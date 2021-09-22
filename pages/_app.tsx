@@ -3,7 +3,7 @@ import 'tailwindcss/tailwind.css';
 
 function MyApp({ Component, pageProps }) {
   return( 
-    <PlausibleProvider domain='https://brockherion.vercel.app/'>
+    <PlausibleProvider domain='brockherion.vercel.app/'>
       <Component {...pageProps} />
     </PlausibleProvider>
   );
