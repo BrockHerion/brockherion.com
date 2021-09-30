@@ -4,7 +4,7 @@ import Layout from '../layout/Layout';
 
 function MyApp({ Component, pageProps }) {
   return( 
-    <PlausibleProvider domain='brockherion.vercel.app/'>
+    <PlausibleProvider domain='brockherion.dev'>
       <Layout>
         <Component {...pageProps} />
       </Layout>
