@@ -11,8 +11,8 @@ function Navbar() {
           </Link>
         </li>
         <li className="text-gray-100 mr-6 hover:underline font-source-code-pro text-lg">
-          <Link href="/articles">
-            <a>Articles</a>
+          <Link href="https://blog.brockherion.dev">
+            <a>Blog</a>
           </Link>
         </li>
         <li className="text-gray-100 mr-6 hover:underline font-source-code-pro text-lg">
