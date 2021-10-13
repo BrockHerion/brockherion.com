@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import NewsletterSignUpForm from "../components/NewsletterSignUpForm";
 
 export default function Home() {
   return (
@@ -9,12 +10,12 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <div className="grid grid-cols-2 bg-green-500 text-gray-900">
+      <div className="grid grid-cols-2 justify-items-stretch bg-green-400 text-gray-900 mb-6">
         <div
-          className="bg-gray-800 2xl:pl-96 xl:pl-72 lg:pl-36 pr-6 md:pl-16 pl-4 py-2 relative"
+          className="bg-gray-800 2xl:pl-96 xl:pl-72 lg:pl-36 pr-6 md:pl-16 pl-4 py-2"
           style={{ borderRadius: "0 0 80px 0" }}
         >
-          <Image src="/code.svg" width={500} height={575} />
+          <Image src="/code.svg" layout='fill' />
         </div>
         <div className="relative">
           <div
@@ -22,7 +23,7 @@ export default function Home() {
             style={{ width: "80px", height: "80px" }}
           ></div>
           <div
-            className="2xl:pr-96 xl:pr-72 lg:pr-36 md:pr-16 pr-6 pl-14 pt-6 bg-green-500 height-full top-0 left-0 absolute flex flex-col items-end justify-center"
+            className="2xl:pr-96 xl:pr-72 lg:pr-36 md:pr-16 pr-6 pl-14 pt-6 bg-green-400 height-full top-0 left-0 absolute flex flex-col items-end justify-center"
             style={{ borderRadius: "80px 0 0 0" }}
           >
             <h1 className="2xl:text-5xl xl:text-4xl text-3xl mb-3 text-right font-source-code-pro">
@@ -44,25 +45,13 @@ export default function Home() {
               content. Enter your email below and join a friendly, growing
               community of readers!
             </h3>
-            <form>
-              <input
-                className="bg-gray-100 px-4 py-2 rounded-xl mr-2"
-                type="email"
-                placeholder="Email"
-              />
-              <button
-                className="bg-yellow-300 px-4 py-2 rounded-xl text-gray-800 font-bold"
-                type="submit"
-              >
-                Subscribe
-              </button>
-            </form>
+            <NewsletterSignUpForm />
           </div>
         </div>
       </div>
 
       <div
-        className="bg-green-500 text-gray-800 pb-2 pt-6 2xl:ml-96 xl:ml-72 lg:ml-36 md:ml-16 ml-6 2xl:pr-96 xl:pr-72 lg:pr-36 md:pr-16 pr-6"
+        className="bg-green-400 text-gray-800 pb-2 pt-6 2xl:ml-96 xl:ml-72 lg:ml-36 md:ml-16 ml-6 2xl:pr-96 xl:pr-72 lg:pr-36 md:pr-16 pr-6 relative"
         style={{ borderTopLeftRadius: "80px", borderBottomLeftRadius: "80px" }}
       >
         <div className="ml-6">
