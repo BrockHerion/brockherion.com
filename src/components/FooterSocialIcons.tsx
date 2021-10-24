@@ -7,23 +7,37 @@ import {
   Instagram,
   Facebook,
 } from "react-feather";
+import {
+  FiTwitter,
+  FiYoutube,
+  FiTwitch,
+  FiGithub,
+  FiLinkedin,
+  FiInstagram,
+  FiFacebook
+} from 'react-icons/fi';
 
 export default function FooterSocialIcons() {
   return (
     <ul className="flex items-center justify-center">
       <li className="mr-3">
         <a href="https://twitter.com/BrockHerion" target="_blank">
-          <Twitter color="#F3F4F6" />
+          <FiTwitter className="text-white" size='1.75em' />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://twitch.tv/brockherion" target="_blank">
-          <Twitch color="#F3F4F6" />
+          <FiYoutube className="text-white" size='1.75em' />
+        </a>
+      </li>
+      <li className="mr-3">
+        <a href="https://twitch.tv/brockherion" target="_blank">
+          <FiTwitch className="text-white" size='1.75em' />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://github.com/brockherion" target="_blank">
-          <GitHub color="#F3F4F6" />
+          <FiGithub className="text-white" size='1.75em' />
         </a>
       </li>
       <li className="mr-3">
@@ -31,12 +45,12 @@ export default function FooterSocialIcons() {
           href="https://www.linkedin.com/in/brock-j-herion-34279a176/"
           target="_blank"
         >
-          <Linkedin color="#F3F4F6" />
+          <FiLinkedin className="text-white" size='1.75em' />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://www.instagram.com/brock_herion/" target="_blank">
-          <Instagram color="#F3F4F6" />
+          <FiInstagram className="text-white" size='1.75em' />
         </a>
       </li>
       <li>
@@ -44,7 +58,7 @@ export default function FooterSocialIcons() {
           href="https://www.facebook.com/Brock-Herion-197864878943988"
           target="_blank"
         >
-          <Facebook color="#F3F4F6" />
+          <FiFacebook className="text-white" size='1.75em' />
         </a>
       </li>
     </ul>
