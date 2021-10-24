@@ -1,8 +1,9 @@
+import type { AppProps } from 'next/app';
 import PlausibleProvider from 'next-plausible';
 import 'tailwindcss/tailwind.css';
 import Layout from '../layout/Layout';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps }: AppProps) {
   return( 
     <PlausibleProvider domain='brockherion.dev'>
       <Layout>
