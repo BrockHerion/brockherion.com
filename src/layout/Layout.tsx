@@ -8,16 +8,16 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <>
+    <div className="flex flex-col items-stretch min-h-screen">
       <Header />
 
-      <main>
+      <main className="flex-1 h-full">
         {children}
       </main>
 
       <Footer />
 
-    </>
+    </div>
   );
 }
 

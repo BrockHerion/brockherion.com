@@ -6,7 +6,7 @@ function Navbar() {
     <nav>
       <ul className="flex items-center">
         <li className="text-gray-100 mr-6 hover:underline font-source-code-pro text-lg">
-          <Link href="/About">
+          <Link href="/about">
             <a>About</a>
           </Link>
         </li>
@@ -21,7 +21,7 @@ function Navbar() {
           </Link>
         </li>
         <li className="text-gray-100 hover:underline font-source-code-pro text-lg">
-          <Link href='newsletter'>
+          <Link href='/newsletter'>
             <a>Newsletter</a>
           </Link>
         </li>
