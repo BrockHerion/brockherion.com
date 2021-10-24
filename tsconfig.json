@@ -19,6 +19,10 @@
     "jsx": "preserve",
     "noImplicitAny": true
   },
+  "baseUrl": ".",
+  "paths": {
+    "@/*": ["./src/*"]
+  },
   "include": [
     "next-env.d.ts",
     "**/*.ts",

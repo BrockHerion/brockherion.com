@@ -1,6 +1,5 @@
 import React from "react";
 import { ChangeHandler, Path, UseFormRegister } from "react-hook-form";
-import { FormValues } from "../models/form-values";
 
 interface InputProps {
   id: string;
