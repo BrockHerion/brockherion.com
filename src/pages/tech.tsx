@@ -16,6 +16,9 @@ import {
   SiJava,
   SiPrettier,
   SiEslint,
+  SiPrisma,
+  SiVercel,
+  SiMysql,
 } from "react-icons/si";
 import { BsCodeSlash, BsServer, BsFillGearFill } from "react-icons/bs";
 import PageHeader from "../components/PageHeader";
@@ -53,7 +56,6 @@ export default function Tech() {
                     <SiNextdotjs className="mr-2" />
                     Next.JS
                   </h4>
-
                   <h4 className="text-3xl flex items-center">
                     <SiTailwindcss className="mr-2" />
                     TailwindCSS
@@ -91,7 +93,6 @@ export default function Tech() {
                     <SiPython className="mr-2" />
                     Python
                   </h4>
-
                   <h4 className="text-3xl flex items-center">
                     <SiNodedotjs className="mr-2" />
                     Node.JS
@@ -100,6 +101,14 @@ export default function Tech() {
                   <h4 className="text-3xl flex items-center">
                     <SiJava className="mr-2" />
                     Java
+                  </h4>
+                  <h4 className="text-3xl flex items-center">
+                    <SiPostgresql className="mr-2" />
+                    Postgres
+                  </h4>
+                  <h4 className="text-3xl flex items-center">
+                    <SiMysql className="mr-2" />
+                    MySQL
                   </h4>
                 </div>
               </div>
@@ -112,15 +121,13 @@ export default function Tech() {
                 <div className="space-y-3">
                   <div className="bg-green-400 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
-                    <SiPostgresql className="mr-2" />
-                    Postgres
+                    <SiVercel className="mr-2" />
+                    Vercel
                   </h4>
-
                   <h4 className="text-3xl flex items-center">
                     <SiDocker className="mr-2" />
                     Docker
                   </h4>
-
                   <h4 className="text-3xl flex items-center">
                     <SiGit className="mr-2" />
                     Git
@@ -133,6 +140,10 @@ export default function Tech() {
                   <h4 className="text-3xl flex items-center">
                     <SiGnubash className="mr-2" />
                     BASH
+                  </h4>
+                  <h4 className="text-3xl flex items-center">
+                    <SiPrisma className="mr-2" />
+                    Prisma
                   </h4>
                 </div>
               </div>
