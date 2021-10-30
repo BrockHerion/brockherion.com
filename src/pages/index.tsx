@@ -56,7 +56,7 @@ export default function Home({ featuredArticle }: HomeProps) {
       >
         <div>
           <h3 className="text-3xl mb-3 font-source-code-pro">
-            Subcribe to my newsletter 📰
+            Subscribe to my newsletter 📰
           </h3>
           <div className="bg-gray-800 w-12 h-1 mb-4"></div>
         </div>
@@ -64,7 +64,7 @@ export default function Home({ featuredArticle }: HomeProps) {
           <div>
             <p className="text-2xl mb-3">
               The Weekly Retrospective is a newsletter about taking what
-              happened durning the week and reflecting on it. In it, we discuss
+              happened during the week and reflecting on it. In it, we discuss
               things related to technology, challenges that were overcome, and
               more!
             </p>
