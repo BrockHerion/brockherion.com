@@ -82,8 +82,8 @@ export default function Home({ featuredArticle }: HomeProps) {
           Check out my blog ✍️
         </h3>
         <div className="bg-green-400 w-12 h-1 mb-6"></div>
-        <div className="md:grid md:grid-cols-2 md:gap-x-10 flex flex-col space-y-6">
-          <div>
+        <div className="md:grid md:grid-cols-2 md:gap-x-10 flex flex-col">
+          <div className="md:mb-0 mb-6">
             <h4 className="text-white text-xl mb-3 font-source-code-pro">
               Popular Series 📚
             </h4>
