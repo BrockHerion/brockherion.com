@@ -92,7 +92,7 @@ export default function Home({ featuredArticle }: HomeProps) {
                 href="https://blog.brockherion.dev/series/backend-development"
                 target="_blank"
                 rel="noreferrer"
-                className="rounded-lg ring-4 ring-green-400 ring-opacity-50 text-white p-3 text-lg flex items-center justify-between"
+                className="rounded-lg bg-gray-700 text-white p-3 text-lg flex items-center justify-between"
               >
                 Backend Development
                 <BsServer />

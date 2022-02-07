@@ -20,6 +20,11 @@ function Navbar() {
             <a>Tech</a>
           </Link>
         </li>
+        <li className="text-gray-100 mr-6 hover:underline font-source-code-pro text-lg">
+          <Link href="/projects">
+            <a>Projects</a>
+          </Link>
+        </li>
       </ul>
     </nav>
   );
