@@ -90,7 +90,7 @@ export default function Projects() {
               </p>
               <div className="mt-2 flex space-x-3">
                 <a
-                  href="https://github.com/BrockHerion/wordle_rs"
+                  href="https://github.com/BrockHerion/brockherion.com"
                   rel="noreferrer"
                   target="_blank"
                 >
