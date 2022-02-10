@@ -28,7 +28,7 @@ export default function Tech() {
   return (
     <>
       <Head>
-        <title>Tech | Brock Herion</title>
+        <title>Tech - Brock Herion</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -38,7 +38,7 @@ export default function Tech() {
           <div className="text-white">
             <h2 className="text-4xl mb-8">
               These are the technologies that I use on a regular basis, either
-              for work or for fun!
+              for work or for fun
             </h2>
             <div className="md:grid md:grid-cols-3 md:space-y-0 flex flex-col space-y-12 md:gap-x-6 my-6 mx-6 md:mx-0">
               <div className="flex flex-col">
@@ -47,7 +47,7 @@ export default function Tech() {
                   Frontend
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-green-400 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiReact className="mr-2" />
                     React.JS
@@ -84,7 +84,7 @@ export default function Tech() {
                   Backend
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-green-400 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiCsharp className="mr-2" />
                     C#
@@ -119,7 +119,7 @@ export default function Tech() {
                   Other Tools
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-green-400 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiVercel className="mr-2" />
                     Vercel
@@ -150,13 +150,10 @@ export default function Tech() {
             </div>
 
             <p className="text-2xl mb-3">
-              And of course, I wouldn't be able to get anything done without my favorite
-              development tool of all:
+              And of course I wouldn't be able to get anything done without my
+              favorite development tool of all, a delicous, fresh cup of coffee
+              ☕
             </p>
-
-              <p className="text-2xl flex items-center">
-                A delicous, fresh cup of coffee ☕
-              </p>
           </div>
         </div>
       </PageWrapper>

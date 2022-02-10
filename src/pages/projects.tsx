@@ -8,18 +8,18 @@ export default function Projects() {
   return (
     <>
       <Head>
-        <title>Projects | Brock Herion</title>
+        <title>Projects - Brock Herion</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <PageWrapper>
         <PageHeader headingText="Projects 🔨" />
         <section className="mt-8">
           <h2 className="text-4xl mb-8">
-            Just a few neat things I&apos;ve built!
+            Just a few neat things I&apos;ve built
           </h2>
         </section>
         <section className="mt-8">
-          <div className="bg-gray-700 p-4 rounded-lg flex flex-col md:flex-row">
+          <div className="bg-slate-600 p-4 rounded-lg flex flex-col md:flex-row">
             <Image src="/wordle_rs.png" width={189} height={150} />
             <div className="ml-4 flex flex-col flex-1">
               <h3 className="text-2xl">Wordle.rs - Rust</h3>
