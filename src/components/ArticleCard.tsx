@@ -9,7 +9,7 @@ export default function ArticleCard({ article }: ArticleCardProps) {
   return (
     <a
       id={article.cuid}
-      className="rounded-lg bg-gray-700 text-white p-3 flex flex-col items-center justify-center"
+      className="rounded-lg bg-slate-600 text-white p-3 flex flex-col items-center justify-center"
       href={`https://blog.brockherion.dev/${article.slug}`}
       target="_blank"
       rel="noreferrer"

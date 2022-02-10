@@ -8,7 +8,7 @@ export default function About() {
   return (
     <>
       <Head>
-        <title>About | Brock Herion</title>
+        <title>About - Brock Herion</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
@@ -23,7 +23,7 @@ export default function About() {
             <h3 className="text-3xl flex items-center mb-3">
               Programming Life <BiCodeCurly className="ml-2" />
             </h3>
-            <div className="bg-green-400 w-12 h-1 mb-4"></div>
+            <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
             <p className="text-xl mb-4">
               I've been interested in computers and programming for as long as I
               can remember. A large part of that was growing up playing games
@@ -60,7 +60,7 @@ export default function About() {
             <h3 className="text-3xl flex items-center mb-3">
               Personal Life <BiCoffeeTogo className="ml-2" />
             </h3>
-            <div className="bg-green-400 w-12 h-1 mb-4"></div>
+            <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
             <p className="text-xl mb-4">
               I'm currently living in the Chicago suburbs with my fiance and our
               three cats. Together, we share our love of Disney, coffee, and
