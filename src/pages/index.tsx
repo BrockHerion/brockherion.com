@@ -60,7 +60,7 @@ export default function Home({ featuredArticle }: HomeProps) {
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col">
               <div>
-                <p className="text-xl">
+                <p className="text-xl mb-3">
                   In Brock&apos;s Bytes - my weekly newsletter - I share tips
                   related to full-stack software development and give advice on
                   managing a healthy, productive life while having a career in
@@ -70,7 +70,7 @@ export default function Home({ featuredArticle }: HomeProps) {
                 </p>
               </div>
               <div>
-                <p className="text-2xl mb-3 text-center">
+                <p className="text-2xl mb-3 md:text-center">
                   Sign up now to join a growing community of friendly readers!
                 </p>
                 <NewsletterSignUpForm />
@@ -96,7 +96,7 @@ export default function Home({ featuredArticle }: HomeProps) {
                   href="https://blog.brockherion.dev/series/backend-development"
                   target="_blank"
                   rel="noreferrer"
-                  className="rounded-lg bg-slate-600 text-white p-3 text-lg flex items-center justify-between"
+                  className="rounded-md bg-slate-600 text-white p-3 text-lg flex items-center justify-between"
                 >
                   Backend Development
                   <BsServer />

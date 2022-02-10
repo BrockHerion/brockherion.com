@@ -8,10 +8,10 @@ export default function NewsletterSignUpForm() {
       action="https://www.getrevue.co/profile/brockherion/add_subscriber"
       method="post"
       target="_blank"
-      className="flex flex-col items-center justify-center px-12"
+      className="flex flex-col md:items-center md:justify-center md:px-12"
     >
       <input
-        className="w-full bg-gray-100 px-4 py-2 rounded-xl mr-2 mb-2"
+        className="w-full bg-gray-100 px-4 py-2 rounded-md mb-2"
         id="member_email"
         name="member[email]"
         type="email"
@@ -19,7 +19,7 @@ export default function NewsletterSignUpForm() {
         required
       />
       <button
-        className="w-full bg-yellow-300 px-4 py-2 rounded-xl text-gray-800 font-bold mb-2"
+        className="w-full bg-yellow-300 px-4 py-2 rounded-md text-gray-800 font-bold mb-2"
         type="submit"
       >
         Subscribe
