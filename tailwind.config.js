@@ -1,11 +1,12 @@
 module.exports = {
   mode: 'jit',
-  content: ['./src/pages/**/*.{js,ts,jsx,tsx}', './src/components/**/*.{js,ts,jsx,tsx}'],
+  content: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
   media: false, // or 'media' or 'class'
   theme: {
     extend: {
       fontFamily: {
         'source-code-pro': ['"Source Code Pro"',],
+				'inconsolata': ['"Inconsolata"', "monospace"],
         'open-sans': ['"Open Sans"',],
       }
     },
