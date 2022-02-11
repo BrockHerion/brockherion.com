@@ -19,7 +19,7 @@ export default function NewsletterSignUpForm() {
         required
       />
       <button
-        className="w-full bg-yellow-300 px-4 py-2 rounded-md text-gray-800 font-bold mb-2"
+        className="w-full bg-yellow-300 px-4 py-2 rounded-md text-slate-800 font-bold mb-2"
         type="submit"
       >
         Subscribe
