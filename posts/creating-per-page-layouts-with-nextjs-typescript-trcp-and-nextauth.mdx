@@ -1,5 +1,6 @@
 ---
 title: Creating Per-Page Layouts with Next.JS, Typescript, tRCP, and NextAuth
+subTitle: tRPC and NextAuth are two powerful libraries that, combined with per-page layouts, let you create fast and powerful NextJS Apps.
 slug: creating-per-page-layouts-with-nextjs-typescript-trcp-and-nextauth
 seoTitle: Creating Per-Page Layouts with Next.JS, Typescript, tRCP, and NextAuth
 abstract: In this article, I will be showing you how you can use NextJS Per-Page layouts with Typescript, NextAuth, and tRPC to build shared layouts.
@@ -8,12 +9,6 @@ isFeatured: true
 publishedOn: "01/07/2022"
 imageUrl: /posts/trpc-next-per-page.png
 ---
-
-<BlogPostHeading
-  title="Creating Per-Page Layouts with Next.JS, Typescript, tRCP, and NextAuth"
-  subTitle="tRPC and NextAuth are two powerful libraries that, combined with per-page layouts, let you create fast and powerful NextJS Apps."
-  imageSrc="/posts/trpc-next-per-page.png"
-/>
 
 <BlogBody>
 
@@ -25,7 +20,7 @@ Next does give you a few choices for handling layouts within your applications, 
 
 The other solution it gives is to use a layout per page, which is what we will be discussing in this article. We will be looking at why you would want to use this solution, how it works, and how to make it work with NextAuth and tRPC.
 
-<BlogSectionHeading heading="What Problem Does This Solve?" />
+## What Problem Does This Solve?
 
 According to the Next docs, this solution aims to solve the issue of multiple and complex layouts. Per their docs,
 
@@ -45,7 +40,7 @@ This works to an extent. For simple layouts, it's not that big of a deal. For la
 
 This is why `getLayout` works. The page state is maintained and only components that have changed will be rendered again, instead of the entire page.
 
-<BlogSectionHeading heading="Defining Layouts" />
+## Defining Layouts
 
 The first thing you need is to actually have a layout that you want to use. I like creating mine under a /layouts folder, but you can choose whatever folder structure works for you and your project. I might have a few layouts like this.
 
@@ -88,7 +83,7 @@ export default function AltLayout({ children }: Props) {
 
 The point is that how you have your layouts doesn't matter too much. You can make them whatever you want and add whatever stylings you want to them as well.
 
-<BlogSectionHeading heading="Apply Layouts to Your Pages" />
+## Apply Layouts to Your Pages
 
 Our next step is to actually apply a layout to a page. Let's go into one of our pages and give it a layout.
 
@@ -120,7 +115,7 @@ AltPage.getLayout = function getLayout(page: React.ReactElement) {
 
 At this point, we have our layouts applied to the pages we want. But how do we render them? Let's hope over to `_app.tsx` and see how that's done with tRPC and NextAuth!
 
-<BlogSectionHeading heading="Bringing it all Together with NextAuth and tRPC" />
+## Bringing it all Together with NextAuth and tRPC
 
 The first thing that we want to do if we're using Typescript is to create two new types. We'll be using these to expand on `NextPage` and `AppProps`.
 
@@ -165,7 +160,7 @@ The second "issue" this solves is specifically for Typescript users. Notice the 
 
 If you're not using NextAuth, you'll have to update `getLayout` to return something like `React.ReactElement` in order to make tRPC happy. Please note that I'm not sure if there are any side-effects to using ReactElement instead of ReactNode. The official Next docs use ReactNode and it is what I use most when returning components as it has a wider coverage of possible types. I would assume it would still work as expected, but I haven't done enough testing to find out. And if I'm way off on using one or the other, please let me know!
 
-<BlogSectionHeading heading="Wrap-up" />
+## Wrap-up
 
 In this article, we looked at how to set up per-page layouts in NextJS and how to use them with NextAuth and tRPC. We also looked at what problem this pattern solves and why we would want to use it. These are some amazing technologies and using them together lets you not only build more reliable and more powerful sites faster but create unique and seamless user experiences.
 

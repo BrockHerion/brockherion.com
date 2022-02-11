@@ -1,5 +1,6 @@
 ---
 title: Designing and Building REST APIs for Other Humans
+subTitle: Learn how to create a REST API that will keep you and other developers happy.
 slug: designing-and-building-rest-apis-for-other-humans
 seoTitle: Designing and Building REST APIs for Other Humans
 abstract: Learn how to create a REST API that will keep you and other developers happy.
@@ -9,19 +10,13 @@ publishedOn: "10/04/2021"
 imageUrl: /posts/designing-building-rest-apis-for-other-humans.png
 ---
 
-<BlogPostHeading
-  title="Designing and Building REST APIs for Other Humans"
-  subTitle="Learn how to create a REST API that will keep you and other developers happy."
-  imageSrc="/posts/designing-building-rest-apis-for-other-humans.png"
-/>
-
 <BlogBody>
 
 As developers, we interact with APIs all the time. And chances are, if you're a web developer, you've interacted with a REST API at some point or another. But what if you need to create one? How do you go about doing that?
 
 When I was presented with this, I had no idea where to begin. In this article, I will be discussing how to build and design a REST API that is easy for you to maintain and easy for other developers to consume. We'll go over what a REST API is, how to design your endpoints, and how to handle things like nested collections, paging, and filtering.
 
-<BlogSectionHeading heading="What is a REST API?" />
+## What is a REST API?
 
 REST stands for Representational State Transfer. Data is fetched over HTTP and usually returned in JSON format. It's important to note that REST is only a type of API, not the only type of API. There are a couple of things that make REST ideal for web developers.
 
@@ -29,13 +24,13 @@ REST APIs do not care about what language they are written in. You can create th
 
 A good way to think about how it works is like a library. Let's pretend you go to a library and are looking for ten book recommendations for a paper you're writing on Data Structures and Algorithms. The librarian disappears in the back and returns to you with a list of titles, authors, date of publication, and ISBN. You do not care about how she searched for them. You gave her a collection (books) with a filter (genre) and a limit to fetch (ten books). She will then attempt to fetch you the collection or resource you searched for. She also does not care about how you use that data. Maybe you are going to check one out or order them online, maybe just take them off the shelf and sit and quietly take notes on them. REST APIs act as a way to exchange data within a set of constraints.
 
-<BlogSectionHeading heading="What's the best way to build one?" />
+## What's the best way to build one?
 
 While seemingly simple, REST APIs can be hard to create. You have to make choices about what data should be returned and when, what actions you will allow your users to take, etc. Because there isn't a single set of best practices to follow, building an API can be hard. You can quickly find yourself getting overwhelmed with trying to build one.
 
 How should your JSON be formatted? What should I name my endpoints? How should I handle nested relationships? These are all questions that you might yourself asking when you start creating your APIs. There are, however, some generally accepted best practices and tips that you can use to build a scalable, developer-friendly API.
 
-<BlogSectionHeading heading="1. Don't use action names in your URLs, use HTTP verbs instead" />
+### 1. Don't use action names in your URLs, use HTTP verbs instead
 
 Let's say we want to create a new user in our application. You might be tempted to build an endpoint at the following URL
 
@@ -66,7 +61,7 @@ In this case, you might lean towards option two. To me, this is an auth action a
 
 It all comes down to your use case and what you need the API to do.
 
-<BlogSectionHeading heading="2. Use plural endpoints for collections" />
+### 2. Use plural endpoints for collections
 
 This one is pretty straightforward. When accessing a collection of items, you should be using endpoints like
 
@@ -88,7 +83,7 @@ GET /api/books/1
 
 The endpoint above is also extremely clear about what it's doing. You want to fetch a single, specific item with an ID of 1 from the collection of books.
 
-<BlogSectionHeading heading="3. Accept and return JSON" />
+### 3. Accept and return JSON
 
 I touched on this earlier, but you absolutely want to be making sure you accept and return JSON. It's a widely accepted format that will let all kinds of consumers interact with your API and let you interact with other APIs.
 
@@ -106,7 +101,7 @@ You can then return errors back to the sender if they're missing any requirement
 
 There is also a discussion around snake vs camel case for your JSON bodies. You'll find camel more in C# and Java APIs while snake in Python or Ruby. There are extremely popular APIs using both of those formats, but again it's important to be consistent with it. Don't mix your cases or you will make a lot of developers upset.
 
-<BlogSectionHeading heading="4. Use correct HTTP Status codes" />
+### 4. Use correct HTTP Status codes
 
 This is a big one. Status codes are how you relate to your consumers the status of what operations they performed. A wrong status code can send the wrong message, leaving the dev on the other end frustrated and confused.
 
@@ -116,7 +111,7 @@ PUT and PATCH can go a few ways. They can send back a 200 with the updated resou
 
 My own thoughts on PUT and PATCH responses are they should be returning the updated resource with a 200. This is because you might have some fields that are updated not a part of the initial request, like a timestamp, and because it saves a trip back to the server to fetch the data again.
 
-<BlogSectionHeading heading="5. Allow for filtering, sorting, and paging" />
+### 5. Allow for filtering, sorting, and paging
 
 Chances are your users will want to further refine the collections they get back from you. Supporting filtering, sorting, and paging is something you should absolutely do. Let's go back to our library example from earlier. We requested books about Data Structures and Algorithms. We requested ten books, so we can use the following request to get the first page of ten books
 
@@ -164,7 +159,7 @@ For a 1-m, you can use a nested route. If we want to fetch all the books in a gi
 GET /api/library/1/books
 ```
 
-<BlogSectionHeading heading="6. Versioning your APIs" />
+### 6. Versioning your APIs
 
 No software stays the same forever, so there's a pretty good chance your API will change. You want to make sure, however, that you aren't breaking anybody's code if they're using an older version of the API. You can avoid that by versioning your APIs.
 
@@ -176,7 +171,7 @@ GET /api/v1/books
 
 This makes it clear that this will hit version 1 of the book's endpoint. If you need to make changes, you really shouldn't be editing that endpoint, especially if people are using it for production code. It's better to introduce version 2 of it instead.
 
-<BlogSectionHeading heading="Conclusion" />
+## Conclusion
 
 That was a lot of information! To recap, when building a REST API, you should
 

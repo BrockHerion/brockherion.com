@@ -35,11 +35,17 @@ export default function BlogPost({ source, frontMatter }: BlogPostProps) {
         <title>{frontMatter["seoTitle"]} - Brock Herion</title>
       </Head>
       <PageWrapper>
+        <BlogPostHeading
+          title={frontMatter["title"] as string}
+          subTitle={frontMatter["subTitle"]}
+          imageSrc={frontMatter["imageUrl"] as string}
+          publishedOn={frontMatter["publishedOn"] as string}
+        />
         <MDXRemote {...source} components={components} />
       </PageWrapper>
       <section className="bg-emerald-500 2xl:px-96 xl:px-72 lg:px-36 md:px-16 px-4 py-12 flex flex-col items-center justify-center ">
         <div className="max-w-md">
-          <h4 className="text-center text-2xl font-bold">
+          <h4 className="text-center text-2xl font-semibold">
             There's more where that came from!
           </h4>
           <h5 className="text-center mt-2 mb-6 text-xl leading-5 font-open-sans">

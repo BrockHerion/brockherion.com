@@ -1,5 +1,6 @@
 ---
 title: Building Reusable Components in React with Typescript and Generics
+subTitle: How to use Typescript generics to build more reusable, more robust React components.
 slug: building-reusable-components-in-react-with-typescript-and-generics
 seoTitle: Building Reusable Components in React with Typescript and Generics
 abstract: In this article, I will be showing you how you can use Typescript generics to build reusable and more robust components for your React applications
@@ -8,12 +9,6 @@ isFeatured: true
 publishedOn: "02/06/2022"
 imageUrl: /posts/react-ts-generics-min.png
 ---
-
-<BlogPostHeading
-  title="Building Reusable Components in React with Typescript and Generics"
-  subTitle="How to use Typescript generics to build more reusable, more robust React components."
-  imageSrc="/posts/react-ts-generics-min.png"
-/>
 
 <BlogBody>
 
@@ -36,7 +31,7 @@ I decided enough was enough. I was tired of writing basically the same code over
 
 In this article, I am going to share with you how to build reusable components for your React applications using Typescript generics.
 
-<BlogSectionHeading heading="What is a generic?" />
+## What is a generic?
 
 Most modern type-safe languages include some form of generics and Typescript is no exception. Generics are a great way to let you build reusable components for your application that are not bound by a specific type.
 
@@ -72,7 +67,7 @@ If this looks a little funky, don't worry. We're saying here our function accept
 
 I won't go into too much more detail on how generics work, but if you want to learn more, you should head over to the [Typescript Documentation](https://www.typescriptlang.org/docs/handbook/2/generics.html) and read their guide on it. It's really well done and provides some more in-depth examples.
 
-<BlogSectionHeading heading="Building our page structure" />
+## Building our page structure
 
 Let's had into React-land and see how we can use generics to build out a listing page. We can assume that we will need to use reuse our listing component for various parts of our app.
 
@@ -99,7 +94,7 @@ export default function Page() {
 
 How the list is currently set up doesn't matter too much, but essentially what we're doing is fetching our data and then returning our list. We can assume our list is hardcoded and we have it duplicated on multiple pages. For simplicities sake, I also moved our data fetching and page setup to a custom hook. The implementation also does not matter here so long as we have data we can pass to our list.
 
-<BlogSectionHeading heading="Creating a list component" />
+## Creating a list component
 
 In our components section, let's go ahead and create a new file for our list component. We'll also make it generic so it can accept multiple types.
 
@@ -134,7 +129,7 @@ export default function Page() {
 
 If you look closely, however, you will realize there's an issue with how this is set up. How does our list know what to render? If we have primitive types, like strings and numbers, this isn't an issue and we can render each as-is. But what about objects? Say I have one page that lists employees and another that lists quarterly totals. My `QuarterlyTotals` object won't have a `firstName` or `lastName` property, nor will my `Employees` have a `netRevenue` property. My types won't always have the same properties so how I can render my list?
 
-<BlogSectionHeading heading="Adding a render() prop" />
+## Adding a render() prop
 
 We can take advantage of `props` to fix this issue. Hop back into `Listing.tsx` and let's add a new prop called `render`.
 
@@ -183,7 +178,7 @@ export default function Page() {
 
 Now we can render each item in our list without having to worry! Our page is dictating what data goes into the list and how that data gets rendered. Our listing component is acting as a wrapper for us. It's a predictable structure as to how our list should look and behave. Whenever we need a list now, we can just use our `<Listing />` and just pass our props in!
 
-<BlogSectionHeading heading="Going forward" />
+## Going forward
 
 There's a ton more you can do to this. In my own app where I built a similar list, I also needed to add search functionality to it. It will also eventually need other kinds of filtering as well. I can now just set up generic filtering and sorting on my list component and, as we did with rendering, let our page dictate how the searched through or filtered.
 
@@ -193,7 +188,7 @@ Of course, that can all be extracted away to other components or functions, but 
 
 Play around with it and see what else you can make your components do!
 
-<BlogSectionHeading heading="Conclusion" />
+## Conclusion
 
 Today, we took a small look at what generics are and how to use them to build robust
 and reusable React components. We saw just how simple yet powerful this can be and

@@ -4,12 +4,14 @@ interface BlogPostHeadingProps {
   title: string;
   subTitle?: string;
   imageSrc?: string;
+  publishedOn: string;
 }
 
 export function BlogPostHeading({
   title,
   subTitle,
   imageSrc,
+  publishedOn,
 }: BlogPostHeadingProps) {
   return (
     <>
@@ -27,6 +29,9 @@ export function BlogPostHeading({
         alt={title}
         className="rounded-md"
       />
+      <span className="italic">
+        Published on {new Date(publishedOn).toLocaleDateString("en-US")}
+      </span>
     </>
   );
 }
