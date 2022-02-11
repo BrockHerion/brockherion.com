@@ -10,7 +10,9 @@ export default function PopularPosts({ popularPosts }: PopularPostsProps) {
   return (
     <div className="grid mb-6">
       <div className="md:mb-0 mb-6">
-        <h4 className="text-white text-xl mb-3 ">Featured Posts 🌟</h4>
+        <h4 className="text-white text-xl mb-3 font-semibold">
+          Featured Posts 🌟
+        </h4>
         <div className="grid md:grid-cols-3 gap-x-4 gap-y-4">
           {popularPosts.map((post) => (
             <Link

@@ -53,7 +53,9 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
         >
           <div className="2xl:px-96 xl:px-72 lg:px-36 md:px-16 px-4 py-12">
             <div>
-              <h3 className="text-3xl mb-3 ">Subscribe to my newsletter 📰</h3>
+              <h3 className="text-3xl mb-3 font-bold tracking-wider">
+                Subscribe to my newsletter 💌
+              </h3>
               <div className="bg-gray-800 w-12 h-1 mb-6"></div>
             </div>
             <div className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col">
@@ -80,7 +82,9 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
 
       <PageWrapper>
         <section>
-          <h3 className="text-white text-3xl mb-3 ">Check out my blog ✍️</h3>
+          <h3 className="text-white text-3xl mb-3 font-bold tracking-wider">
+            Check out my blog ✍️
+          </h3>
           <div className="bg-emerald-500 w-12 h-1 mb-6"></div>
           <PopularPosts popularPosts={popularPosts} />
           <RecentPosts newPosts={newPosts} />

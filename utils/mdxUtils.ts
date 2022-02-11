@@ -16,6 +16,29 @@ export interface Post {
   imageUrl: string;
 }
 
+export const getAllPosts = (): Post[] => {
+  const posts: Post[] = [];
+
+  const files = fs.readdirSync(POSTS_PATH);
+
+  files.forEach((file) => {
+    const source = fs.readFileSync(path.join(POSTS_PATH, file));
+    const { data } = matter(source);
+
+    if (data["isPublished"]) {
+      posts.push({
+        title: data["title"] as string,
+        slug: data["slug"] as string,
+        abstract: data["abstract"] as string,
+        publishedOn: new Date(data["publishedOn"]).getTime(),
+        imageUrl: data["imageUrl"] ?? "",
+      });
+    }
+  });
+
+  return posts;
+};
+
 export const getGetLatestPosts = (limit: number): Post[] => {
   const posts: Post[] = [];
 
@@ -30,7 +53,7 @@ export const getGetLatestPosts = (limit: number): Post[] => {
         title: data["title"] as string,
         slug: data["slug"] as string,
         abstract: data["abstract"] as string,
-        publishedOn: new Date(data["publishedOn"] as string).getDate(),
+        publishedOn: new Date(data["publishedOn"]).getTime(),
         imageUrl: data["imageUrl"] ?? "",
       });
     }
@@ -53,7 +76,7 @@ export const getPoplularPosts = (limit: number): Post[] => {
         title: data["title"] as string,
         slug: data["slug"] as string,
         abstract: data["abstract"] as string,
-        publishedOn: new Date(data["publishedOn"]).getDate(),
+        publishedOn: new Date(data["publishedOn"]).getTime(),
         imageUrl: data["imageUrl"] ?? "",
       });
     }
