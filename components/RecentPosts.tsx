@@ -7,7 +7,7 @@ interface NewPostsProps {
 
 export default function PopularPosts({ newPosts }: NewPostsProps) {
   return (
-    <div className="grid">
+    <div className="grid mb-8">
       <div className="md:mb-0 mb-6">
         <h4 className="text-white text-xl mb-3 font-semibold">
           Fresh Off The Press 🗞
