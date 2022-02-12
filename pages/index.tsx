@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
+import Link from "next/link";
 import NewsletterSignUpForm from "../components/NewsletterSignUpForm";
 import PageWrapper from "../components/PageWrapper";
 import { getGetLatestPosts, getPoplularPosts, Post } from "../utils/mdxUtils";
@@ -61,7 +62,7 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
             <div className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col">
               <div>
                 <p className="text-xl mb-3">
-                  In Brock&apos;s Bytes - my weekly newsletter - I share tips
+                  In Brock&apos;s Bytes [my weekly newsletter] I share tips
                   related to full-stack software development and give advice on
                   managing a healthy, productive life while having a career in
                   programming. Whether you&apos;re a senior developer,
@@ -81,13 +82,20 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
       </section>
 
       <PageWrapper>
-        <section>
+        <section className="flex flex-col">
           <h3 className="text-white text-3xl mb-3 font-bold tracking-wider">
             Check out my blog ✍️
           </h3>
           <div className="bg-emerald-500 w-12 h-1 mb-6"></div>
           <PopularPosts popularPosts={popularPosts} />
           <RecentPosts newPosts={newPosts} />
+          <div className="flex justify-center">
+            <Link href="/blog">
+              <a className="bg-emerald-600 px-3 py-4 rounded-md">
+                Explore more posts
+              </a>
+            </Link>
+          </div>
         </section>
       </PageWrapper>
     </div>
