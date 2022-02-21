@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import {
   SiGithub,
@@ -14,14 +13,15 @@ import {
 import { IoNavigateSharp } from "react-icons/io5";
 import PageHeader from "../components/PageHeader";
 import PageWrapper from "../components/PageWrapper";
+import PageHead from "../components/PageHead";
 
 export default function Projects() {
   return (
     <>
-      <Head>
-        <title>Projects - Brock Herion</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageHead
+        title="Project - Brock Herion"
+        description="Check out what projects I've built or am currently working on, and the technology that's currently driving them."
+      />
       <PageWrapper>
         <PageHeader headingText="Projects 🔨" />
         <section className="mt-8">

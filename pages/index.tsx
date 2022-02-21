@@ -1,4 +1,3 @@
-import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import NewsletterSignUpForm from "../components/NewsletterSignUpForm";
@@ -6,6 +5,7 @@ import PageWrapper from "../components/PageWrapper";
 import { getGetLatestPosts, getPoplularPosts, Post } from "../utils/mdxUtils";
 import PopularPosts from "../components/PopularPosts";
 import RecentPosts from "../components/RecentPosts";
+import PageHead from "../components/PageHead";
 
 interface HomeProps {
   newPosts: Post[];
@@ -15,14 +15,14 @@ interface HomeProps {
 export default function Home({ newPosts, popularPosts }: HomeProps) {
   return (
     <div className="flex flex-col min-h-screen bg-gray-800">
-      <Head>
-        <title>Home - Brock Herion</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageHead
+        title="Home - Brock Herion"
+        description="I'm Brock. I'm a software developer and content creator. On this site, we look at content related to software development and my own journey as a developer"
+      />
       <PageWrapper>
-        <section className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col justify-items-stretch text-white">
+        <section className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col justify-items-stretch text-white my-6">
           <div className="">
-            <Image src="/code.svg" width={700} height={850} />
+            <Image src="/code.svg" width={890} height={858} />
           </div>
           <div className="height-full flex flex-col md:items-end justify-center">
             <div className=" flex flex-col md:items-end">
@@ -37,7 +37,7 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
               On this site, you&apos;ll find content relating to programming and
               full-stack development. You&apos;ll also get to know a little bit
               more about me and get to see some of the cool things I&apos;ve
-              worked on
+              worked on.
             </h3>
           </div>
         </section>

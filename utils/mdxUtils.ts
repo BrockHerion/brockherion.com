@@ -12,7 +12,8 @@ export interface Post {
   title: string;
   slug: string;
   abstract: string;
-  publishedOn: number;
+  publishedOn: string;
+  publishedOnTime: number;
   imageUrl: string;
 }
 
@@ -30,13 +31,14 @@ export const getAllPosts = (): Post[] => {
         title: data["title"] as string,
         slug: data["slug"] as string,
         abstract: data["abstract"] as string,
-        publishedOn: new Date(data["publishedOn"]).getTime(),
+        publishedOn: data["publishedOn"] as string,
+        publishedOnTime: new Date(data["publishedOn"]).getTime(),
         imageUrl: data["imageUrl"] ?? "",
       });
     }
   });
 
-  return posts;
+  return posts.sort((a, b) => b.publishedOnTime - a.publishedOnTime);
 };
 
 export const getGetLatestPosts = (limit: number): Post[] => {
@@ -53,13 +55,16 @@ export const getGetLatestPosts = (limit: number): Post[] => {
         title: data["title"] as string,
         slug: data["slug"] as string,
         abstract: data["abstract"] as string,
-        publishedOn: new Date(data["publishedOn"]).getTime(),
+        publishedOn: data["publishedOn"] as string,
+        publishedOnTime: new Date(data["publishedOn"]).getTime(),
         imageUrl: data["imageUrl"] ?? "",
       });
     }
   });
 
-  return posts.sort((a, b) => b.publishedOn - a.publishedOn).slice(0, limit);
+  return posts
+    .sort((a, b) => b.publishedOnTime - a.publishedOnTime)
+    .slice(0, limit);
 };
 
 export const getPoplularPosts = (limit: number): Post[] => {
@@ -76,7 +81,8 @@ export const getPoplularPosts = (limit: number): Post[] => {
         title: data["title"] as string,
         slug: data["slug"] as string,
         abstract: data["abstract"] as string,
-        publishedOn: new Date(data["publishedOn"]).getTime(),
+        publishedOn: data["publishedOn"] as string,
+        publishedOnTime: new Date(data["publishedOn"]).getTime(),
         imageUrl: data["imageUrl"] ?? "",
       });
     }
