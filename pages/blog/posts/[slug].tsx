@@ -12,9 +12,9 @@ import {
 } from "../../../components/blog";
 import { GetStaticPropsContext } from "next";
 import PageWrapper from "../../../components/PageWrapper";
-import Head from "next/head";
 import highlight from "rehype-highlight";
 import NewsletterSignUpForm from "../../../components/NewsletterSignUpForm";
+import PageHead from "../../../components/PageHead";
 
 interface BlogPostProps {
   source: MDXRemoteSerializeResult;
@@ -31,9 +31,10 @@ const components = {
 export default function BlogPost({ source, frontMatter }: BlogPostProps) {
   return (
     <>
-      <Head>
-        <title>{frontMatter["seoTitle"]} - Brock Herion</title>
-      </Head>
+      <PageHead
+        title={`${frontMatter["seoTitle"]} - Brock Herion`}
+        description={frontMatter["abstract"]}
+      />
       <PageWrapper>
         <BlogPostHeading
           title={frontMatter["title"] as string}

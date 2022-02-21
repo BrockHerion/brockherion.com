@@ -2,6 +2,7 @@ import React from "react";
 import Image from "next/image";
 import { Post } from "../utils/mdxUtils";
 import Link from "next/link";
+import { formatPublishDate } from "../utils/date";
 
 interface PostCardProps {
   post: Post;
@@ -31,7 +32,7 @@ export default function ArticleCard({ post }: PostCardProps) {
           <div className="h-24 overflow-hidden">
             <hr />
             <span className="text-sm italic">
-              {new Date(post.publishedOn).toLocaleDateString("en-US")}
+              {formatPublishDate(post.publishedOn)}
             </span>
             <p className="leading-5 mt-1 line-clamp-3">{post.abstract}</p>
           </div>
