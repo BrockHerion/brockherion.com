@@ -1,5 +1,9 @@
-# Allow all pages
+# *
 User-agent: *
 Allow: /
 
-Sitemap: https://brockherion.dev/sitemap.xml
+# Host
+Host: https://localhost:3000
+
+# Sitemaps
+Sitemap: https://localhost:3000/sitemap.xml
