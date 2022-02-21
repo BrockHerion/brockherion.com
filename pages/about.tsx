@@ -1,23 +1,23 @@
 import React from "react";
-import Head from "next/head";
 import { BiCodeCurly, BiCoffeeTogo } from "react-icons/bi";
 import PageWrapper from "../components/PageWrapper";
 import PageHeader from "../components/PageHeader";
+import PageHead from "../components/PageHead";
 
 export default function About() {
   return (
     <>
-      <Head>
-        <title>About - Brock Herion</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageHead
+        title="About - Brock Herion"
+        description="Come and get to know me a little bit better! See my journey so far as a software developer and get a peek into my life outside of programming."
+      />
 
       <PageWrapper>
         <PageHeader headingText="About Me 💡" />
         <div className="mt-6 text-white">
           <h2 className="text-4xl mb-8">
-            My name is Brock and I enjoy building apps that go really fast and
-            living life to it's fullest
+            My name is Brock and I'm a full-stack software developer from the
+            Chicagoland area.
           </h2>
           <div>
             <h3 className="text-3xl flex items-center mb-3">
@@ -49,11 +49,12 @@ export default function About() {
             </p>
             <p className="text-xl mb-4">
               My current stack revolves around building applications to be fast,
-              robust, and scalable. I still use C# on the backend, but use
-              Next.JS on the frontend. I also deploy my apps to Vercel and
-              really like using Supabase as a database. I enjoy solving
-              problems, not fighting with the tools and technology that are
-              supposed to help me solve them.
+              robust, and scalable. I use C# on the backend for work, but use
+              Next.JS for pretty much everything else. I deploy my apps to
+              Vercel. For databases, I tend to lean on Supabase or Planetscale
+              depending on what kind of application I'm building. I enjoy
+              solving problems, not fighting with the tools and technology that
+              are supposed to help me solve them.
             </p>
           </div>
           <div>

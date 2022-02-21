@@ -1,3 +1,4 @@
+import Head from "next/head";
 import React from "react";
 import Footer from "../Footer";
 import Header from "../Header";
@@ -9,13 +10,15 @@ interface LayoutProps {
 
 function Layout({ children }: LayoutProps) {
   return (
-    <div className="flex flex-col bg-gray-800 min-h-screen">
-      <Header />
+    <>
+      <div className="flex flex-col bg-gray-800 min-h-screen">
+        <Header />
 
-      <Main>{children}</Main>
+        <Main>{children}</Main>
 
-      <Footer />
-    </div>
+        <Footer />
+      </div>
+    </>
   );
 }
 

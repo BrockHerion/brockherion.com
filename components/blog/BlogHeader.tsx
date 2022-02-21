@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { formatPublishDate } from "../../utils/date";
 
 interface BlogPostHeadingProps {
   title: string;
@@ -30,7 +31,7 @@ export function BlogPostHeading({
         className="rounded-md"
       />
       <span className="italic">
-        Published on {new Date(publishedOn).toLocaleDateString("en-US")}
+        Brock Herion / {formatPublishDate(publishedOn)}
       </span>
     </>
   );

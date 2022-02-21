@@ -1,5 +1,5 @@
 import hljs from "highlight.js";
-import "highlight.js/styles/nord.css";
+import "highlight.js/styles/vs2015.css";
 import { useEffect } from "react";
 
 interface BlogBodyProps {

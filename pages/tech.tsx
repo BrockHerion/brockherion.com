@@ -1,4 +1,3 @@
-import Head from "next/head";
 import React from "react";
 import {
   SiNextdotjs,
@@ -13,9 +12,6 @@ import {
   SiReact,
   SiAmazonaws,
   SiGnubash,
-  SiJava,
-  SiPrettier,
-  SiEslint,
   SiPrisma,
   SiVercel,
   SiMysql,
@@ -23,14 +19,15 @@ import {
 import { BsCodeSlash, BsServer, BsFillGearFill } from "react-icons/bs";
 import PageHeader from "../components/PageHeader";
 import PageWrapper from "../components/PageWrapper";
+import PageHead from "../components/PageHead";
 
 export default function Tech() {
   return (
     <>
-      <Head>
-        <title>Tech - Brock Herion</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <PageHead
+        title="Tech - Brock Herion"
+        description="Being a full-stack developer, I get to use a wide variety of tools and technologies on a daily basis. Come take a peek at what I'm using in my stack!"
+      />
 
       <PageWrapper>
         <PageHeader headingText="Technology 👨‍💻" />
@@ -60,20 +57,9 @@ export default function Tech() {
                     <SiTailwindcss className="mr-2" />
                     TailwindCSS
                   </h4>
-
                   <h4 className="text-3xl flex items-center">
                     <SiTypescript className="mr-2" />
                     TypeScript
-                  </h4>
-
-                  <h4 className="text-3xl flex items-center">
-                    <SiEslint className="mr-2" />
-                    ESLint
-                  </h4>
-
-                  <h4 className="text-3xl flex items-center">
-                    <SiPrettier className="mr-2" />
-                    Prettier
                   </h4>
                 </div>
               </div>
@@ -96,11 +82,6 @@ export default function Tech() {
                   <h4 className="text-3xl flex items-center">
                     <SiNodedotjs className="mr-2" />
                     Node.JS
-                  </h4>
-
-                  <h4 className="text-3xl flex items-center">
-                    <SiJava className="mr-2" />
-                    Java
                   </h4>
                   <h4 className="text-3xl flex items-center">
                     <SiPostgresql className="mr-2" />
