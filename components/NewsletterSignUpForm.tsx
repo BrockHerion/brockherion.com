@@ -24,13 +24,21 @@ export default function NewsletterSignUpForm() {
       >
         Subscribe
       </button>
-      <div className="w-full text-sm text-center italic">
+      <div className="w-full text-sm text-center italic text-gray-800">
         By subscribing, you agree with Revue’s{" "}
-        <a target="_blank" href="https://www.getrevue.co/terms">
+        <a
+          target="_blank"
+          href="https://www.getrevue.co/terms"
+          className="text-gray-800 hover:underline"
+        >
           Terms of Service
         </a>{" "}
         and{" "}
-        <a target="_blank" href="https://www.getrevue.co/privacy">
+        <a
+          target="_blank"
+          href="https://www.getrevue.co/privacy"
+          className="text-gray-800 hover:underline"
+        >
           Privacy Policy
         </a>
         .

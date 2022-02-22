@@ -16,13 +16,11 @@ export function BlogPostHeading({
 }: BlogPostHeadingProps) {
   return (
     <>
-      <h1 className="md:text-5xl text-3xl text-white py-6">
+      <h1 className="md:text-5xl text-3xl py-6">
         {title}
-        <div className="w-16 h-2 mt-4 bg-emerald-500"></div>
+        <div className="w-16 h-2 mt-4 bg-emerald-400"></div>
       </h1>
-      <h2 className="md:text-2xl text-xl text-white mb-4 opacity-60">
-        {subTitle}
-      </h2>
+      <h2 className="md:text-2xl text-xl mb-4 opacity-60">{subTitle}</h2>
       <Image
         src={imageSrc}
         width={1600}

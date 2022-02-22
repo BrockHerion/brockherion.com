@@ -30,7 +30,7 @@ export default function Projects() {
           </h2>
         </section>
         <section className="mt-8 flex flex-col space-y-4">
-          <div className="bg-slate-600 p-4 rounded-lg flex flex-col md:flex-row md:items-center">
+          <div className="bg-slate-200 dark:bg-slate-600 shadow-md dark:shadow-none p-4 rounded-lg flex flex-col md:flex-row md:items-center">
             <div
               style={{ width: "200px", height: "200px" }}
               className="flex items-center justify-center"
@@ -67,7 +67,7 @@ export default function Projects() {
               </div>
             </div>
           </div>
-          <div className="bg-slate-600 p-4 rounded-lg flex flex-col md:flex-row md:items-center">
+          <div className="bg-slate-200 dark:bg-slate-600 shadow-md dark:shadow-none p-4 rounded-lg flex flex-col md:flex-row md:items-center">
             <div
               style={{ width: "200px", height: "200px" }}
               className="flex items-center justify-center"
@@ -102,7 +102,7 @@ export default function Projects() {
               </div>
             </div>
           </div>
-          <div className="bg-slate-600 p-4 rounded-lg flex flex-col md:flex-row md:items-center">
+          <div className="bg-slate-200 dark:bg-slate-600 shadow-md dark:shadow-none p-4 rounded-lg flex flex-col md:flex-row md:items-center">
             <div
               style={{ width: "200px", height: "200px" }}
               className="flex items-center justify-center"
@@ -135,7 +135,7 @@ export default function Projects() {
               </p>
             </div>
           </div>
-          <div className="bg-slate-600 p-4 rounded-lg flex flex-col md:flex-row md:items-center">
+          <div className="bg-slate-200 dark:bg-slate-600 shadow-md dark:shadow-none p-4 rounded-lg flex flex-col md:flex-row md:items-center">
             <div
               style={{ width: "200px", height: "200px" }}
               className="flex items-center justify-center"

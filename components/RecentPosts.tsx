@@ -9,9 +9,7 @@ export default function PopularPosts({ newPosts }: NewPostsProps) {
   return (
     <div className="grid mb-8">
       <div className="md:mb-0 mb-6">
-        <h4 className="text-white text-xl mb-3 font-semibold">
-          Fresh Off The Press 🗞
-        </h4>
+        <h4 className="text-xl mb-3 font-semibold">Fresh Off The Press 🗞</h4>
         <div className="grid gap-y-4">
           {newPosts.map((post) => (
             <Link
@@ -19,7 +17,7 @@ export default function PopularPosts({ newPosts }: NewPostsProps) {
               key={`popular-post-${post.slug}`}
             >
               <a>
-                <div className="bg-slate-600 rounded-md overflow-hidden p-4">
+                <div className="bg-slate-200 shadow-md dark:bg-slate-600 dark:shadow-none rounded-md overflow-hidden p-4">
                   <h5 className="text-xl underline font-semibold">
                     {post.title}
                   </h5>

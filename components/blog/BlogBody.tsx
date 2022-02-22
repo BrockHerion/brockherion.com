@@ -12,7 +12,7 @@ export function BlogBody({ children }: BlogBodyProps) {
   }, []);
 
   return (
-    <div className="text-white flex flex-col my-6 pb-6 text-lg tracking-wider post">
+    <div className="flex flex-col my-6 pb-6 text-lg tracking-wider post">
       {children}
     </div>
   );
