@@ -25,8 +25,8 @@
 <rect x="132" y="352" width="75" height="20" rx="10" fill="#FCD34D"/>
 <rect x="285" y="125" width="75" height="20" rx="10" fill="#3B82F6"/>
 <rect x="370" y="125" width="75" height="20" rx="10" fill="#3B82F6"/>
-<rect x="80" width="75" height="20" rx="10" fill="white"/>
-<rect x="130" y="57" width="75" height="20" rx="10" fill="white"/>
+<rect x="80" width="75" height="20" rx="10" fill="#e2e8f0"/>
+<rect x="130" y="57" width="75" height="20" rx="10" fill="#e2e8f0"/>
 <rect x="95" y="91" width="75" height="20" rx="10" fill="#34D399"/>
 <circle cx="222" cy="215" r="145" fill="#1F2937"/>
 <rect x="82" y="75" width="280" height="280" rx="140" fill="url(#pattern0)"/>

@@ -32,7 +32,7 @@ export default function Tech() {
       <PageWrapper>
         <PageHeader headingText="Technology 👨‍💻" />
         <div className="flex flex-col mt-6 space-y-6">
-          <div className="text-white">
+          <div>
             <h2 className="text-4xl mb-8">
               These are the technologies that I use on a regular basis, either
               for work or for fun
@@ -44,7 +44,7 @@ export default function Tech() {
                   Frontend
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-400 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiReact className="mr-2" />
                     React.JS
@@ -70,7 +70,7 @@ export default function Tech() {
                   Backend
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-400 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiCsharp className="mr-2" />
                     C#
@@ -100,7 +100,7 @@ export default function Tech() {
                   Other Tools
                 </h3>
                 <div className="space-y-3">
-                  <div className="bg-emerald-500 w-12 h-1 mb-4"></div>
+                  <div className="bg-emerald-400 w-12 h-1 mb-4"></div>
                   <h4 className="text-3xl flex items-center">
                     <SiVercel className="mr-2" />
                     Vercel

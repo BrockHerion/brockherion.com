@@ -3,13 +3,16 @@ import PlausibleProvider from "next-plausible";
 import "../styles/global.css";
 
 import Layout from "../components/layout/Layout";
+import { ThemeProvider } from "next-themes";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <PlausibleProvider domain="brockherion.dev">
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
+      <ThemeProvider attribute="class">
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ThemeProvider>
     </PlausibleProvider>
   );
 }

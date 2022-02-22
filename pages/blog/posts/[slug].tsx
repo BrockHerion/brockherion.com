@@ -44,12 +44,12 @@ export default function BlogPost({ source, frontMatter }: BlogPostProps) {
         />
         <MDXRemote {...source} components={components} />
       </PageWrapper>
-      <section className="bg-emerald-500 2xl:px-96 xl:px-72 lg:px-36 md:px-16 px-4 py-12 flex flex-col items-center justify-center ">
+      <section className="bg-emerald-400 2xl:px-96 xl:px-72 lg:px-36 md:px-16 px-4 py-12 flex flex-col items-center justify-center ">
         <div className="max-w-md">
-          <h4 className="text-center text-2xl font-semibold">
+          <h4 className="text-center text-2xl font-semibold text-gray-800">
             There's more where that came from!
           </h4>
-          <h5 className="text-center mt-2 mb-6 text-xl leading-5 font-open-sans">
+          <h5 className="text-center mt-2 mb-6 text-xl leading-5 font-open-sans text-gray-800">
             Sign up for Brock&apos;s Bytes - my weekly newsletter - to get
             notified when a new article is published! You will also get
             newsletter-exclusive tips and advice on software development!

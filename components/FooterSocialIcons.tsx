@@ -14,22 +14,34 @@ export default function FooterSocialIcons() {
     <ul className="flex items-center justify-center">
       <li className="mr-3">
         <a href="https://twitter.com/BrockHerion" target="_blank">
-          <FiTwitter className="text-white" size="1.75em" />
+          <FiTwitter
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://twitch.tv/brockherion" target="_blank">
-          <FiYoutube className="text-white" size="1.75em" />
+          <FiYoutube
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://twitch.tv/brockherion" target="_blank">
-          <FiTwitch className="text-white" size="1.75em" />
+          <FiTwitch
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://github.com/brockherion" target="_blank">
-          <FiGithub className="text-white" size="1.75em" />
+          <FiGithub
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li className="mr-3">
@@ -37,12 +49,18 @@ export default function FooterSocialIcons() {
           href="https://www.linkedin.com/in/brock-j-herion-34279a176/"
           target="_blank"
         >
-          <FiLinkedin className="text-white" size="1.75em" />
+          <FiLinkedin
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li className="mr-3">
         <a href="https://www.instagram.com/brock_herion/" target="_blank">
-          <FiInstagram className="text-white" size="1.75em" />
+          <FiInstagram
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
       <li>
@@ -50,7 +68,10 @@ export default function FooterSocialIcons() {
           href="https://www.facebook.com/Brock-Herion-197864878943988"
           target="_blank"
         >
-          <FiFacebook className="text-white" size="1.75em" />
+          <FiFacebook
+            className="dark:text-slate-100 text-gray-800"
+            size="1.75em"
+          />
         </a>
       </li>
     </ul>
