@@ -20,7 +20,7 @@ export default function PageHead({
     imageUrl: imageUrl ? imageUrl : "/default-og-image.png",
     siteName: "Brock Herion",
     type: "article",
-    twitterHandle: "https://twitter.com/brockherion",
+    twitterHandle: "@brockherion",
     canonicalUrl: `${process.env.NEXT_PUBLIC_BASE_URL}${router.asPath}`,
   };
 
@@ -38,7 +38,8 @@ export default function PageHead({
         key="twhandle"
       />
       <meta name="twitter:card" content="summary" key="twcard" />
-      <meta name="twitter:site" content={meta.canonicalUrl} />
+      <meta name="twitter:site" content={meta.twitterHandle} />
+      <meta name="twitter:creator" content={meta.twitterHandle} />
       {/* OpenGraph meta data */}
       <meta name="og:title" content={meta.title} key="ogtitle" />
       <meta name="og:description" content={meta.description} key="ogdesc" />
