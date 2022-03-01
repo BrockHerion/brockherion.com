@@ -34,6 +34,7 @@ export default function BlogPost({ source, frontMatter }: BlogPostProps) {
       <PageHead
         title={`${frontMatter["seoTitle"]} - Brock Herion`}
         description={frontMatter["abstract"]}
+        imageUrl={frontMatter["imageUrl"]}
       />
       <PageWrapper>
         <BlogPostHeading
