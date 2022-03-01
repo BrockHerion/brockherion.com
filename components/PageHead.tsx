@@ -17,7 +17,7 @@ export default function PageHead({
   const meta = {
     title,
     description,
-    imageUrl,
+    imageUrl: imageUrl ? imageUrl : "/default-og-image.png",
     siteName: "Brock Herion",
     type: "article",
     twitterHandle: "https://twitter.com/brockherion",
