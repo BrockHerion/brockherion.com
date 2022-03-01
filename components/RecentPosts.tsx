@@ -17,7 +17,7 @@ export default function PopularPosts({ newPosts }: NewPostsProps) {
               key={`popular-post-${post.slug}`}
             >
               <a>
-                <div className="bg-slate-200 shadow-md dark:bg-slate-600 dark:shadow-none rounded-md overflow-hidden p-4">
+                <div className="bg-slate-100 shadow-md dark:bg-slate-600 dark:shadow-none rounded-md overflow-hidden p-4">
                   <h5 className="text-xl underline font-semibold">
                     {post.title}
                   </h5>
