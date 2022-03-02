@@ -1,0 +1,90 @@
+---
+title: Stop building REST APIs for your Next.js apps, use tRPC instead
+subTitle: tRPC is a tool that let's you build scalable backends quickly, as well as provide type safety between your front and backends.
+slug: stop-building-rest-apis-for-your-next-apps
+seoTitle: Stop building REST APIs for your Next.js apps, use tRPC instead
+abstract: As you build your Next.js, there's a good chance that you'll need an API, and the best way to build one is with tRPC.
+isPublished: true
+isFeatured: true
+publishedOn: "03/01/2022"
+imageUrl: /posts/stop-building-rest-apis-for-your-next-apps.png
+---
+
+<BlogBody>
+
+When I first started developing full-stack applications, I was building and managing my own REST APIs. I began with building them in Java with Spring, then moved over to .NET, then to Node with Express, and even dabbled in a little bit of Django. To say that managing two different projects in different languages (sometimes) is cumbersome would be putting it lightly.
+
+Enter tRPC, a tool for building APIs with end-to-end typesafety. tRPC lets you create robust and scalable backends for your Next, React, and Node apps very quickly.
+
+Have I peaked your interest? Then I encourage you to read on! In this article, we are going to be taking a look at what tRPC is how you can setup and use it with Next.js.
+
+## What is tRPC?
+
+As I mentioned before, tRPC lets you build fully typesafe APIs for your Next, React, and Node applications. With it's end-to-end typesafety, you're able to catch errors between your front and backends at compile time instead of runtime. And because you're only using type declarations and not importing actual server code, your builds stay small and fast.
+
+## Installing tRPC
+
+Installing tRPC is pretty straighforward. There's a few packages we need, both from tRPC itself and two others that will make our lives much easier. In your Next.js project, run the following command to install your dependencies.
+
+`$ yarn add @trpc/client @trpc/server @trpc/react @trpc/next zod react-query`
+
+tRPC is built on `react-query`, which is a package for caching and managing data without needing to mess with state. We also are using `zod` to help with our schema and input validations.
+
+The next thing we need to do is make sure that strict mode is enabled in our `tsconfig.json`
+
+```json
+// tsconfig.json
+{
+  // ...
+  "compilerOptions": {
+    // ...
+    "strict": true
+  }
+}
+```
+
+This isn't for tRPC specifically, but rather for `zod` to run correctly. `zod` specifically is also not a requirement for using tRPC but, as you'll see later on, it works really well with it and makes our lives a lot easier.
+
+## Creating our server
+
+In our project root, or `/src` folder if you're using Next with that, create a new folder called `/server`. This folder is going to contain our tRPC context, router and our actual API routes.
+
+### Configuring our context
+
+The first thing we want to create in here is our context. Our context lets us pass down request data to each of our resolvers within our routes. To create a new context, let's create a file called `context.ts` and add the following code to it.
+
+```ts
+// server/context.ts
+import { CreateNextContextOptions } from "@trpc/server/adapters/next";
+import { inferAsyncReturnType } from "@trpc/server";
+
+export async function createContext(contextOptions?: CreateNextContextOptions) {
+  const req = contextOptions?.req;
+  const res = contextOptions?.res;
+
+  return {
+    req,
+    res,
+  };
+}
+
+export type MyContextType = inferAsyncReturnType<typeof createContext>;
+```
+
+Here we're just passing along the request and response to our routes. You can add other things that you want to pass along here as well. Things like Prisma clients and NextAuth sessions are good examples of this.
+
+### Creating a simple router
+
+Next, let's go ahead and add a `create-router.ts` file. In this file, we'll be setting up a simple router that acts as a root.
+
+```ts
+// server/create-router.ts
+import * as trpc from "@trpc/server";
+import { MyContextType } from "./context";
+
+export function createRouter() {
+  return trpc.router<MyContextType>();
+}
+```
+
+</BlogBody>
