@@ -28,9 +28,7 @@ export function BlogPostHeading({
         alt={title}
         className="rounded-md"
       />
-      <span className="italic">
-        Brock Herion / {formatPublishDate(publishedOn)}
-      </span>
+      <span className="italic">Published {formatPublishDate(publishedOn)}</span>
     </>
   );
 }
