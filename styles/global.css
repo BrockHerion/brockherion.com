@@ -24,7 +24,7 @@
 
 @layer components {
   .post h2 {
-    @apply flex flex-col text-3xl my-2 after:w-16 after:h-1 after:bg-emerald-400 mb-6;
+    @apply flex flex-col text-3xl my-2 after:w-16 after:h-2 after:bg-emerald-400 after:mt-2 mb-6;
   }
 
   .post h3 {
@@ -32,7 +32,11 @@
   }
 
   .post h4 {
-    @apply flex flex-col text-xl my-2 after:w-6 after:h-1 after:bg-emerald-400 mb-4;
+    @apply flex flex-col text-xl my-2 mb-1;
+  }
+
+  .post h5 {
+	@apply text-base;
   }
 
   .post ul {
@@ -44,7 +48,7 @@
   }
 
   .post a {
-    @apply text-emerald-500 hover:underline;
+    @apply hover:text-emerald-500 underline font-semibold tracking-widest;
   }
 
   .post p {

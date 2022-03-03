@@ -5,6 +5,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote, MDXRemoteSerializeResult } from "next-mdx-remote";
 import { postFilePaths, POSTS_PATH } from "../../../utils/mdxUtils";
 import {
+  AffiliateLink,
   BlogPostHeading,
   BlogFooter,
   BlogBody,
@@ -22,6 +23,7 @@ interface BlogPostProps {
 }
 
 const components = {
+  AffiliateLink,
   BlogPostHeading,
   BlogBody,
   BlogFooter,
