@@ -15,11 +15,6 @@ function Navbar() {
             <a>Blog</a>
           </Link>
         </li>
-        <li className="text-gray-800 dark:text-slate-100 mr-6 hover:underline font-source-code-pro text-lg">
-          <Link href="/tech">
-            <a>Tech</a>
-          </Link>
-        </li>
         <li className="text-gray-800 dark:text-slate-100 hover:underline font-source-code-pro text-lg">
           <Link href="/projects">
             <a>Projects</a>
