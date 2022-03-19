@@ -22,7 +22,7 @@ export default function Home({ newPosts, popularPosts }: HomeProps) {
       <PageWrapper>
         <section className="md:grid md:grid-cols-2 md:gap-x-6 flex flex-col justify-items-stretch my-6">
           <div className="md:mb-0 mb-6">
-            <Image src="/code.svg" width={890} height={858} />
+            <Image src="/code.svg" width={890} height={858} alt="" />
           </div>
           <div className="height-full flex flex-col md:items-end justify-center">
             <div className=" flex flex-col md:items-end">
