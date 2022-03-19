@@ -22,7 +22,7 @@ export function BlogPostHeading({
       </h1>
       <h2 className="md:text-2xl text-xl mb-4 opacity-60">{subTitle}</h2>
       <Image
-        src={imageSrc}
+        src={imageSrc ?? ""}
         width={1600}
         height={840}
         alt={title}
