@@ -71,7 +71,10 @@ type PageParams = {
 export async function getStaticProps({
   params,
 }: GetStaticPropsContext<PageParams>) {
-  const postFilePath = path.join(POSTS_PATH, `${params.slug}.mdx`);
+  // TODO: Fix this, ! is only here so the build succeeds right now
+  const slug = params!.slug;
+
+  const postFilePath = path.join(POSTS_PATH, `${slug}.mdx`);
   const source = fs.readFileSync(postFilePath);
 
   const { content, data } = matter(source);
