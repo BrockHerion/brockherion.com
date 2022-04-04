@@ -13,7 +13,7 @@ export default function ArticleCard({ post }: PostCardProps) {
     <Link href={`/blog/posts/${post.slug}`}>
       <a
         id={post.slug}
-        className="rounded-md bg-slate-100 dark:bg-slate-600 shadow-md dark:shadow-none overflow-hidden flex flex-col"
+        className="rounded-md bg-slate-100 dark:bg-slate-600 shadow dark:shadow-none overflow-hidden flex flex-col"
       >
         <div className="relative w-full h-40">
           {post.imageUrl !== "" && (

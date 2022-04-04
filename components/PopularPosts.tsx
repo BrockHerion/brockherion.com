@@ -18,7 +18,7 @@ export default function PopularPosts({ popularPosts }: PopularPostsProps) {
               key={`popular-post-${post.slug}`}
             >
               <a>
-                <div className="bg-slate-200 dark:bg-slate-600 shadow-md dark:shadow-none rounded-md overflow-hidden h-72">
+                <div className="bg-slate-200 dark:bg-slate-600 shadow dark:shadow-none rounded-md overflow-hidden h-72">
                   <div className="relative w-full h-40">
                     {post.imageUrl !== "" && (
                       <Image

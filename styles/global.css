@@ -20,6 +20,10 @@
   code {
     @apply rounded-md font-inconsolata;
   }
+
+  p > code {
+	  @apply py-1 px-2 bg-slate-100 shadow-sm dark:bg-slate-600 dark:shadow-none;
+  }
 }
 
 @layer components {
