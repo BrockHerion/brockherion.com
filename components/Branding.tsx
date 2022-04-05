@@ -6,7 +6,7 @@ function Branding() {
     <Link href="/">
       <a className="flex items-center">
         <span className="text-4xl md:5xl text-gray-800 dark:text-slate-100 font-inconsolata">
-          [Brock Herion]
+          Brock Herion
         </span>
       </a>
     </Link>

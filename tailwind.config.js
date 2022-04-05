@@ -7,7 +7,7 @@ module.exports = {
       fontFamily: {
         'source-code-pro': ['"Source Code Pro"',],
 				'inconsolata': ['"Inconsolata"', "monospace"],
-        'open-sans': ['"Open Sans"',],
+        'open-sans': ['"Open Sans"', 'sans-serif'],
       }
     },
   },
