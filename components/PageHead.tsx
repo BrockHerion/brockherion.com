@@ -41,15 +41,17 @@ export default function PageHead({
       <meta name="twitter:site" content={meta.twitterHandle} />
       <meta name="twitter:creator" content={meta.twitterHandle} />
       {/* OpenGraph meta data */}
-      <meta name="og:title" content={meta.title} key="ogtitle" />
-      <meta name="og:description" content={meta.description} key="ogdesc" />
-      <meta name="og:site_name" content={meta.siteName} key="ogsitename" />
-      <meta name="og:type" content={meta.type} key="ogtype" />
+      <meta property="og:title" content={meta.title} key="ogtitle" />
+      <meta property="og:description" content={meta.description} key="ogdesc" />
+      <meta property="og:site_name" content={meta.siteName} key="ogsitename" />
+      <meta property="og:type" content={meta.type} key="ogtype" />
       <meta
-        name="og:image"
+        property="og:image"
         content={`${process.env.NEXT_PUBLIC_BASE_URL}${meta.imageUrl}`}
         key="ogimage"
       />
+      <meta property="og:image:width" content="1600" />
+      <meta property="og:image:height" content="840" />
       <meta property="og:url" content={meta.canonicalUrl} key="ogurl" />
     </Head>
   );

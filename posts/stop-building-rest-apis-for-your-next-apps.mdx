@@ -1,6 +1,6 @@
 ---
 title: Stop building REST APIs for your Next.js apps, use tRPC instead
-subTitle: tRPC is a tool that lets you build scalable backends quickly, as well as provide type safety between your front and backends.
+subTitle: tRPC is a tool that lets you build scalable back-ends quickly, as well as provide type safety between your front and back-ends.
 slug: stop-building-rest-apis-for-your-next-apps
 seoTitle: Stop building REST APIs for your Next.js apps, use tRPC instead
 abstract: As you build your Next.js, there's a good chance that you'll need an API, and the best way to build one is with tRPC.
@@ -14,9 +14,9 @@ imageUrl: /posts/stop-building-rest-apis-for-your-next-apps.png
 
 When I first started developing full-stack applications, I was building and managing my own REST APIs. I began with building them in Java with Spring, then moved over to .NET, then to Node with Express, and even dabbled in a little bit of Django. To say that managing two different projects in different languages (sometimes) is cumbersome would be putting it lightly.
 
-Enter tRPC, a tool for building APIs with end-to-end type-safety. tRPC lets you create robust and scalable backends for your Next, React, and Node apps very quickly.
+Enter tRPC, a tool for building APIs with end-to-end type-safety. tRPC lets you create robust and scalable back-ends for your Next, React, and Node apps very quickly.
 
-Have I peaked your interest? Then I encourage you to read on! In this article, we are going to be taking a look at what tRPC is and how you can set up and use it with Next.js.
+Have I piqued your interest? Then I encourage you to read on! In this article, we will be looking at what tRPC is and how you can set up and use it with Next.js.
 
 ## What is tRPC?
 
@@ -139,7 +139,7 @@ export const appRouter = createRouter().merge("names.", nameRouter);
 
 ### Adding an endpoint in Next.js
 
-We need to add a new endpoint in Next.js. Under the `/pages/api` folder, create a new file under `/trpc/[trpc].ts`. Your folder structure should look like this
+We need to add a new endpoint in Next.js. Under the `/pages/api` folder, create a new file under `/trpc/[trpc].ts`. Your folder structure should look like this:
 
 ```text
 .
@@ -149,7 +149,7 @@ We need to add a new endpoint in Next.js. Under the `/pages/api` folder, create 
 |			+-- [trpc].ts
 ```
 
-Now add the following code to `[trpc].ts`
+Now add the following code to `[trpc].ts`:
 
 ```ts
 // pages/api/trpc/[trpc].ts
@@ -213,7 +213,7 @@ export type inferQueryOutput<
 > = inferProcedureOutput<AppRouter["_def"]["queries"][TRouteKey]>;
 ```
 
-Here we're creating our hook to use tRPC on the client. The hook is strongly typed using our API's type signature. This is the "magic" that gives us our end-to-end type-safety. This hook lets us call our backend and get fully typed inputs and outputs from it. And, if you change a route name, you will get an error on the client. It's very powerful.
+Here we're creating our hook to use tRPC on the client. The hook is strongly typed using our API's type signature. This is the "magic" that gives us our end-to-end type-safety. This hook lets us call our back-end and get fully typed inputs and outputs from it. And, if you change a route name, you will get an error on the client. It's very powerful.
 
 The last thing we need to do is actually use our query. Create a new page and name it `name.tsx`. Add the following code to it
 
