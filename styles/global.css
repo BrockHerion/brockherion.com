@@ -24,6 +24,14 @@
   p > code {
 	  @apply py-1 px-2 bg-slate-100 shadow-sm dark:bg-slate-600 dark:shadow-none;
   }
+
+  blockquote {
+	  @apply relative italic before:w-2 before:h-full before:absolute before:bg-emerald-500;
+  }
+
+  blockquote > p {
+	@apply pl-6;
+  }
 }
 
 @layer components {
