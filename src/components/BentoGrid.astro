@@ -1,0 +1,86 @@
+---
+import { getCollection } from 'astro:content';
+import Card from './Card.astro';
+import NowPreview from './NowPreview.astro';
+
+const allPosts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 3);
+
+const allProjects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const featuredProject = allProjects.find(p => p.data.featured) || allProjects[0];
+---
+
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4">
+  <!-- Bio card: full width on tablet, spans 4 cols + 2 rows on desktop -->
+  <Card class="sm:col-span-2 lg:col-span-4 lg:row-span-2 flex flex-col items-center lg:items-start gap-4">
+    <img
+      src="/avatar.jpg"
+      alt="Brock Herion"
+      class="w-24 h-24 rounded-full object-cover"
+    />
+    <div>
+      <h1 class="font-heading text-2xl font-bold">Brock Herion</h1>
+      <p class="text-text-muted mt-2">
+        Software engineer, gymnast, thinker. Building things and writing about all of it.
+      </p>
+    </div>
+  </Card>
+
+  <!-- Latest posts: spans 2 cols on desktop -->
+  <Card class="lg:col-span-2">
+    <p class="text-xs uppercase tracking-wider text-text-muted mb-3">Latest Posts</p>
+    <div class="space-y-3">
+      {allPosts.map(post => (
+        <a href={`/blog/${post.id}`} class="block group">
+          <p class="text-sm font-medium group-hover:text-text-muted transition-colors">{post.data.title}</p>
+          <time class="text-xs text-text-muted">
+            {post.data.date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+          </time>
+        </a>
+      ))}
+    </div>
+  </Card>
+
+  <!-- Now preview: spans 2 cols on desktop -->
+  <div class="lg:col-span-2">
+    <NowPreview />
+  </div>
+
+  <!-- Project: spans 2 cols on desktop -->
+  {featuredProject && (
+    <Card class="lg:col-span-2">
+      <p class="text-xs uppercase tracking-wider text-text-muted mb-2">Project</p>
+      <h3 class="font-heading font-semibold">{featuredProject.data.title}</h3>
+      <p class="text-sm text-text-muted mt-1">{featuredProject.data.description}</p>
+      <div class="flex gap-3 mt-3 text-sm">
+        {featuredProject.data.url && (
+          <a href={featuredProject.data.url} class="text-text-muted hover:text-text transition-colors underline underline-offset-2">Live</a>
+        )}
+        {featuredProject.data.repo && (
+          <a href={featuredProject.data.repo} class="text-text-muted hover:text-text transition-colors underline underline-offset-2">Source</a>
+        )}
+      </div>
+    </Card>
+  )}
+
+  <!-- Socials: spans 2 cols on desktop -->
+  <Card class="lg:col-span-2">
+    <p class="text-xs uppercase tracking-wider text-text-muted mb-2">Connect</p>
+    <div class="flex gap-4 text-sm">
+      <a href="https://github.com/brockherion" class="text-text-muted hover:text-text transition-colors">GitHub</a>
+      <a href="https://x.com/braborion" class="text-text-muted hover:text-text transition-colors">X</a>
+      <a href="https://linkedin.com/in/brock-herion" class="text-text-muted hover:text-text transition-colors">LinkedIn</a>
+    </div>
+  </Card>
+
+  <!-- Wildcard: spans 2 cols on desktop -->
+  <Card class="lg:col-span-2">
+    <p class="text-text-muted text-sm italic">
+      "The only way to do great work is to love what you do."
+    </p>
+  </Card>
+</div>
