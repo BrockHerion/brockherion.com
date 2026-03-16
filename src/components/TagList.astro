@@ -1,0 +1,25 @@
+---
+interface Props {
+  tags: string[];
+  linked?: boolean;
+}
+
+const { tags, linked = false } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-1.5">
+  {tags.map(tag => (
+    linked ? (
+      <a
+        href={`/blog?tag=${encodeURIComponent(tag)}`}
+        class="text-xs px-2 py-0.5 rounded-full bg-tag-bg text-tag-text hover:opacity-80 transition-opacity"
+      >
+        {tag}
+      </a>
+    ) : (
+      <span class="text-xs px-2 py-0.5 rounded-full bg-tag-bg text-tag-text">
+        {tag}
+      </span>
+    )
+  ))}
+</div>
