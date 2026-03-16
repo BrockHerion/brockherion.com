@@ -1,0 +1,91 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import BlogPostCard from '../../components/BlogPostCard.astro';
+
+const allPosts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))].sort();
+---
+
+<BaseLayout title="Blog — Brock Herion">
+  <h1 class="font-heading text-3xl font-bold mb-2">Blog</h1>
+  <p class="text-text-muted mb-8">Thoughts on tech, life, and everything in between.</p>
+
+  <!-- Tag filter pills -->
+  <div class="flex flex-wrap gap-2 mb-8" id="tag-filters">
+    <button
+      class="tag-pill text-xs px-3 py-1 rounded-full bg-tag-bg text-tag-text cursor-pointer transition-opacity"
+      data-tag="all"
+    >
+      All
+    </button>
+    {allTags.map(tag => (
+      <button
+        class="tag-pill text-xs px-3 py-1 rounded-full bg-tag-bg text-tag-text cursor-pointer transition-opacity"
+        data-tag={tag}
+      >
+        {tag}
+      </button>
+    ))}
+  </div>
+
+  <!-- Post list -->
+  <div class="space-y-4" id="post-list">
+    {allPosts.map(post => (
+      <div data-tags={post.data.tags.join(',')}>
+        <BlogPostCard
+          title={post.data.title}
+          description={post.data.description}
+          date={post.data.date}
+          tags={post.data.tags}
+          slug={post.id}
+        />
+      </div>
+    ))}
+  </div>
+
+  <script>
+    function initTagFiltering() {
+      const pills = document.querySelectorAll<HTMLButtonElement>('.tag-pill');
+      const posts = document.querySelectorAll<HTMLElement>('#post-list > div');
+
+      const params = new URLSearchParams(window.location.search);
+      let activeTag = params.get('tag') || 'all';
+
+      function filterPosts(tag: string) {
+        activeTag = tag;
+        pills.forEach(pill => {
+          pill.classList.toggle('opacity-50', pill.dataset.tag !== tag);
+        });
+        posts.forEach(post => {
+          const postTags = post.dataset.tags?.split(',') || [];
+          const visible = tag === 'all' || postTags.includes(tag);
+          post.style.display = visible ? '' : 'none';
+        });
+        const url = new URL(window.location.href);
+        if (tag === 'all') {
+          url.searchParams.delete('tag');
+        } else {
+          url.searchParams.set('tag', tag);
+        }
+        history.replaceState(null, '', url.toString());
+      }
+
+      pills.forEach(pill => {
+        pill.addEventListener('click', () => filterPosts(pill.dataset.tag || 'all'));
+      });
+
+      const matchingPosts = Array.from(posts).some(post => {
+        const postTags = post.dataset.tags?.split(',') || [];
+        return postTags.includes(activeTag);
+      });
+
+      filterPosts(matchingPosts ? activeTag : 'all');
+    }
+
+    initTagFiltering();
+  </script>
+</BaseLayout>

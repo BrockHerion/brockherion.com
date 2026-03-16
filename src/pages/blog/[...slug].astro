@@ -1,0 +1,30 @@
+---
+import { getCollection, render } from 'astro:content';
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts
+    .filter(post => !post.data.draft)
+    .map(post => ({
+      params: { slug: post.id },
+      props: { post },
+    }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+// post.body may not exist in Astro 6 glob loader. If undefined, fall back to 1 min.
+const readingTime = post.body ? Math.ceil(post.body.split(/\s+/).length / 200) : 1;
+---
+
+<BlogPostLayout
+  title={post.data.title}
+  description={post.data.description}
+  date={post.data.date}
+  tags={post.data.tags}
+  readingTime={readingTime}
+>
+  <Content />
+</BlogPostLayout>
