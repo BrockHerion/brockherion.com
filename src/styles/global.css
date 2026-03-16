@@ -1,0 +1,123 @@
+@import "tailwindcss";
+
+/* Dark mode via class on html */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* --- Adaptive color tokens --- */
+:root {
+  --page: #f5f0e8;
+  --card: #faf7f2;
+  --text: #2c2c2c;
+  --text-muted: #8a7e6b;
+  --tag-bg: #ebe5d9;
+  --tag-text: #6b5f4e;
+  --border: rgba(0, 0, 0, 0.08);
+}
+
+:root.dark {
+  --page: #131825;
+  --card: #1a2233;
+  --text: #e2ddd5;
+  --text-muted: #7a8599;
+  --tag-bg: #232d40;
+  --tag-text: #8a9ab5;
+  --border: rgba(255, 255, 255, 0.05);
+}
+
+/* --- Register tokens with Tailwind so we get utility classes --- */
+@theme {
+  --color-page: var(--page);
+  --color-card: var(--card);
+  --color-text: var(--text);
+  --color-text-muted: var(--text-muted);
+  --color-tag-bg: var(--tag-bg);
+  --color-tag-text: var(--tag-text);
+  --color-border: var(--border);
+
+  --font-heading: 'Lora', Georgia, serif;
+  --font-body: 'Inter', system-ui, sans-serif;
+}
+
+/* --- Base styles --- */
+body {
+  font-family: var(--font-body);
+  background-color: var(--page);
+  color: var(--text);
+  transition: background-color 0.2s, color 0.2s;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+}
+
+/* --- Prose styles for blog content --- */
+.prose {
+  max-width: 65ch;
+  line-height: 1.75;
+}
+
+.prose h2 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+}
+
+.prose h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.prose p {
+  margin-bottom: 1.25rem;
+}
+
+.prose a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose ul, .prose ol {
+  padding-left: 1.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.prose li {
+  margin-bottom: 0.25rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--text-muted);
+  padding-left: 1rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 1.5rem 0;
+}
+
+.prose pre {
+  background-color: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+}
+
+.prose code:not(pre code) {
+  background-color: var(--tag-bg);
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.25rem;
+  font-size: 0.875em;
+}
+
+.prose img {
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+}
+
+.prose hr {
+  border-color: var(--border);
+  margin: 2rem 0;
+}
