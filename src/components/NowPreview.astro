@@ -1,0 +1,26 @@
+---
+import Card from './Card.astro';
+
+const nowFiles = import.meta.glob<{
+  frontmatter: { preview?: string; lastUpdated?: string };
+  compiledContent: () => string;
+}>('/src/data/now.md', { eager: true });
+
+const nowFile = Object.values(nowFiles)[0];
+const preview = nowFile?.frontmatter?.preview;
+
+let previewText = preview || '';
+if (!previewText && nowFile?.compiledContent) {
+  const html = nowFile.compiledContent();
+  const stripped = html.replace(/<[^>]*>/g, '').trim();
+  previewText = stripped.length > 100 ? stripped.slice(0, 100) + '…' : stripped;
+}
+---
+
+<Card>
+  <p class="text-xs uppercase tracking-wider text-text-muted mb-2">Now</p>
+  <p class="text-sm text-text">{previewText}</p>
+  <a href="/now" class="text-sm text-text-muted hover:text-text transition-colors mt-3 inline-block underline underline-offset-2">
+    See more
+  </a>
+</Card>
