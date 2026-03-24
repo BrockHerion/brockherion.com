@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(/Users/brockherion/.claude/plugins/cache/claude-plugins-official/superpowers/5.0.2/skills/brainstorming/scripts/start-server.sh --project-dir /Users/brockherion/dev/brockherion.com)",
+      "Bash(git add:*)",
+      "Bash(pnpm add:*)",
+      "Bash(timeout:*)",
+      "Bash(git commit:*)",
+      "Bash(pnpm build:*)",
+      "Bash(curl:*)",
+      "Bash(grep -l \"isPublished: false\" /Users/brockherion/dev/brockherion.dev/src/content/posts/*.md)",
+      "Bash(for f:*)",
+      "Bash(do head:*)",
+      "Bash(if ! head -10 $f)",
+      "Bash(do echo:*)",
+      "Bash(sed -n '1,/^---$/{ /^---$/!p; }; /^---$/,/^---$/p' /Users/brockherion/dev/brockherion.dev/src/content/posts/$f)",
+      "Bash(done)",
+      "Bash(node:*)",
+      "Bash(npx astro:*)",
+      "Bash(pnpm dev:*)",
+      "Bash(ls:*)",
+      "Bash(git push:*)",
+      "Bash(git remote:*)"
+    ]
+  }
+}
