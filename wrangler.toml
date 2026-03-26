@@ -1,2 +1,5 @@
 name = "brockherion-com"
-pages_build_output_dir = "dist"
+compatibility_date = "2026-03-26"
+
+[assets]
+directory = "./dist"
