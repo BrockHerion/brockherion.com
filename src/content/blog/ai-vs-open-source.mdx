@@ -1,0 +1,56 @@
+---
+title: "AI vs Open Source: Cal.com and the threat AI poses to open source software"
+description: "Cal.com announced that they moving to a closed source model due to security concerns. This is a huge blow to the open source community, and raises questions about the future of open source software in the age of AI."
+date: 2026-04-16
+tags: ["cal.com", "open-source", "ai", "software-development", "security"]
+---
+
+Yesterday, Tech-Twitter (I refuse to call it X) was up in arms about Cal.com's announcement that they were moving to a closed source model. The reason given was, simply, security concerns. And while this move was surprising, I can't say I'm shocked by it. The rise of AI has made it increasingly difficult for open source projects to maintain their security.
+
+## What is Open Source Software?
+
+In case you're not familiar, open source software is software that is released with a license that allows anyone to view, modify, and distribute the source code. This has been a cornerstone of the software development community for decades, allowing for collaboration and innovation on a scale that would not be possible with closed source software. Projects Linux, Apache, and many others have been built on the open source model, and have had a profound impact on the technology landscape.
+
+Cal.com is what's known as a commercial open source project. This means that while the source code is available for anyone to view and modify, the company behind it (Cal.com) also offers a paid version of the software with additional features and support. This model has been successful for many companies and allows them to generate revenue while still contributing to the open source community. I myself have been a user for many years now and have referenced their codebase countless times due to how well it's put together.
+
+## The rise of AI coding
+
+Tools like Codex, Claude, GitHub Copilot, and many others have made it easier than ever for developers to write code. In the right hands, they're a productivity booster. They can help write boilerplate code, implement tests, suggest codebase improvements, and much more.
+
+There is a dark side to this however. Because agents are good at writing code, people are writing a lot more of it. This has led to a surge in the amount of code being written, and with that comes an increase in the number of vulnerabilities. AI-generated code can be just as vulnerable as human-written code, and in some cases, it may even be more vulnerable due to the lack of oversight and review. This isn't even to mention the fact that AI agents can be used to automatically generate exploits for known vulnerabilities, making it easier for attackers to find and exploit weaknesses in software.
+
+We saw this early on where OSS codebases blew up with the number of pull-requests being opened. Many of these were low-quality, and some were even malicious. This has made it difficult for maintainers to keep up with the influx of contributions, and has led to a decrease in the overall quality of open source software. Some OSS projects have put hard restrictions on who can contribute, and have implemented strict review processes to try to mitigate this issue.
+
+## Claude Mythos and security concerns
+
+Last week, Anthropic release a paper on a new model called Mythos and a new initiative called Project Glasswing. Mythos is a new language model supposed to be the next step up in agent coding capabilities. What they found, in a nutshell, was that Mythos is really, really good and finding and exploiting issues. In the research paper, they claim Mythos was able to identify a 27 year old bug inside of FreeBSD, a Linux distribution that was arguably one of the most secure and well-maintained open source projects out there. That's not to mention issues it found in web browsers like Chrome and Firefox.
+
+Anthropic deemed Mythos too dangerous to release for public use and instead giving it to companies like Microsoft, Amazon, Apple, Chase Bank, and others. As agents and tooling improve at coding, it was also improve at finding issues within code. And those issues can be exploited by bad actors.
+
+## Cal.com and the future of open source software
+
+It used to be said the open-source was more secure than closed source software. Why? Because of the community transparency. With more eyes on the code, it's easier to find and fix vulnerabilities. There's a reason OSS tools are the corner stone of most other software projects out there.
+
+Attacks used to take time and effort to find and exploit vulnerabilities. The odds of a bad actor finding a vulnerability in a large codebase at the some time a good actor did was low. Vulnerabilities could be fixed before they were exploited. That's all changed now with AI agents.
+
+You can literally ask Claude to go into a codebase and find it's weaknesses and how to exploit them.
+
+This is a huge problem for open source software. Before, the open nature of the code was a strength. Now, that strength is in question. The more open the code, the easier it is for bad actors to find and exploit vulnerabilities. Not only exploit, but do so in a way where untold amounts of damage cane be done before the exploit is even found and fixed.
+
+## What's next?
+
+Honestly, I don't know.
+
+We are still so early in this era and have a lot to figure out still. The rate at which changes are coming out is unprecedented. I don't think it's unreasonable to think that we may see more companies following in Cal.com's footsteps and moving to a closed source model.
+
+What I do think think is that we will see a tremendous shift in the way we approach software development and security. What constitutes an open or closed source model will likely change as well.
+
+Cal.com made the right move for right now. There is too much risk with too much uncertainty. Projects both open and close source will have at adapt. Unlike the years we had of crypto currency, the course of agent workflows at this point isn't going anywhere.
+
+We're too far in and moving too fast.
+
+Further reading:
+
+- [Cal.com is going closed source. Here's why.](https://cal.com/blog/cal-com-goes-closed-source-why)
+- [Project Glasswing: Securing critical software for the AI era](https://www.anthropic.com/glasswing)
+- [Mythos autonomously exploited vulnerabilities that survived 27 years of human review. Security teams need a new detection playbook](https://venturebeat.com/security/mythos-detection-ceiling-security-teams-new-playbook)

@@ -1,0 +1,59 @@
+
+   Home (H)   Install (I)   Update (U)   Sync (S)   Clean (X)   Check (C)   Log (L)   Restore (R)   Profile (P)   Debug (D)   Help (?) 
+
+  Total: 41 plugins
+
+  Failed (1)
+    ○ mason.nvim  Mason  <leader>cm  conform.nvim  nvim-lspconfig 
+        Origin has changed:
+          * old: https://github.com/williamboman/mason.nvim.git
+          * new: https://github.com/mason-org/mason.nvim.git
+        Please run update to fix
+
+  Installed (4)
+    ● blink.cmp 33.12ms  CmdlineEnter
+    ● friendly-snippets 1.13ms  blink.cmp
+    ○ fzf-lua  FzfLua  <leader><space>  <leader>fc  <leader>ff  <leader>fF  <leader>fg  <leader>fr  <leader>fR  <leader>gc  <leader>gd  <leader>gl  <leader>gs  <leader>gS  <leader>s"  <leader>s/  <leader>sa  <leader>sb  <leader>sc  <leader>sC  <leader>sd  <leader>sD  <leader>sg  <leader>sG  <leader>sh  <leader>sH  <leader>sj  <leader>sk  <leader>sl  <leader>sM  <leader>sm  <leader>sR  <leader>sq  <leader>sw  <leader>sW  <leader>sw (x)  <leader>sW (x)  <leader>uC  <leader>ss  <leader>sS  <c-j> (t)  <leader>fB  <c-k> (t)  <leader>,  <leader>/  <leader>:  <leader>fb 
+    ○ neo-tree.nvim  Neotree  <leader>E  <leader>ge  <leader>be  <leader>fe  <leader>fE  <leader>e 
+
+  Clean (1)
+    ○ omnisharp-extended-lsp.nvim 
+
+  Loaded (17)
+    ● bufferline.nvim 4.78ms  VeryLazy
+    ● flash.nvim 2.44ms  VeryLazy
+    ● lazy.nvim 2839.33ms  init.lua
+    ● LazyVim 3.71ms  start
+    ● lualine.nvim 20.81ms  VeryLazy
+    ● mini.ai 3.79ms  VeryLazy
+    ● mini.pairs 2.85ms  VeryLazy
+    ● noice.nvim 2.63ms  VeryLazy
+    ● nui.nvim 0.07ms 󰢱 nui.object  noice.nvim
+    ● nvim-treesitter 15.04ms  VeryLazy
+    ● nvim-treesitter-textobjects 4.85ms  VeryLazy
+    ● snacks.nvim 1.35ms  start
+    ● tokyonight.nvim 1.14ms colorscheme tokyonight
+    ● trouble.nvim 3.75ms 󰢱 trouble  lualine.nvim
+    ● ts-comments.nvim 2.31ms  VeryLazy
+    ● vscode.nvim 1.57ms colorscheme vscode  LazyVim
+    ● which-key.nvim 1.58ms  VeryLazy
+
+  Not Loaded (18)
+    ○ catppuccin 
+    ○ conform.nvim  ConformInfo  <leader>cF (x)  <leader>cF 
+    ○ diffview.nvim  DiffviewFileHistory  DiffviewOpen  <leader>gd  <leader>gq  <leader>gD 
+    ○ gitsigns.nvim  LazyFile 
+    ○ grug-far.nvim  GrugFar  GrugFarWithin  <leader>sr  <leader>sr (x) 
+    ○ lazydev.nvim  LazyDev  lua 
+    ○ mason-lspconfig.nvim  nvim-lspconfig 
+    ○ mini.icons 
+    ○ nvim-lint  LazyFile 
+    ○ nvim-lspconfig  LazyFile 
+    ○ nvim-ts-autotag  LazyFile 
+    ○ nvim-web-devicons  render-markdown.nvim 
+    ○ persistence.nvim  <leader>ql  <leader>qd  <leader>qs  <leader>qS  BufReadPre 
+    ○ plenary.nvim 
+    ○ render-markdown.nvim  markdown 
+    ○ SchemaStore.nvim 
+    ○ todo-comments.nvim  TodoTelescope  TodoTrouble  ]t  <leader>xt  <leader>xT  <leader>st  <leader>sT  [t  LazyFile 
+    ○ venv-selector.nvim  VenvSelect  <leader>cv  python 
