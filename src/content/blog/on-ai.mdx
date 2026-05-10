@@ -1,0 +1,90 @@
+---
+title: "On AI: Where it's earned its keep in my workflow, and where it hasn't"
+description: "An honest mixed-bag take on using Claude Code, Cursor, and the rest in my day-to-day. The wins are real. The losses are quieter, and that's the problem."
+date: 2026-05-10
+tags: ["ai", "workflow", "claude-code", "software-development", "tooling"]
+---
+
+I've been deep in AI tooling for long enough now that I think I can say something honest about it. Not the breathless kind of honest where every workflow is transformed and we're all 10x engineers now. And not the doomer kind where the models are dumb and we're all going to ship vulnerabilities into prod and burn the world down.
+
+Just the actual, lived-in version. The one where some things got dramatically better and other things got quietly worse, and where I'm still figuring out what to do about both.
+
+Here's where I've landed.
+
+## What I'm actually using
+
+I want to be specific about this because "I use AI" is a useless statement at this point. The tools have wildly different shapes and they're good at wildly different things.
+
+Day to day, I have four things in rotation:
+
+- **Claude Code** in the terminal for anything that touches more than one file or needs to reason across a codebase.
+- **Cursor / Copilot** in the editor for inline completions and quick edits where I already know what I want.
+- **Claude and ChatGPT in the browser** for research, drafting, planning, and the kind of back-and-forth where I don't want a tool to start writing files yet.
+- **Codex and other agents** when I want to offload something async and come back to a PR.
+
+I don't think the specific brand matters that much. The important thing is that these are four genuinely different modes of working, and I learned the hard way that using the wrong one for a given task is worse than not using AI at all.
+
+## The win: I actually ship side projects now
+
+If you'd asked me two years ago what was killing my side projects, I would have said motivation or time. I would have been wrong. The thing actually killing them was the long flat stretch in the middle of every project where you've already done the fun part and you're staring down a list of un-fun work that has to happen before anyone can use the thing. Auth flows. Form validation. Settings pages. The seventh CRUD screen.
+
+I would burn out somewhere through my to-do list and the project would die.
+
+That part is gone now. Genuinely gone. Not "AI helps a little." Gone.
+
+When I have a clear picture of what I'm building, I can move through the boring middle of a project at a pace that wasn't possible before. The boilerplate isn't free, exactly, but it's no longer the bottleneck. The bottleneck is back to where it should be: deciding what to build and making sure it's actually good.
+
+This is the single thing that's changed my relationship with my own work the most. I have shipped more in the last year than I did in the three before it. Not because I'm working harder. Because the cost of "let me just try this" dropped through the floor.
+
+That's the real win, and I don't want to undersell it. Cheap experiments compound. When trying an idea costs you an afternoon instead of a weekend, you try more ideas. When you try more ideas, you find the good ones faster.
+
+There's a quieter version of this I didn't see coming, too. AI doesn't just speed up the work I was already doing, it gets me to do work I used to skip on principle. Tests are the obvious one. On a solo side project, writing tests has always been the thing I "should" do and never did. Setting up the harness, picking the right runner, scaffolding the first few cases. A couple of hours of friction at the front, and on a side project that's the difference between starting something and not. So I'd skip it. Every time.
+
+Now I can ask an agent to set up the infrastructure and write a first pass of cases against the parts of the code that actually matter, and have something working in fifteen minutes. The friction is gone. I have unit tests on side projects now. That sentence would have been a lie a year ago.
+
+## The loss: the bugs you don't notice
+
+Here's where it gets harder to talk about, because the failures aren't loud.
+
+The thing AI is worst at, in my experience, is being subtly wrong in a way that looks completely right. Not "the code doesn't compile." Not "this function doesn't exist." Those are the easy failures. You catch them in seconds.
+
+The hard failures are the ones where the code runs, the tests pass, the diff looks reasonable, and there's something quietly off about the logic that you only notice three weeks later when a user does something you didn't anticipate. An off-by-one. A condition flipped. An edge case the model "handled" by silently dropping the input. A schema migration that works for the rows in your dev database and breaks on the one weird shape in prod.
+
+I've shipped these. More than I'd like to admit. And the unsettling part is that when I go back and look at the diffs, I can usually see the moment I should have caught it. I just didn't, because the surrounding code looked fine and I had the agent's confidence pulling me along.
+
+This is the failure mode that scares me the most about how I work now. Not that the model writes bad code, because bad code announces itself. The dangerous version is plausible code that's wrong in a small way, generated faster than I can carefully read it, in a context where the agent sounds confident and I'm tired and want to move on.
+
+The lesson I keep relearning is that **the speed-up at the keyboard does not get to extend into the speed of review**. If I let it, things slip. Every time. The fix is to treat the review like the bottleneck it is. Slow down. Read carefully. Don't merge until I understand every line of the diff and can explain why it's right.
+
+## Where it lands for research and learning
+
+This one's easier. AI is a strictly better front door for new tech than scattered Google searches and Stack Overflow threads from 2014.
+
+When I'm picking up something I haven't used before - a database I haven't touched, a framework I'm evaluating, a piece of infra I need to understand well enough to make a decision - I can have a conversation with a model that gets me from zero to "I know enough to ask the right questions of the actual docs" in about a tenth of the time it used to take.
+
+The trap here is the same as everywhere else: the model will confidently invent APIs that don't exist, recommend libraries that were deprecated two years ago, and miss the version-specific gotcha that's actually going to bite me. So I treat the chat as a starting point, not an answer. It tells me where to look. I go look.
+
+That part of my workflow has gotten genuinely better with no real downside, as long as I keep the verification step in place.
+
+## The thing I'm still trying to figure out
+
+The honest part of "honest mixed bag" is that there's a risk here I haven't figured out how to manage. The bug-shipping problem I can handle with discipline. The velocity win I'll happily take. The harder one is about my own behavior.
+
+It's really easy to do too much work now. The velocity win is real, but it's also a little addictive. The cost of trying something is so low that "let me just try this one more thing" stops being a single thought and starts being how I work. I'll catch myself with two or three agents running across as many projects at once, half-watching each one, context-switching every few minutes. It feels productive. Sometimes it is. A lot of the time I'm just generating more surface area for myself to maintain.
+
+I have to be careful that I'm not just doing more work for the sake of doing more work. The velocity is supposed to translate into shipping the right things faster, not into having three half-built projects instead of one finished one. That part still takes the same kind of stepping back it always did. The agents don't help with it. If anything they make it harder, because the cost of *not* stepping back is hidden.
+
+## Where I've landed, for now
+
+For me, the rules of thumb that have actually held up are:
+
+- **Use the right tool for the mode of work.** Inline completion for known edits. Agents for multi-file work. Chat for thinking out loud. Don't reach for the sledgehammer when you need a scalpel.
+- **The slowdown is in review, not in writing.** The bottleneck moved. Treat it that way.
+- **Verify everything that touches a real system.** Especially anything that talks to a database, a payment provider, or an auth boundary.
+- **If you can't explain what the agent did, don't merge it.** Even if it works. Especially if it works.
+
+None of this is novel advice. I've seen versions of it from a hundred other people. But there's a difference between reading rules and earning them, and I had to ship a few quiet bugs before the rules above stopped being abstractions and started being habits.
+
+AI in my workflow today is a force multiplier, with a specific failure mode that I have to actively guard against. That's not a contradiction, it's just what the tool is. It's making me ship more and forcing me to be more careful at the same time. I think that's actually a fair trade.
+
+I'll take it.
