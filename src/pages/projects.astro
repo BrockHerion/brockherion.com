@@ -8,7 +8,8 @@ const projects = (await getCollection('projects'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Projects — Brock Herion" description="Things Brock Herion has built.">
+<BaseLayout title="Projects — Brock Herion" description="Things Brock Herion has built."
+  image="/og/page-projects.png">
   <div class="gutter py-16">
     <PageHeader title="Projects">
       <p class="mono text-[10px] tracking-[0.12em] text-muted pb-2">Things I've built</p>

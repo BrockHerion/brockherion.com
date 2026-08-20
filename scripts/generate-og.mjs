@@ -10,8 +10,10 @@
  * to Times is worse than one that fails loudly.
  *
  * Usage:  node scripts/generate-og.mjs [--only <slug>] [--site] [--missing]
- * Output: public/og/<slug>.png at 1200x630, plus public/og/site.png for the
- *         pages that are not posts.
+ * Output: public/og/<slug>.png at 1200x630, public/og/page-<name>.png for the
+ *         standing pages, and public/og/site.png as the shared fallback.
+
+ * Page cards are prefixed so they cannot collide with a post slug.
  */
 
 import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from 'node:fs';
@@ -124,7 +126,28 @@ mkdirSync(tmp, { recursive: true });
 let made = 0;
 let skipped = 0;
 
-// The card the home page, blog index, projects, about and now all share.
+// The standing pages get their own card, mirroring what the page itself shows:
+// a single word in Cormorant over the ink rule. The kicker carries the wordmark
+// where a post would carry its date.
+const PAGES = [
+  { name: 'blog', title: 'Writing' },
+  { name: 'projects', title: 'Projects' },
+  { name: 'about', title: 'About' },
+  { name: 'now', title: 'Now' },
+];
+
+if (!only && !siteOnly) {
+  for (const page of PAGES) {
+    const out = join(OUT_DIR, `page-${page.name}.png`);
+    if (missingOnly && existsSync(out)) continue;
+    const path = join(tmp, `page-${page.name}.html`);
+    writeFileSync(path, template({ title: page.title, kicker: 'est. 2021' }));
+    shoot(path, out);
+    console.log(`  ✓ page-${page.name}`);
+  }
+}
+
+// The fallback, used by the home page, the 404, and anything without its own.
 if (!only && !(missingOnly && existsSync(join(OUT_DIR, 'site.png')))) {
   const sitePath = join(tmp, 'site.html');
   writeFileSync(sitePath, template({
