@@ -1,19 +1,35 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 ---
 
-<BaseLayout title="About — Brock Herion">
-  <article class="max-w-3xl mx-auto">
-    <h1 class="font-heading text-3xl font-bold mb-6">About Me</h1>
-    <div class="prose">
-    <p>
-      I'm Brock — a software engineer with 6+ years of experience. I love building things,
-      writing about what I learn, and sharing ideas across everything I'm into: tech, gymnastics,
-      EVs, books, and games.
-    </p>
-    <p>
-      This site is my corner of the internet. It's not a dev portfolio — it's a space for all of it.
-    </p>
+<BaseLayout title="About — Brock Herion" description="About Brock Herion.">
+  <div class="gutter py-16">
+    <!-- The post's reading measure. No rails needed here. -->
+    <div class="max-w-[720px] mx-auto">
+      <PageHeader title="About" />
+
+      <figure class="mt-10 mb-10">
+        <img
+          class="plate w-full aspect-[3/2] object-cover object-[center_20%]"
+          src="/avatar.jpeg"
+          alt="Brock Herion"
+          width="720"
+          height="480"
+        />
+      </figure>
+
+      <div class="prose">
+        <p>
+          I'm Brock — a software engineer with 6+ years of experience. I love building things,
+          writing about what I learn, and sharing ideas across everything I'm into: tech,
+          gymnastics, EVs, books, and games.
+        </p>
+        <p>
+          This site is my corner of the internet. It's not a dev portfolio — it's a space for
+          all of it.
+        </p>
+      </div>
     </div>
-  </article>
+  </div>
 </BaseLayout>

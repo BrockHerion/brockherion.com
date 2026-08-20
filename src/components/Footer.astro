@@ -1,14 +1,23 @@
 ---
 const year = new Date().getFullYear();
+
+const links = [
+  { href: 'https://github.com/BrockHerion', label: 'GitHub' },
+  { href: 'https://x.com/BrockHerion', label: 'X' },
+  { href: 'https://www.linkedin.com/in/brock-j-herion-34279a176/', label: 'LinkedIn' },
+  { href: '/rss.xml', label: 'RSS' },
+];
 ---
 
-<footer class="max-w-5xl mx-auto px-4 py-8 mt-16 border-t border-border">
-  <div class="flex flex-col sm:flex-row items-center justify-between gap-4 text-sm text-text-muted">
-    <p>&copy; {year} Brock Herion</p>
-    <div class="flex gap-4">
-      <a href="https://github.com/BrockHerion" class="hover:text-text transition-colors">GitHub</a>
-      <a href="https://x.com/BrockHerion" class="hover:text-text transition-colors">X</a>
-      <a href="https://www.linkedin.com/in/brock-j-herion-34279a176/" class="hover:text-text transition-colors">LinkedIn</a>
-    </div>
-  </div>
+<footer
+  class="gutter mono flex flex-wrap items-center justify-between gap-x-8 gap-y-2 py-[22px] text-[10px] tracking-[0.12em] text-muted border-t border-divider"
+>
+  <span class="tnum">&copy; {year} Brock Herion</span>
+  <span class="flex flex-wrap gap-5">
+    {links.map(link => (
+      <a href={link.href} class="no-underline text-muted hover:text-accent transition-colors">
+        {link.label}
+      </a>
+    ))}
+  </span>
 </footer>

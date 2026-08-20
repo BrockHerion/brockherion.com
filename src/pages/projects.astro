@@ -1,25 +1,29 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 
 const projects = (await getCollection('projects'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 ---
 
-<BaseLayout title="Projects — Brock Herion">
-  <h1 class="font-heading text-3xl font-bold mb-2">Projects</h1>
-  <p class="text-text-muted mb-8">Things I've built.</p>
+<BaseLayout title="Projects — Brock Herion" description="Things Brock Herion has built.">
+  <div class="gutter py-16">
+    <PageHeader title="Projects">
+      <p class="mono text-[10px] tracking-[0.12em] text-muted pb-2">Things I've built</p>
+    </PageHeader>
 
-  <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-    {projects.map(project => (
-      <ProjectCard
-        title={project.data.title}
-        description={project.data.description}
-        url={project.data.url}
-        repo={project.data.repo}
-        tags={project.data.tags}
-      />
-    ))}
+    <div class="grid grid-cols-1 band:grid-cols-2 gap-6 mt-10">
+      {projects.map(project => (
+        <ProjectCard
+          title={project.data.title}
+          description={project.data.description}
+          url={project.data.url}
+          repo={project.data.repo}
+          kicker={project.data.url ? 'Shipping' : 'In progress'}
+        />
+      ))}
+    </div>
   </div>
 </BaseLayout>

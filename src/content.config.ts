@@ -9,6 +9,8 @@ const blog = defineCollection({
     date: z.coerce.date(),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
+    // Optional context line shown beside the lead essay on the front page.
+    note: z.string().optional(),
   }),
 });
 

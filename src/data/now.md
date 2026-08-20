@@ -1,6 +1,13 @@
 ---
 preview: "Building a new personal site, getting back into writing, and training gymnastics."
-lastUpdated: 2026-03-16
+lastUpdated: 2026-08-20
+entries:
+  - label: Training
+    value: Gymnastics consistency, barbell on off days.
+  - label: Reading
+    value: The Hero of Ages, and Ashes of Man.
+  - label: At home
+    value: Fatherhood — the newest project.
 ---
 
 ## What I'm Up To
@@ -9,7 +16,8 @@ Building a new personal site from scratch with Astro. Getting back into writing 
 
 ## Reading
 
-Nothing at the moment — open to recommendations.
+Two at once: *The Hero of Ages*, closing out Brandon Sanderson's original Mistborn
+trilogy, and *Ashes of Man*, book five of Christopher Ruocchio's Sun Eater series.
 
 ## Playing
 

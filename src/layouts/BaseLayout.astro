@@ -22,7 +22,10 @@ const { title, description = 'Brock Herion — software engineer, gymnast, think
     <meta name="generator" content={Astro.generator} />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Lora:wght@400;600;700&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
     <link rel="alternate" type="application/rss+xml" title="Brock Herion" href="/rss.xml" />
     <title>{title}</title>
     <script async src="https://plausible.io/js/pa-PV_3Vri_l0Ki-W_Wv0ydF.js"></script>
@@ -38,9 +41,9 @@ const { title, description = 'Brock Herion — software engineer, gymnast, think
       }
     </script>
   </head>
-  <body class="min-h-screen bg-page text-text">
+  <body class="min-h-screen flex flex-col bg-bg text-body">
     <Nav />
-    <main class="max-w-5xl mx-auto px-4 py-8">
+    <main class="flex-1">
       <slot />
     </main>
     <Footer />

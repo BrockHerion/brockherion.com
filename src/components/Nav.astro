@@ -2,34 +2,38 @@
 import DarkModeToggle from './DarkModeToggle.astro';
 
 const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/blog', label: 'Blog' },
+  { href: '/', label: 'Front' },
+  { href: '/blog', label: 'Writing' },
   { href: '/projects', label: 'Projects' },
   { href: '/about', label: 'About' },
   { href: '/now', label: 'Now' },
 ];
 
 const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+// A post at /blog/some-slug still lights up "Writing".
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
 ---
 
-<nav class="max-w-5xl mx-auto px-4 py-4 flex items-center justify-between">
-  <a href="/" class="font-heading text-lg font-bold hover:text-text-muted transition-colors">
-    Brock Herion
+<header
+  class="gutter flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-[18px] border-b border-divider"
+>
+  <a href="/" class="flex items-baseline gap-3 no-underline">
+    <span class="font-heading text-[21px] text-text">Brock Herion</span>
+    <span class="mono text-[10px] tracking-[0.12em] text-accent">est. 2021</span>
   </a>
-  <div class="flex items-center gap-1 sm:gap-4">
+
+  <nav
+    aria-label="Primary"
+    class="mono flex items-center gap-x-3 gap-y-2 sm:gap-x-7 text-[11px] tracking-[0.1em] flex-wrap"
+  >
     {navLinks.map(link => (
-      <a
-        href={link.href}
-        class:list={[
-          'text-sm transition-colors',
-          currentPath === link.href
-            ? 'text-text font-medium'
-            : 'text-text-muted hover:text-text',
-        ]}
-      >
+      <a href={link.href} class="nav-link" aria-current={isActive(link.href) ? 'page' : undefined}>
         {link.label}
       </a>
     ))}
+    <span class="w-px h-[14px] bg-divider" aria-hidden="true"></span>
     <DarkModeToggle />
-  </div>
-</nav>
+  </nav>
+</header>

@@ -1,8 +1,148 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import BentoGrid from '../components/BentoGrid.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import TagList from '../components/TagList.astro';
+import { dateShort, dateLead, dateMonthStamp, readingTime } from '../lib/format';
+
+const posts = (await getCollection('blog'))
+  .filter(post => !post.data.draft)
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const [lead, ...rest] = posts;
+const recent = rest.slice(0, 3);
+const leadMinutes = readingTime(lead.body);
+
+const projects = (await getCollection('projects'))
+  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
+  .slice(0, 2);
+
+const nowFile = Object.values(
+  import.meta.glob<{
+    frontmatter: { lastUpdated?: string; entries?: { label: string; value: string }[] };
+  }>('/src/data/now.md', { eager: true })
+)[0];
+
+const nowEntries = nowFile?.frontmatter?.entries ?? [];
+const nowStamp = nowFile?.frontmatter?.lastUpdated
+  ? dateMonthStamp(new Date(nowFile.frontmatter.lastUpdated))
+  : '';
 ---
 
 <BaseLayout title="Brock Herion">
-  <BentoGrid />
+  <!--
+    The lead. Closed by the page's one full-strength ink rule — everything
+    below it is carried by 16% hairlines.
+  -->
+  <section
+    class="gutter pt-[72px] pb-14 grid grid-cols-1 gap-10 wide:grid-cols-[minmax(0,1fr)_380px] wide:gap-[72px] wide:items-end border-b border-rule"
+  >
+    <div>
+      <p class="mono text-[11px] tracking-[0.16em] text-accent mb-5">
+        The lead — <span class="tnum">{dateLead(lead.data.date)} · {leadMinutes} min</span>
+      </p>
+      <h1 class="display-lead mb-6">{lead.data.title}</h1>
+      <p class="text-[22px] leading-[1.5] text-deck max-w-[52ch] mb-7">
+        {lead.data.description}
+      </p>
+      <a class="btn btn-primary" href={`/blog/${lead.id}`}>Read the essay</a>
+    </div>
+
+    <div class="flex flex-col gap-3.5">
+      <TagList tags={lead.data.tags.slice(0, 3)} linked />
+      <div class="rule-hair"></div>
+      {lead.data.note && (
+        <p class="text-[15px] leading-[1.6] text-muted">{lead.data.note}</p>
+      )}
+    </div>
+  </section>
+
+  <!--
+    The three-up band. Structure is carried by 1px rules with zero gap — this
+    is the print-derived move, and it is not a gapped card grid. The band is
+    closed below by the footer's own hairline.
+  -->
+  <section class="gutter grid grid-cols-1 band:grid-cols-2 wide:grid-cols-[1.4fr_1fr_1fr]">
+    <!-- Recent writing -->
+    <div
+      class="py-10 border-b border-divider band:col-span-2 wide:col-span-1 wide:border-b-0 wide:border-r wide:pr-12"
+    >
+      <div class="flex justify-between items-baseline mb-5">
+        <h2 class="text-[13px] tracking-[0.08em] uppercase text-accent">Recent writing</h2>
+        <a
+          href="/blog"
+          class="mono text-[10px] tracking-[0.12em] no-underline text-accent"
+        >
+          All <span class="tnum">{posts.length}</span> &rarr;
+        </a>
+      </div>
+      <div class="flex flex-col">
+        {recent.map((post, i) => (
+          <a
+            href={`/blog/${post.id}`}
+            class:list={[
+              'row-link grid grid-cols-[64px_1fr] sm:grid-cols-[88px_1fr] gap-5 py-4 border-t border-divider',
+              i === recent.length - 1 && 'border-b',
+            ]}
+          >
+            <span class="mono tnum text-[11px] tracking-[0.06em] text-muted pt-1.5">
+              {dateShort(post.data.date)}
+            </span>
+            <h3 class="text-[24px] font-normal leading-[1.15]">{post.data.title}</h3>
+          </a>
+        ))}
+      </div>
+    </div>
+
+    <!-- In the workshop -->
+    <div
+      class="py-10 border-b border-divider band:border-b-0 band:border-r band:pr-10 wide:px-10"
+    >
+      <h2 class="text-[13px] tracking-[0.08em] uppercase text-accent mb-5">In the workshop</h2>
+      <div class="flex flex-col gap-3.5">
+        {projects.map(project => (
+          <ProjectCard
+            title={project.data.title}
+            description={project.data.description}
+            url={project.data.url}
+            repo={project.data.repo}
+            kicker={project.data.url ? 'Shipping' : 'In progress'}
+          />
+        ))}
+      </div>
+    </div>
+
+    <!-- Now -->
+    <div class="py-10 band:pl-10">
+      <div class="flex justify-between items-baseline mb-4">
+        <h2 class="text-[13px] tracking-[0.08em] uppercase text-accent">Now</h2>
+        {nowStamp && (
+          <span class="mono tnum text-[10px] tracking-[0.1em] text-muted">{nowStamp}</span>
+        )}
+      </div>
+      <figure class="mb-4">
+        <img
+          class="plate w-full aspect-[3/2] object-cover object-[center_20%]"
+          src="/avatar.jpeg"
+          alt="Brock Herion"
+          width="600"
+          height="400"
+        />
+      </figure>
+      <dl class="grid gap-2.5 text-[14px] leading-[1.6]">
+        {nowEntries.map(entry => (
+          <div class="grid grid-cols-[76px_1fr] gap-3">
+            <dt class="mono text-[10px] tracking-[0.1em] text-muted pt-[3px]">{entry.label}</dt>
+            <dd class="m-0">{entry.value}</dd>
+          </div>
+        ))}
+      </dl>
+      <a
+        href="/now"
+        class="mono text-[10px] tracking-[0.12em] no-underline text-accent inline-block mt-5"
+      >
+        More &rarr;
+      </a>
+    </div>
+  </section>
 </BaseLayout>

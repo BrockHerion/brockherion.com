@@ -1,36 +1,24 @@
 ---
-import Card from './Card.astro';
-import TagList from './TagList.astro';
-
 interface Props {
   title: string;
   description: string;
   url?: string;
   repo?: string;
-  tags?: string[];
+  /** Mono kicker above the title — `Shipping`, `In progress`. */
+  kicker?: string;
 }
 
-const { title, description, url, repo, tags } = Astro.props;
+const { title, description, url, repo, kicker } = Astro.props;
 ---
 
-<Card>
-  <h3 class="font-heading text-lg font-semibold">{title}</h3>
-  <p class="text-text-muted text-sm mt-2">{description}</p>
-  {tags && tags.length > 0 && (
-    <div class="mt-3">
-      <TagList tags={tags} />
+<article class="card">
+  {kicker && <p class="card-kicker tnum">{kicker}</p>}
+  <h3 class="card-title">{title}</h3>
+  <p class="card-body">{description}</p>
+  {(url || repo) && (
+    <div class="flex gap-2.5 mt-3.5">
+      {url && <a class="btn btn-primary btn-sm" href={url}>Live</a>}
+      {repo && <a class="btn btn-secondary btn-sm" href={repo}>Source</a>}
     </div>
   )}
-  <div class="flex gap-3 mt-4 text-sm">
-    {url && (
-      <a href={url} class="text-text-muted hover:text-text transition-colors underline underline-offset-2">
-        Live site
-      </a>
-    )}
-    {repo && (
-      <a href={repo} class="text-text-muted hover:text-text transition-colors underline underline-offset-2">
-        Source
-      </a>
-    )}
-  </div>
-</Card>
+</article>

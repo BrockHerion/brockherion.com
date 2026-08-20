@@ -3,121 +3,492 @@
 /* Dark mode via class on html */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* --- Adaptive color tokens --- */
+/* ══════════════════════════════════════════════════════════════════════
+   Classical — design tokens.
+
+   Two kinds of custom property live here:
+
+   1. Ramp values (--color-neutral-*, --color-accent-*) are fixed. They are
+      the palette, and they do not change between themes.
+   2. Role values (--color-bg, --tag-accent-bg, --card-padding, …) point at
+      ramp steps and DO change under .dark. Every component class below is
+      written once against roles, so dark mode is a token swap rather than a
+      second set of rules.
+
+   Dark mode is not an inversion: it substitutes a warm near-black ground, a
+   lighter gold, and white hairlines. Everything else holds.
+   ══════════════════════════════════════════════════════════════════════ */
+
 :root {
-  --page: #f5f0e8;
-  --card: #faf7f2;
-  --text: #2c2c2c;
-  --text-muted: #8a7e6b;
-  --tag-bg: #ebe5d9;
-  --tag-text: #6b5f4e;
-  --border: rgba(0, 0, 0, 0.08);
+  /* — fixed ramps — */
+  --color-neutral-100: #f8f4f4;
+  --color-neutral-200: #eae7e7;
+  --color-neutral-300: #d7d3d3;
+  --color-neutral-400: #bab6b6;
+  --color-neutral-500: #9b9797;
+  --color-neutral-600: #7d7979;
+  --color-neutral-700: #605d5d;
+  --color-neutral-800: #444141;
+  --color-neutral-900: #2d2b2b;
+
+  --color-accent-100: #fff3e4;
+  --color-accent-200: #ffe3bf;
+  --color-accent-300: #facb8d;
+  --color-accent-400: #e1ad66;
+  --color-accent-500: #c28d41;
+  --color-accent-600: #a06f24;
+  --color-accent-700: #7d5411;
+  --color-accent-800: #5a3b0a;
+  --color-accent-900: #3a270d;
+
+  /* — type — */
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-body: "Lora", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* — spacing / radius / elevation — */
+  --space-1: 4.6px;
+  --space-2: 9.2px;
+  --space-3: 13.8px;
+  --space-4: 18.4px;
+  --space-6: 27.6px;
+  --space-8: 36.8px;
+
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 7px;
+
+  --shadow-sm: 0 1px 2px color-mix(in srgb, #2d2b2b 14%, transparent);
+  --shadow-md: 0 3px 10px color-mix(in srgb, #2d2b2b 16%, transparent);
+  --shadow-lg: 0 12px 32px color-mix(in srgb, #2d2b2b 22%, transparent);
+
+  /* ── roles: light ── */
+  --bg: #f3f2f2;
+  --surface: #eae9e9;
+  --accent: #b68235;
+
+  /* Four text levels, not one. The dark theme needs each at a different
+     opacity, so they cannot collapse into a single token with an alpha. */
+  --text: #201f1d;                                        /* headings, titles */
+  --body: #201f1d;                                        /* running prose */
+  --deck: color-mix(in srgb, #201f1d 62%, transparent);   /* decks, summaries */
+  --muted: color-mix(in srgb, #201f1d 55%, transparent);  /* metadata */
+
+  /* Accent at paragraph size: the base gold only clears 3:1 on this ground,
+     so prose-sized accent text steps down the ramp for contrast. */
+  --accent-text: var(--color-accent-700);
+
+  --divider: color-mix(in srgb, #201f1d 16%, transparent); /* hairline */
+  --rule: #201f1d;                                         /* the one ink rule */
+  --row-hover: var(--color-accent-100);
+
+  --btn-primary-hover: color-mix(in srgb, var(--accent) 12%, transparent);
+  --btn-primary-active: color-mix(in srgb, var(--accent) 22%, transparent);
+  --btn-secondary-hover: color-mix(in srgb, var(--text) 7%, transparent);
+
+  --tag-radius: calc(var(--radius-md) * 0.75);
+  --tag-accent-bg: var(--color-accent-100);
+  --tag-accent-color: var(--color-accent-800);
+  --tag-accent-border: transparent;
+  --tag-neutral-bg: var(--color-neutral-100);
+  --tag-neutral-color: var(--color-neutral-800);
+  --tag-neutral-border: transparent;
+  --tag-outline-color: var(--accent);
+  --tag-outline-border: var(--accent);
+
+  --card-border: var(--divider);
+  --card-padding: var(--space-3);
+  --card-shadow: var(--shadow-sm);
+
+  --plate-mat: var(--surface);
+  --plate-outline: 1px solid var(--divider);
+  --plate-radius: 0;
+
+  --code-bg: var(--surface);
+  --code-border: var(--divider);
+
+  --prose-leading: 1.75;
 }
 
 :root.dark {
-  --page: #131825;
-  --card: #1a2233;
-  --text: #e2ddd5;
-  --text-muted: #7a8599;
-  --tag-bg: #232d40;
-  --tag-text: #8a9ab5;
-  --border: rgba(255, 255, 255, 0.05);
+  --bg: var(--color-neutral-900);
+  --surface: #383535;
+  --accent: var(--color-accent-400);
+
+  --text: var(--color-neutral-100);
+  --body: rgba(234, 231, 231, 0.78);
+  --deck: rgba(234, 231, 231, 0.74);
+  --muted: rgba(234, 231, 231, 0.58);
+
+  --accent-text: var(--color-accent-400);
+
+  --divider: rgba(255, 255, 255, 0.1);
+  --rule: rgba(255, 255, 255, 0.22);
+  --row-hover: rgba(182, 130, 53, 0.1);
+
+  --btn-primary-hover: rgba(182, 130, 53, 0.14);
+  --btn-primary-active: rgba(182, 130, 53, 0.24);
+  --btn-secondary-hover: rgba(255, 255, 255, 0.07);
+
+  /* Tags stop being tinted fills and become pill outlines. */
+  --tag-radius: 999px;
+  --tag-accent-bg: transparent;
+  --tag-accent-color: var(--color-accent-400);
+  --tag-accent-border: var(--color-accent-400);
+  --tag-neutral-bg: transparent;
+  --tag-neutral-color: var(--color-neutral-200);
+  --tag-neutral-border: rgba(255, 255, 255, 0.2);
+  --tag-outline-color: var(--color-neutral-200);
+  --tag-outline-border: rgba(255, 255, 255, 0.18);
+
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-padding: 20px;
+  --card-shadow: none;
+
+  /* The paper mat becomes a translucent one. */
+  --plate-mat: rgba(255, 255, 255, 0.07);
+  --plate-outline: none;
+  --plate-radius: var(--radius-md);
+
+  --code-bg: rgba(255, 255, 255, 0.04);
+  --code-border: rgba(255, 255, 255, 0.12);
+
+  --prose-leading: 1.8;
 }
 
-/* --- Register tokens with Tailwind so we get utility classes --- */
+/* — register roles with Tailwind so utilities exist for them — */
 @theme {
-  --color-page: var(--page);
-  --color-card: var(--card);
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
   --color-text: var(--text);
-  --color-text-muted: var(--text-muted);
-  --color-tag-bg: var(--tag-bg);
-  --color-tag-text: var(--tag-text);
-  --color-border: var(--border);
+  --color-body: var(--body);
+  --color-deck: var(--deck);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+  --color-divider: var(--divider);
+  --color-rule: var(--rule);
+  --color-row-hover: var(--row-hover);
 
-  --font-heading: 'Lora', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
+  --font-heading: "Cormorant Garamond", system-ui, sans-serif;
+  --font-body: "Lora", Georgia, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* The two reductions the handoff calls for, named rather than numbered:
+     `band` is where the three-up collapses to two columns, `wide` is full. */
+  --breakpoint-band: 900px;
+  --breakpoint-wide: 1200px;
 }
 
-/* --- Base styles --- */
-body {
-  font-family: var(--font-body);
-  background-color: var(--page);
-  color: var(--text);
-  transition: background-color 0.2s, color 0.2s;
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--body);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    font-weight: 400;
+  }
+
+  /* Interface headings cap at 600. Display sizes (over ~40px) set at 400 and
+     are declared at their use sites — the bigger the text, the lighter it sets. */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    color: var(--text);
+    margin: 0;
+  }
+  h6 { font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  p { margin: 0; }
+  img { display: block; max-width: 100%; }
+  figure { margin: 0; }
+
+  a { color: var(--accent); text-underline-offset: 3px; }
+
+  :focus { outline: none; }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  ::selection { background: color-mix(in srgb, var(--accent) 30%, transparent); }
 }
 
-h1, h2, h3, h4, h5, h6 {
-  font-family: var(--font-heading);
+@layer components {
+  /* Metadata voice. Mono is only ever used for figures and labels — never for
+     prose, never for headings. */
+  .mono {
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+  }
+
+  /* Tabular figures, so dates in a column align. Deliberately NOT applied to
+     running prose: Lora's tnum feature also widens its word spaces. */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
+  }
+
+  /* — rules — the structure is carried by these, not by gaps or card edges — */
+  .rule-ink { height: 1px; background: var(--rule); border: 0; }
+  .rule-hair { height: 1px; background: var(--divider); border: 0; }
+
+  /* — the photograph treatment — every content photo goes through this — */
+  .plate {
+    filter: sepia(0.22) saturate(0.82) contrast(1.05);
+    border: 6px solid var(--plate-mat);
+    outline: var(--plate-outline);
+    border-radius: var(--plate-radius);
+  }
+
+  /* — buttons — outlined, never filled — */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    cursor: pointer;
+    text-decoration: none;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 1.2;
+    color: var(--text);
+    background: transparent;
+    border: 1px solid transparent;
+    padding: var(--space-2) calc(var(--space-3) * 1.2);
+    border-radius: var(--radius-md);
+    transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
+  }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn-primary { color: var(--accent); border-color: var(--accent); }
+  .btn-primary:hover { background: var(--btn-primary-hover); }
+  .btn-primary:active { background: var(--btn-primary-active); }
+  .btn-secondary { color: var(--body); border-color: var(--divider); }
+  .btn-secondary:hover { background: var(--btn-secondary-hover); }
+  .btn-sm { font-size: 12px; padding: 4px 12px; }
+
+  /* — tags — */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    padding: 3px 10px;
+    border: 1px solid transparent;
+    border-radius: var(--tag-radius);
+    text-decoration: none;
+    transition: background-color 140ms ease-out, border-color 140ms ease-out, color 140ms ease-out;
+  }
+  .tag-accent {
+    background: var(--tag-accent-bg);
+    color: var(--tag-accent-color);
+    border-color: var(--tag-accent-border);
+  }
+  .tag-neutral {
+    background: var(--tag-neutral-bg);
+    color: var(--tag-neutral-color);
+    border-color: var(--tag-neutral-border);
+  }
+  .tag-outline {
+    color: var(--tag-outline-color);
+    border-color: var(--tag-outline-border);
+  }
+  a.tag:hover, button.tag:hover { border-color: var(--accent); color: var(--accent-text); }
+
+  /* — cards — bordered, never filled; elevation is a whisper — */
+  .card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding: var(--card-padding);
+    border-radius: var(--radius-md);
+    background: transparent;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--card-shadow);
+  }
+  .card-kicker {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .card-title {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 1.2;
+    color: var(--text);
+  }
+  .card-body { font-size: 13px; color: var(--deck); flex: 1; }
+
+  /* — nav — the bottom border is always present at 1px so hover never shifts
+       the layout — */
+  .nav-link {
+    text-decoration: none;
+    color: var(--body);
+    border-bottom: 1px solid transparent;
+    padding-bottom: 3px;
+    transition: border-color 140ms ease-out, color 140ms ease-out;
+  }
+  .nav-link:hover { border-bottom-color: var(--accent); color: var(--accent-text); }
+  .nav-link[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* The blog index row. Grid areas rather than utilities: the three columns
+     reflow into a two-line stack below `band`, and expressing that reorder in
+     utility classes is unreadable. */
+  .post-row {
+    display: grid;
+    gap: 8px 12px;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "date tags"
+      "content content";
+  }
+  .post-row > .post-row-date { grid-area: date; }
+  .post-row > .post-row-content { grid-area: content; }
+  .post-row > .post-row-tags { grid-area: tags; }
+
+  @media (min-width: 900px) {
+    .post-row {
+      gap: 32px;
+      grid-template-columns: 120px minmax(0, 1fr) 220px;
+      grid-template-areas: "date content tags";
+    }
+  }
+
+  /* — the post's table-of-contents rail —
+     Inactive links carry a 1px border and 1px more padding than active ones,
+     so the text edge stays put when the active marker thickens to 2px. */
+  .toc-link {
+    font-size: 13px;
+    text-decoration: none;
+    color: var(--body);
+    border-left: 1px solid var(--divider);
+    padding-left: 11px;
+    transition: color 140ms ease-out, border-color 140ms ease-out;
+  }
+  .toc-link:hover { color: var(--accent-text); }
+  .toc-link.is-active {
+    color: var(--accent-text);
+    border-left: 2px solid var(--accent);
+    padding-left: 10px;
+  }
+
+  /* — ruled rows — the whole row is the link — */
+  .row-link {
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 140ms ease-out;
+  }
+  .row-link:hover { background: var(--row-hover); }
 }
 
-/* --- Prose styles for blog content --- */
+/* ══════════════════════════════════════════════════════════════════════
+   Prose — the blog post body. 720px column, 18px/1.75.
+   ══════════════════════════════════════════════════════════════════════ */
 .prose {
-  max-width: 65ch;
-  line-height: 1.75;
+  font-size: 18px;
+  line-height: var(--prose-leading);
+  color: var(--body);
 }
+
+.prose > * + * { margin-top: 20px; }
+.prose p { margin: 0 0 20px; }
 
 .prose h2 {
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-top: 2rem;
-  margin-bottom: 0.75rem;
+  font-size: 32px;
+  font-weight: 400;
+  margin: 36px 0 12px;
+  letter-spacing: -0.015em;
+  scroll-margin-top: 96px;
 }
-
 .prose h3 {
-  font-size: 1.25rem;
+  font-size: 25px;
   font-weight: 600;
-  margin-top: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.prose p {
-  margin-bottom: 1.25rem;
+  margin: 28px 0 10px;
+  scroll-margin-top: 96px;
 }
 
 .prose a {
+  color: var(--accent-text);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 3px;
 }
 
-.prose ul, .prose ol {
-  padding-left: 1.5rem;
-  margin-bottom: 1.25rem;
-}
+.prose ul, .prose ol { padding-left: 24px; margin: 0 0 20px; }
+.prose ul { list-style: disc; }
+.prose ol { list-style: decimal; }
+.prose li { margin-bottom: 6px; }
+.prose li::marker { color: var(--muted); }
 
-.prose li {
-  margin-bottom: 0.25rem;
-}
-
+/* The pull quote — the one place gold appears as a stroke inside prose. */
 .prose blockquote {
-  border-left: 3px solid var(--text-muted);
-  padding-left: 1rem;
-  color: var(--text-muted);
-  font-style: italic;
-  margin: 1.5rem 0;
+  margin: 28px 0;
+  padding: 4px 0 4px 24px;
+  border-left: 2px solid var(--accent);
+  font-family: var(--font-heading);
+  font-size: 26px;
+  line-height: 1.3;
+  color: var(--text);
 }
+.prose blockquote p { margin: 0; }
 
 .prose pre {
-  background-color: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 0.5rem;
-  padding: 1rem;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-md);
+  padding: 18px;
   overflow-x: auto;
-  margin: 1.5rem 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 20px;
 }
-
-.prose code:not(pre code) {
-  background-color: var(--tag-bg);
-  padding: 0.15rem 0.35rem;
-  border-radius: 0.25rem;
+.prose :not(pre) > code {
+  font-family: var(--font-mono);
   font-size: 0.875em;
+  background: var(--code-bg);
+  border: 1px solid var(--code-border);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.35em;
 }
 
-.prose img {
-  border-radius: 0.5rem;
-  margin: 1.5rem 0;
+.prose img { margin: 28px 0; }
+.prose hr { height: 1px; border: 0; background: var(--divider); margin: 32px 0; }
+
+.prose figcaption {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  margin-top: var(--space-1);
 }
 
-.prose hr {
-  border-color: var(--border);
-  margin: 2rem 0;
+/* The character comes from type and rules, not motion. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Layout helpers.
+
+   Page gutters are load-bearing — 64px at desktop, easing to 24px on small
+   screens. clamp() rather than breakpoint steps, per the handoff.
+   ══════════════════════════════════════════════════════════════════════ */
+.gutter { padding-inline: clamp(24px, 4.5vw, 64px); }
+
+/* Display sizes. All weight 400: the bigger the text, the lighter it sets. */
+.display-lead { font-size: clamp(44px, 7.2vw, 104px); font-weight: 400; line-height: 0.95; letter-spacing: -0.03em; text-wrap: balance; }
+.display-page { font-size: clamp(40px, 5.3vw, 76px); font-weight: 400; line-height: 1; letter-spacing: -0.02em; }
+.display-post { font-size: clamp(34px, 4.2vw, 60px); font-weight: 400; line-height: 1; letter-spacing: -0.02em; text-wrap: balance; }
+.display-row  { font-size: clamp(26px, 2.4vw, 34px); font-weight: 400; line-height: 1.08; }

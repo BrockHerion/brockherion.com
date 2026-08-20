@@ -1,6 +1,12 @@
 ---
 import BaseLayout from './BaseLayout.astro';
-import TagList from '../components/TagList.astro';
+import { dateStamp } from '../lib/format';
+
+interface Heading {
+  depth: number;
+  slug: string;
+  text: string;
+}
 
 interface Props {
   title: string;
@@ -8,31 +14,129 @@ interface Props {
   date: Date;
   tags: string[];
   readingTime: number;
+  headings: Heading[];
 }
 
-const { title, description, date, tags, readingTime } = Astro.props;
+const { title, description, date, tags, readingTime, headings } = Astro.props;
 
-const formattedDate = date.toLocaleDateString('en-US', {
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric',
-});
+// The rail lists sections, not sub-sections.
+const sections = headings.filter(heading => heading.depth === 2);
 ---
 
 <BaseLayout title={`${title} — Brock Herion`} description={description}>
-  <article class="max-w-3xl mx-auto">
-    <header class="mb-8">
-      <time class="text-sm text-text-muted">{formattedDate}</time>
-      <span class="text-sm text-text-muted mx-2">·</span>
-      <span class="text-sm text-text-muted">{readingTime} min read</span>
-      <h1 class="font-heading text-3xl font-bold mt-2">{title}</h1>
-      <p class="text-text-muted mt-2">{description}</p>
-      <div class="mt-4">
-        <TagList tags={tags} linked />
-      </div>
-    </header>
-    <div class="prose">
-      <slot />
+  <div
+    class="gutter py-14 grid grid-cols-1 gap-8 band:grid-cols-[200px_minmax(0,720px)] band:gap-14 band:justify-center wide:grid-cols-[200px_minmax(0,720px)_200px]"
+  >
+    <!--
+      Left rail. Below `band` it drops out of the margin and sets as a single
+      metadata line above the title.
+    -->
+    <div
+      class="mono text-[10px] tracking-[0.1em] flex flex-row flex-wrap items-center gap-x-4 gap-y-2 band:flex-col band:items-end band:text-right band:gap-3.5"
+    >
+      <span class="tnum text-accent">{dateStamp(date)}</span>
+      <span class="tnum text-muted">{readingTime} min read</span>
+      <div class="hidden band:block w-12 h-px bg-divider ml-auto"></div>
+      {tags.length > 0 && (
+        <span class="text-muted">{tags.join(' · ')}</span>
+      )}
     </div>
-  </article>
+
+    <article>
+      <h1 class="display-post mb-[18px]">{title}</h1>
+      <p class="text-[21px] leading-[1.5] text-deck mb-8">{description}</p>
+      <div class="rule-ink mb-8"></div>
+      <div class="prose" id="post-body">
+        <slot />
+      </div>
+    </article>
+
+    <!-- Right rail: on this page. Dropped below `wide`. -->
+    {sections.length > 0 && (
+      <nav
+        class="hidden wide:flex flex-col gap-2.5 self-start sticky top-10"
+        aria-label="On this page"
+        id="toc"
+      >
+        <span class="mono text-[10px] tracking-[0.12em] text-accent">On this page</span>
+        {sections.map(section => (
+          <a class="toc-link" href={`#${section.slug}`} data-toc-link={section.slug}>
+            {section.text}
+          </a>
+        ))}
+      </nav>
+    )}
+  </div>
+
+  <script>
+    function initScrollSpy() {
+      const toc = document.getElementById('toc');
+      const body = document.getElementById('post-body');
+      if (!toc || !body) return;
+
+      const links = new Map<string, HTMLAnchorElement>();
+      toc.querySelectorAll<HTMLAnchorElement>('[data-toc-link]').forEach(link => {
+        links.set(link.dataset.tocLink!, link);
+      });
+
+      const headings = Array.from(body.querySelectorAll<HTMLElement>('h2[id]')).filter(
+        heading => links.has(heading.id)
+      );
+      if (!headings.length) return;
+
+      let current = '';
+      function setActive(id: string) {
+        if (id === current) return;
+        links.get(current)?.classList.remove('is-active');
+        links.get(id)?.classList.add('is-active');
+        current = id;
+      }
+
+      // The active section is the last heading to have crossed the reading
+      // line near the top of the viewport.
+      const READING_LINE = 120;
+      function update() {
+        // At the end of the document the final heading may never reach the
+        // reading line, so nothing would mark its section as being read.
+        const scrolledToEnd =
+          window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2;
+        if (scrolledToEnd) {
+          setActive(headings[headings.length - 1].id);
+          return;
+        }
+
+        let active = headings[0].id;
+        for (const heading of headings) {
+          if (heading.getBoundingClientRect().top > READING_LINE) break;
+          active = heading.id;
+        }
+        setActive(active);
+      }
+
+      // Driven by scroll rather than by IntersectionObserver: an instant jump
+      // can carry a heading clean across an observer's band between two
+      // frames, firing no entry and leaving the rail stale. Clicking a link in
+      // this rail is exactly such a jump, so the observer would fail on the
+      // one interaction the rail exists for. Recomputing costs one rect read
+      // per heading, capped at one frame.
+      let queued = false;
+      window.addEventListener(
+        'scroll',
+        () => {
+          if (queued) return;
+          queued = true;
+          requestAnimationFrame(() => {
+            queued = false;
+            update();
+          });
+        },
+        { passive: true }
+      );
+      window.addEventListener('resize', update, { passive: true });
+
+      update();
+    }
+
+    initScrollSpy();
+  </script>
 </BaseLayout>

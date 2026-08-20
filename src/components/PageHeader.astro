@@ -1,0 +1,24 @@
+---
+interface Props {
+  title: string;
+  /** Mono stamp shown under the title — e.g. the Now page's `MAR 2026`. */
+  stamp?: string;
+}
+
+const { title, stamp } = Astro.props;
+---
+
+<!--
+  The shared page opening: display title closed by the page's one
+  full-strength ink rule. Anything in the default slot sits right-aligned on
+  the title's baseline (the blog index puts its tag filter there).
+-->
+<header class="flex flex-wrap justify-between items-end gap-6 pb-5 border-b border-rule">
+  <div>
+    <h1 class="display-page">{title}</h1>
+    {stamp && (
+      <p class="mono tnum text-[10px] tracking-[0.12em] text-muted mt-3">{stamp}</p>
+    )}
+  </div>
+  <slot />
+</header>

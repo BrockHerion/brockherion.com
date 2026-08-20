@@ -1,26 +1,44 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { dateMonthStamp } from '../lib/format';
 
-const nowFiles = import.meta.glob<{
-  frontmatter: { preview?: string; lastUpdated?: string };
-  default: any;
-}>('/src/data/now.md', { eager: true });
+const nowFile = Object.values(
+  import.meta.glob<{
+    frontmatter: { lastUpdated?: string; entries?: { label: string; value: string }[] };
+    default: any;
+  }>('/src/data/now.md', { eager: true })
+)[0];
 
-const nowFile = Object.values(nowFiles)[0];
 const NowContent = nowFile?.default;
-const lastUpdated = nowFile?.frontmatter?.lastUpdated;
-
-const formattedDate = lastUpdated
-  ? new Date(lastUpdated).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })
+const entries = nowFile?.frontmatter?.entries ?? [];
+const stamp = nowFile?.frontmatter?.lastUpdated
+  ? dateMonthStamp(new Date(nowFile.frontmatter.lastUpdated))
   : '';
 ---
 
-<BaseLayout title="Now — Brock Herion">
-  <article class="max-w-3xl mx-auto">
-    <h1 class="font-heading text-3xl font-bold mb-2">Now</h1>
-    {formattedDate && <p class="text-text-muted mb-6">Last updated {formattedDate}</p>}
-    <div class="prose">
-      {NowContent && <NowContent />}
+<BaseLayout title="Now — Brock Herion" description="What Brock Herion is doing right now.">
+  <div class="gutter py-16">
+    <div class="max-w-[720px] mx-auto">
+      <PageHeader title="Now" stamp={stamp} />
+
+      <!-- The home page's Now list, at page scale. -->
+      {entries.length > 0 && (
+        <dl class="grid mt-10 text-[18px] leading-[1.6]">
+          {entries.map(entry => (
+            <div class="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-x-5 gap-y-1 py-5 border-t border-divider">
+              <dt class="mono text-[10px] tracking-[0.1em] text-muted sm:pt-2">{entry.label}</dt>
+              <dd class="m-0">{entry.value}</dd>
+            </div>
+          ))}
+        </dl>
+      )}
+
+      <div class="rule-hair my-10"></div>
+
+      <div class="prose">
+        {NowContent && <NowContent />}
+      </div>
     </div>
-  </article>
+  </div>
 </BaseLayout>

@@ -1,89 +1,128 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import BlogPostCard from '../../components/BlogPostCard.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import TagList from '../../components/TagList.astro';
+import { dateStamp } from '../../lib/format';
 
 const allPosts = (await getCollection('blog'))
   .filter(post => !post.data.draft)
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
 
-const allTags = [...new Set(allPosts.flatMap(post => post.data.tags))].sort();
+// 95 distinct tags exist across the archive; the header filter holds a single
+// wrapping row. Show the most-used ones and let `?tag=` reach the rest — the
+// script below adds a chip for any tag arrived at from a post's tag list.
+const tagCounts = new Map<string, number>();
+for (const post of allPosts) {
+  for (const tag of post.data.tags) {
+    tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
+  }
+}
+const topTags = [...tagCounts.entries()]
+  .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+  .slice(0, 8)
+  .map(([tag]) => tag);
 ---
 
-<BaseLayout title="Blog — Brock Herion">
-  <h1 class="font-heading text-3xl font-bold mb-2">Blog</h1>
-  <p class="text-text-muted mb-8">Thoughts on tech, life, and everything in between.</p>
-
-  <!-- Tag filter pills -->
-  <div class="flex flex-wrap gap-2 mb-8" id="tag-filters">
-    <button
-      class="tag-pill text-xs px-3 py-1 rounded-full bg-tag-bg text-tag-text cursor-pointer transition-opacity"
-      data-tag="all"
-    >
-      All
-    </button>
-    {allTags.map(tag => (
-      <button
-        class="tag-pill text-xs px-3 py-1 rounded-full bg-tag-bg text-tag-text cursor-pointer transition-opacity"
-        data-tag={tag}
-      >
-        {tag}
-      </button>
-    ))}
-  </div>
-
-  <!-- Post list -->
-  <div class="space-y-4" id="post-list">
-    {allPosts.map(post => (
-      <div data-tags={post.data.tags.join(',')}>
-        <BlogPostCard
-          title={post.data.title}
-          description={post.data.description}
-          date={post.data.date}
-          tags={post.data.tags}
-          slug={post.id}
-        />
+<BaseLayout title="Writing — Brock Herion" description="Essays and notes by Brock Herion.">
+  <div class="gutter py-16">
+    <PageHeader title="Writing">
+      <div class="flex flex-wrap gap-2 justify-end max-w-[600px]" id="tag-filters">
+        <button class="tag tag-accent" type="button" data-tag="all">
+          All <span class="tnum ml-1">{allPosts.length}</span>
+        </button>
+        {topTags.map(tag => (
+          <button class="tag tag-outline" type="button" data-tag={tag}>{tag}</button>
+        ))}
       </div>
-    ))}
+    </PageHeader>
+
+    <div class="flex flex-col" id="post-list">
+      {allPosts.map(post => (
+        <a
+          href={`/blog/${post.id}`}
+          class="row-link post-row py-[26px] border-b border-divider"
+          data-tags={post.data.tags.join(',')}
+        >
+          <span class="post-row-date mono tnum text-[11px] tracking-[0.08em] text-muted band:pt-2.5">
+            {dateStamp(post.data.date)}
+          </span>
+          <div class="post-row-content">
+            <h2 class="display-row mb-1.5">{post.data.title}</h2>
+            <p class="text-[16px] text-deck max-w-[64ch]">{post.data.description}</p>
+          </div>
+          <TagList
+            tags={post.data.tags.slice(0, 2)}
+            align="end"
+            class="post-row-tags band:pt-2"
+          />
+        </a>
+      ))}
+    </div>
+
+    <p class="mono text-[10px] tracking-[0.12em] text-muted mt-10 hidden" id="empty-state">
+      No posts match that tag.
+    </p>
   </div>
 
   <script>
     function initTagFiltering() {
-      const pills = document.querySelectorAll<HTMLButtonElement>('.tag-pill');
-      const posts = document.querySelectorAll<HTMLElement>('#post-list > div');
+      const filters = document.getElementById('tag-filters');
+      const posts = Array.from(
+        document.querySelectorAll<HTMLElement>('#post-list > [data-tags]')
+      );
+      const emptyState = document.getElementById('empty-state');
+      if (!filters || !posts.length) return;
 
-      const params = new URLSearchParams(window.location.search);
-      let activeTag = params.get('tag') || 'all';
+      const activeTag = new URLSearchParams(window.location.search).get('tag') || 'all';
 
-      function filterPosts(tag: string) {
-        activeTag = tag;
-        pills.forEach(pill => {
-          pill.classList.toggle('opacity-50', pill.dataset.tag !== tag);
+      // A tag reached from a post's tag list may not be in the top-8 header
+      // set. Give it a chip so the filter is visible and clearable.
+      const known = new Set(
+        Array.from(filters.querySelectorAll<HTMLButtonElement>('[data-tag]')).map(
+          button => button.dataset.tag
+        )
+      );
+      if (activeTag !== 'all' && !known.has(activeTag)) {
+        const chip = document.createElement('button');
+        chip.type = 'button';
+        chip.className = 'tag tag-outline';
+        chip.dataset.tag = activeTag;
+        chip.textContent = activeTag;
+        filters.appendChild(chip);
+      }
+
+      const buttons = Array.from(
+        filters.querySelectorAll<HTMLButtonElement>('[data-tag]')
+      );
+
+      function apply(tag: string) {
+        buttons.forEach(button => {
+          const isActive = button.dataset.tag === tag;
+          button.classList.toggle('tag-accent', isActive);
+          button.classList.toggle('tag-outline', !isActive);
+          button.setAttribute('aria-pressed', String(isActive));
         });
+
+        let visible = 0;
         posts.forEach(post => {
-          const postTags = post.dataset.tags?.split(',') || [];
-          const visible = tag === 'all' || postTags.includes(tag);
-          post.style.display = visible ? '' : 'none';
+          const match = tag === 'all' || (post.dataset.tags || '').split(',').includes(tag);
+          post.style.display = match ? '' : 'none';
+          if (match) visible += 1;
         });
+        emptyState?.classList.toggle('hidden', visible > 0);
+
         const url = new URL(window.location.href);
-        if (tag === 'all') {
-          url.searchParams.delete('tag');
-        } else {
-          url.searchParams.set('tag', tag);
-        }
+        if (tag === 'all') url.searchParams.delete('tag');
+        else url.searchParams.set('tag', tag);
         history.replaceState(null, '', url.toString());
       }
 
-      pills.forEach(pill => {
-        pill.addEventListener('click', () => filterPosts(pill.dataset.tag || 'all'));
+      buttons.forEach(button => {
+        button.addEventListener('click', () => apply(button.dataset.tag || 'all'));
       });
 
-      const matchingPosts = Array.from(posts).some(post => {
-        const postTags = post.dataset.tags?.split(',') || [];
-        return postTags.includes(activeTag);
-      });
-
-      filterPosts(matchingPosts ? activeTag : 'all');
+      apply(activeTag);
     }
 
     initTagFiltering();

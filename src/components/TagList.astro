@@ -1,25 +1,30 @@
 ---
 interface Props {
   tags: string[];
+  /** Link each tag through to the filtered blog index. */
   linked?: boolean;
+  /** Right-justify — used in the blog index's third column. */
+  align?: 'start' | 'end';
+  class?: string;
 }
 
-const { tags, linked = false } = Astro.props;
+const { tags, linked = false, align = 'start', class: className = '' } = Astro.props;
 ---
 
-<div class="flex flex-wrap gap-1.5">
-  {tags.map(tag => (
-    linked ? (
-      <a
-        href={`/blog?tag=${encodeURIComponent(tag)}`}
-        class="text-xs px-2 py-0.5 rounded-full bg-tag-bg text-tag-text hover:opacity-80 transition-opacity"
-      >
-        {tag}
-      </a>
+<div
+  class:list={[
+    'flex flex-wrap gap-1.5',
+    align === 'end' && 'justify-end content-start',
+    className,
+  ]}
+>
+  {tags.map((tag, i) => {
+    // The primary tag carries the accent; the rest stay neutral.
+    const variant = i === 0 ? 'tag tag-accent' : 'tag tag-neutral';
+    return linked ? (
+      <a href={`/blog?tag=${encodeURIComponent(tag)}`} class={variant}>{tag}</a>
     ) : (
-      <span class="text-xs px-2 py-0.5 rounded-full bg-tag-bg text-tag-text">
-        {tag}
-      </span>
-    )
-  ))}
+      <span class={variant}>{tag}</span>
+    );
+  })}
 </div>
