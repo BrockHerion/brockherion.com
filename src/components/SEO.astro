@@ -1,0 +1,101 @@
+---
+/**
+ * Every tag search engines and link unfurlers need, in one place.
+ *
+ * Canonical URLs matter here beyond the usual: the blog index writes
+ * `?tag=…` onto its own URL via history.replaceState, so `/blog` is reachable
+ * at many query-string URLs that are all the same page. The canonical is built
+ * from the pathname alone, which collapses them.
+ */
+
+interface Props {
+  title: string;
+  description: string;
+  /** Root-relative or absolute. Defaults to the portrait. */
+  image?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  tags?: string[];
+  /** Keep the page out of the index — error pages, not real content. */
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description,
+  image = '/avatar.jpeg',
+  type = 'website',
+  publishedDate,
+  tags = [],
+  noindex = false,
+} = Astro.props;
+
+const site = Astro.site ?? new URL('https://brockherion.com');
+const canonical = new URL(Astro.url.pathname, site);
+const imageUrl = new URL(image, site);
+
+// The portrait is square, which letterboxes badly in a large card. A page that
+// supplies its own artwork is assumed to be sized for one.
+const twitterCard = image === '/avatar.jpeg' ? 'summary' : 'summary_large_image';
+
+const schema =
+  type === 'article'
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        headline: title,
+        description,
+        image: imageUrl.href,
+        url: canonical.href,
+        mainEntityOfPage: canonical.href,
+        datePublished: publishedDate?.toISOString(),
+        keywords: tags.join(', ') || undefined,
+        author: { '@type': 'Person', name: 'Brock Herion', url: site.href },
+        publisher: { '@type': 'Person', name: 'Brock Herion', url: site.href },
+      }
+    : {
+        '@context': 'https://schema.org',
+        '@type': 'WebSite',
+        name: 'Brock Herion',
+        description,
+        url: site.href,
+        author: {
+          '@type': 'Person',
+          name: 'Brock Herion',
+          url: site.href,
+          image: new URL('/avatar.jpeg', site).href,
+          sameAs: [
+            'https://github.com/BrockHerion',
+            'https://x.com/BrockHerion',
+            'https://www.linkedin.com/in/brock-j-herion-34279a176/',
+          ],
+        },
+      };
+---
+
+{noindex ? (
+  <meta name="robots" content="noindex, follow" />
+) : (
+  <link rel="canonical" href={canonical.href} />
+)}
+
+<meta property="og:type" content={type} />
+<meta property="og:title" content={title} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical.href} />
+<meta property="og:image" content={imageUrl.href} />
+<meta property="og:site_name" content="Brock Herion" />
+<meta property="og:locale" content="en_US" />
+{publishedDate && (
+  <meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+{type === 'article' && tags.map(tag => <meta property="article:tag" content={tag} />)}
+
+<meta name="twitter:card" content={twitterCard} />
+<meta name="twitter:title" content={title} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={imageUrl.href} />
+<meta name="twitter:creator" content="@BrockHerion" />
+<meta name="twitter:site" content="@BrockHerion" />
+
+<script type="application/ld+json" set:html={JSON.stringify(schema)} />

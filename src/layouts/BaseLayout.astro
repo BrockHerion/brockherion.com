@@ -2,13 +2,30 @@
 import '../styles/global.css';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import SEO from '../components/SEO.astro';
 
 interface Props {
   title: string;
   description?: string;
+  /** Unfurl title, without the " — Brock Herion" suffix the tab title carries. */
+  socialTitle?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedDate?: Date;
+  tags?: string[];
+  noindex?: boolean;
 }
 
-const { title, description = 'Brock Herion — software engineer, gymnast, thinker.' } = Astro.props;
+const {
+  title,
+  description = 'Brock Herion — software engineer, gymnast, thinker.',
+  socialTitle,
+  image,
+  type,
+  publishedDate,
+  tags,
+  noindex,
+} = Astro.props;
 ---
 
 <!doctype html>
@@ -28,6 +45,15 @@ const { title, description = 'Brock Herion — software engineer, gymnast, think
     />
     <link rel="alternate" type="application/rss+xml" title="Brock Herion" href="/rss.xml" />
     <title>{title}</title>
+    <SEO
+      title={socialTitle ?? title}
+      description={description}
+      image={image}
+      type={type}
+      publishedDate={publishedDate}
+      tags={tags}
+      noindex={noindex}
+    />
     <script async src="https://plausible.io/js/pa-PV_3Vri_l0Ki-W_Wv0ydF.js"></script>
     <script is:inline>
       window.plausible=window.plausible||function(){(plausible.q=plausible.q||[]).push(arguments)},plausible.init=plausible.init||function(i){plausible.o=i||{}};

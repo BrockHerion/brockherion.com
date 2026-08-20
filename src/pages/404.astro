@@ -1,0 +1,25 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Not found — Brock Herion"
+  socialTitle="Not found"
+  description="That page doesn't exist."
+  noindex
+>
+  <div class="gutter py-16">
+    <div class="max-w-[720px] mx-auto">
+      <p class="mono tnum text-[11px] tracking-[0.16em] text-accent mb-5">Error 404</p>
+      <h1 class="display-page mb-6">Nothing here</h1>
+      <div class="rule-ink mb-8"></div>
+      <p class="text-[21px] leading-[1.5] text-deck mb-8">
+        That page doesn't exist — it may have moved, or the link may be wrong.
+      </p>
+      <div class="flex flex-wrap gap-3">
+        <a class="btn btn-primary" href="/">Back to the front</a>
+        <a class="btn btn-secondary" href="/blog">Browse the writing</a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
