@@ -15,9 +15,10 @@ interface Props {
   tags: string[];
   readingTime: number;
   headings: Heading[];
+  image?: string;
 }
 
-const { title, description, date, tags, readingTime, headings } = Astro.props;
+const { title, description, date, tags, readingTime, headings, image } = Astro.props;
 
 // The rail lists sections, not sub-sections.
 const sections = headings.filter(heading => heading.depth === 2);
@@ -30,6 +31,7 @@ const sections = headings.filter(heading => heading.depth === 2);
   type="article"
   publishedDate={date}
   tags={tags}
+  image={image}
 >
   <div
     class="gutter py-14 grid grid-cols-1 gap-8 band:grid-cols-[200px_minmax(0,720px)] band:gap-14 band:justify-center wide:grid-cols-[200px_minmax(0,720px)_200px]"

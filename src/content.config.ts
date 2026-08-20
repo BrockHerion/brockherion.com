@@ -11,6 +11,8 @@ const blog = defineCollection({
     draft: z.boolean().default(false),
     // Optional context line shown beside the lead essay on the front page.
     note: z.string().optional(),
+    // Overrides the generated /og/<slug>.png card for this post.
+    image: z.string().optional(),
   }),
 });
 

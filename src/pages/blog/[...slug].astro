@@ -15,6 +15,10 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
+
+// Cards are generated per slug by scripts/generate-og.mjs. Frontmatter only
+// needs `image` when a post wants artwork of its own.
+const image = post.data.image ?? `/og/${post.id}.png`;
 ---
 
 <BlogPostLayout
@@ -24,6 +28,7 @@ const { Content, headings } = await render(post);
   tags={post.data.tags}
   readingTime={readingTime(post.body)}
   headings={headings}
+  image={image}
 >
   <Content />
 </BlogPostLayout>
