@@ -461,6 +461,21 @@
 }
 
 .prose img { margin: 28px 0; }
+
+/* Diagrams ship as black line art on an opaque white ground, which lands as a
+   glaring white slab on the dark theme's warm near-black. Inverting turns them
+   into white-on-black line art that belongs to the page, and the mat frames
+   the result the way .plate frames a photograph.
+
+   Keyed on the extension because the diagrams are the only SVGs in the posts
+   and all of them are pure #000/#fff. A COLOR svg would inverse to nonsense —
+   give one an explicit opt-out class if that day comes. Raster screenshots are
+   deliberately untouched: inverting a picture of a UI reads as broken. */
+:root.dark .prose img[src$=".svg"] {
+  filter: invert(1);
+  border: 6px solid var(--plate-mat);
+  border-radius: var(--radius-md);
+}
 .prose hr { height: 1px; border: 0; background: var(--divider); margin: 32px 0; }
 
 .prose figcaption {

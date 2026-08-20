@@ -11,7 +11,8 @@ entries:
 
 ## What I'm Up To
 
-Building a new personal site from scratch with Astro. Getting back into writing after a long break.
+Just shipped a full rebuild of this site — Astro and MDX under an editorial
+redesign. Getting back into writing after a long break.
 
 ## Reading
 
