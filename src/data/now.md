@@ -1,5 +1,4 @@
 ---
-preview: "Building a new personal site, getting back into writing, and training gymnastics."
 lastUpdated: 2026-08-20
 entries:
   - label: Training
@@ -22,7 +21,3 @@ trilogy, and *Ashes of Man*, book five of Christopher Ruocchio's Sun Eater serie
 ## Playing
 
 Taking a break from games.
-
-## Training
-
-Working on gymnastics consistency.
