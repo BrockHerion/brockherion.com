@@ -9,12 +9,12 @@
  * make the output depend on the network, and a card that silently falls back
  * to Times is worse than one that fails loudly.
  *
- * Usage:  node scripts/generate-og.mjs [--only <slug>] [--site]
+ * Usage:  node scripts/generate-og.mjs [--only <slug>] [--site] [--missing]
  * Output: public/og/<slug>.png at 1200x630, plus public/og/site.png for the
  *         pages that are not posts.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -99,6 +99,9 @@ const only = process.argv.includes('--only')
   ? process.argv[process.argv.indexOf('--only') + 1]
   : null;
 const siteOnly = process.argv.includes('--site');
+// --missing renders only what is absent, which is what the pre-commit hook
+// wants: adding one post should not re-render fifty unchanged cards.
+const missingOnly = process.argv.includes('--missing');
 
 function shoot(htmlPath, outPath) {
   execFileSync(CHROME, [
@@ -122,7 +125,7 @@ let made = 0;
 let skipped = 0;
 
 // The card the home page, blog index, projects, about and now all share.
-if (!only) {
+if (!only && !(missingOnly && existsSync(join(OUT_DIR, 'site.png')))) {
   const sitePath = join(tmp, 'site.html');
   writeFileSync(sitePath, template({
     title: 'Software engineer, gymnast, thinker.',
@@ -139,6 +142,7 @@ for (const file of siteOnly ? [] : readdirSync(blogDir).filter(f => f.endsWith('
   const post = parsePost(readFileSync(join(blogDir, file), 'utf8'));
   if (!post) { console.warn(`  ?  ${slug} — unparseable frontmatter`); continue; }
   if (post.draft) { skipped++; continue; }
+  if (missingOnly && existsSync(join(OUT_DIR, `${slug}.png`))) continue;
 
   // UTC getters, matching src/lib/format.ts — local time renders a day early.
   const d = new Date(post.date);

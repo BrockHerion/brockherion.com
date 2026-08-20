@@ -1,0 +1,18 @@
+#!/bin/sh
+# Renders an Open Graph card for any newly staged post and stages it alongside.
+#
+# Generation needs headless Chrome, which exists here but not in the deploy
+# environment, so cards must be committed rather than built. Skipping this hook
+# is safe: scripts/check-og.mjs fails the build if a card never arrives.
+
+staged_posts=$(git diff --cached --name-only --diff-filter=ACM | grep '^src/content/blog/.*\.mdx$')
+[ -z "$staged_posts" ] && exit 0
+
+echo "→ checking Open Graph cards for staged posts"
+if ! pnpm og --missing; then
+  echo "✗ card generation failed — commit anyway with --no-verify, the build will catch it"
+  exit 1
+fi
+
+git add public/og
+exit 0
