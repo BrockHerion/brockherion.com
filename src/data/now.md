@@ -2,7 +2,7 @@
 lastUpdated: 2026-08-20
 entries:
   - label: Training
-    value: Gymnastics consistency, barbell on off days.
+    value: Strength work, and recovering from a back injury.
   - label: Reading
     value: The Hero of Ages, and Ashes of Man.
   - label: At home
