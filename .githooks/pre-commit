@@ -1,18 +1,26 @@
 #!/bin/sh
-# Renders an Open Graph card for any newly staged post and stages it alongside.
+# Regenerates the Open Graph card for any added or modified post and stages it.
+#
+# Regenerates rather than only filling gaps: the card carries the title and the
+# reading time, so editing either leaves a stale card behind, and a stale card
+# is harder to notice than a missing one — the build guard cannot catch it.
 #
 # Generation needs headless Chrome, which exists here but not in the deploy
 # environment, so cards must be committed rather than built. Skipping this hook
-# is safe: scripts/check-og.mjs fails the build if a card never arrives.
+# is safe for new posts: scripts/check-og.mjs fails the build if a card never
+# arrives. It cannot catch a stale one, so prefer not to skip it on edits.
 
 staged_posts=$(git diff --cached --name-only --diff-filter=ACM | grep '^src/content/blog/.*\.mdx$')
 [ -z "$staged_posts" ] && exit 0
 
-echo "→ checking Open Graph cards for staged posts"
-if ! pnpm og --missing; then
-  echo "✗ card generation failed — commit anyway with --no-verify, the build will catch it"
-  exit 1
-fi
+echo "→ regenerating Open Graph cards for staged posts"
+for path in $staged_posts; do
+  slug=$(basename "$path" .mdx)
+  if ! pnpm og --only "$slug"; then
+    echo "✗ card generation failed for $slug — fix, or commit with --no-verify"
+    exit 1
+  fi
+done
 
 git add public/og
 exit 0
