@@ -151,7 +151,7 @@ if (!only && !siteOnly) {
 if (!only && !(missingOnly && existsSync(join(OUT_DIR, 'site.png')))) {
   const sitePath = join(tmp, 'site.html');
   writeFileSync(sitePath, template({
-    title: 'Software engineer, gymnast, thinker.',
+    title: 'Software engineer, writer, thinker.',
     kicker: 'est. 2021',
   }));
   shoot(sitePath, join(OUT_DIR, 'site.png'));
