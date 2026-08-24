@@ -1,0 +1,46 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+
+const pages = [
+  { slug: '/about', description: 'Who I am and what this site is.' },
+  { slug: '/blog', description: 'Writing on tech, life, and everything in between.' },
+  { slug: '/llms.txt', description: 'A plain-text index of this site for language models.' },
+  { slug: '/now', description: 'What I’m doing right now.' },
+  { slug: '/projects', description: 'Things I’ve built and shipped.' },
+  { slug: '/rss.xml', description: 'The feed, for readers that subscribe.' },
+  { slug: '/uses', description: 'The hardware, software, and tools I use.' },
+];
+---
+
+<BaseLayout title="Pages — Brock Herion" description="Every slash page on brockherion.com, in one place."
+  image="/og/page-slash.png">
+  <div class="gutter py-16">
+    <div class="max-w-[720px] mx-auto">
+      <PageHeader title="Pages" />
+
+      <dl class="grid mt-10 text-[18px] leading-[1.6]">
+        {pages.map(page => (
+          <div class="grid grid-cols-1 sm:grid-cols-[120px_1fr] gap-x-5 gap-y-1 py-5 border-t border-divider">
+            <dt class="mono text-[12px] tracking-[0.06em] sm:pt-1">
+              <a href={page.slug}>{page.slug}</a>
+            </dt>
+            <dd class="m-0">{page.description}</dd>
+          </div>
+        ))}
+      </dl>
+
+      <div class="rule-hair my-10"></div>
+
+      <div class="prose">
+        <h2>What is a slash page?</h2>
+        <p>
+          A slash page is a small standing page with a root-level slug — <code>/about</code>,
+          <code>/now</code>, <code>/uses</code> — that describes the person behind a site rather
+          than its content. See <a href="https://slashpages.net">slashpages.net</a> for the full
+          taxonomy and plenty of inspiration.
+        </p>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

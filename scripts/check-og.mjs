@@ -30,7 +30,7 @@ for (const file of readdirSync(blogDir).filter(f => f.endsWith('.mdx'))) {
 
 // The standing pages and the shared fallback are generated too, and a missing
 // one degrades the same way a post's would.
-for (const name of ['blog', 'projects', 'about', 'now']) {
+for (const name of ['blog', 'projects', 'about', 'now', 'uses', 'slash']) {
   if (!existsSync(join(ogDir, `page-${name}.png`))) missing.push(`page-${name}`);
 }
 if (!existsSync(join(ogDir, 'site.png'))) missing.push('site (shared card)');

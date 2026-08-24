@@ -1,0 +1,30 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import { dateMonthStamp } from '../lib/format';
+
+const usesFile = Object.values(
+  import.meta.glob<{
+    frontmatter: { lastUpdated?: string };
+    default: any;
+  }>('/src/data/uses.md', { eager: true })
+)[0];
+
+const UsesContent = usesFile?.default;
+const stamp = usesFile?.frontmatter?.lastUpdated
+  ? dateMonthStamp(new Date(usesFile.frontmatter.lastUpdated))
+  : '';
+---
+
+<BaseLayout title="Uses — Brock Herion" description="The hardware, software, and tools Brock Herion uses."
+  image="/og/page-uses.png">
+  <div class="gutter py-16">
+    <div class="max-w-[720px] mx-auto">
+      <PageHeader title="Uses" stamp={stamp} />
+
+      <div class="prose mt-10">
+        {UsesContent && <UsesContent />}
+      </div>
+    </div>
+  </div>
+</BaseLayout>

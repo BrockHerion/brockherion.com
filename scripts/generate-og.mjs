@@ -134,6 +134,8 @@ const PAGES = [
   { name: 'projects', title: 'Projects' },
   { name: 'about', title: 'About' },
   { name: 'now', title: 'Now' },
+  { name: 'uses', title: 'Uses' },
+  { name: 'slash', title: 'Pages' },
 ];
 
 if (!only && !siteOnly) {
