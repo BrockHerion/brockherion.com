@@ -15,9 +15,12 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   publishedDate?: Date;
+  updatedDate?: Date;
   tags?: string[];
   /** Keep the page out of the index — error pages, not real content. */
   noindex?: boolean;
+  /** Emit ProfilePage schema instead of WebSite — the About page. */
+  profile?: boolean;
 }
 
 const {
@@ -26,13 +29,27 @@ const {
   image = '/og/site.png',
   type = 'website',
   publishedDate,
+  updatedDate,
   tags = [],
   noindex = false,
+  profile = false,
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://brockherion.com');
 const canonical = new URL(Astro.url.pathname, site);
 const imageUrl = new URL(image, site);
+
+const person = {
+  '@type': 'Person',
+  name: 'Brock Herion',
+  url: site.href,
+  image: new URL('/avatar.jpeg', site).href,
+  sameAs: [
+    'https://github.com/BrockHerion',
+    'https://x.com/BrockHerion',
+    'https://www.linkedin.com/in/brock-j-herion-34279a176/',
+  ],
+};
 
 const schema =
   type === 'article'
@@ -45,9 +62,19 @@ const schema =
         url: canonical.href,
         mainEntityOfPage: canonical.href,
         datePublished: publishedDate?.toISOString(),
+        dateModified: updatedDate?.toISOString(),
         keywords: tags.join(', ') || undefined,
         author: { '@type': 'Person', name: 'Brock Herion', url: site.href },
         publisher: { '@type': 'Person', name: 'Brock Herion', url: site.href },
+      }
+    : profile
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ProfilePage',
+        name: title,
+        description,
+        url: canonical.href,
+        mainEntity: person,
       }
     : {
         '@context': 'https://schema.org',
@@ -55,17 +82,7 @@ const schema =
         name: 'Brock Herion',
         description,
         url: site.href,
-        author: {
-          '@type': 'Person',
-          name: 'Brock Herion',
-          url: site.href,
-          image: new URL('/avatar.jpeg', site).href,
-          sameAs: [
-            'https://github.com/BrockHerion',
-            'https://x.com/BrockHerion',
-            'https://www.linkedin.com/in/brock-j-herion-34279a176/',
-          ],
-        },
+        author: person,
       };
 ---
 
@@ -80,10 +97,18 @@ const schema =
 <meta property="og:description" content={description} />
 <meta property="og:url" content={canonical.href} />
 <meta property="og:image" content={imageUrl.href} />
+{/* Every card is generated at 1200x630 (scripts/generate-og.mjs); a post
+    supplying its own `image` frontmatter must match. */}
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content={title} />
 <meta property="og:site_name" content="Brock Herion" />
 <meta property="og:locale" content="en_US" />
 {publishedDate && (
   <meta property="article:published_time" content={publishedDate.toISOString()} />
+)}
+{updatedDate && (
+  <meta property="article:modified_time" content={updatedDate.toISOString()} />
 )}
 {type === 'article' && tags.map(tag => <meta property="article:tag" content={tag} />)}
 

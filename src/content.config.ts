@@ -7,6 +7,9 @@ const blog = defineCollection({
     title: z.string(),
     description: z.string(),
     date: z.coerce.date(),
+    // Set when a post gets a meaningful revision — feeds dateModified and
+    // article:modified_time so crawlers see the freshness.
+    updated: z.coerce.date().optional(),
     tags: z.array(z.string()),
     draft: z.boolean().default(false),
     // Optional context line shown beside the lead essay on the front page.

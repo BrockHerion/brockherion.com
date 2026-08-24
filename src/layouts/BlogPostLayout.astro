@@ -12,13 +12,14 @@ interface Props {
   title: string;
   description: string;
   date: Date;
+  updated?: Date;
   tags: string[];
   readingTime: number;
   headings: Heading[];
   image?: string;
 }
 
-const { title, description, date, tags, readingTime, headings, image } = Astro.props;
+const { title, description, date, updated, tags, readingTime, headings, image } = Astro.props;
 
 // The rail lists sections, not sub-sections.
 const sections = headings.filter(heading => heading.depth === 2);
@@ -30,6 +31,7 @@ const sections = headings.filter(heading => heading.depth === 2);
   description={description}
   type="article"
   publishedDate={date}
+  updatedDate={updated}
   tags={tags}
   image={image}
 >

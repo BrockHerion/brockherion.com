@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+/* Self-hosted fonts — was Google Fonts; keeps the render path first-party.
+   Lora gets a real italic where the remote setup faux-italicized. */
+@import "@fontsource/cormorant-garamond/400.css";
+@import "@fontsource/cormorant-garamond/600.css";
+@import "@fontsource/lora/400.css";
+@import "@fontsource/lora/400-italic.css";
+@import "@fontsource/lora/600.css";
+
 /* Dark mode via class on html */
 @custom-variant dark (&:where(.dark, .dark *));
 

@@ -12,19 +12,23 @@ interface Props {
   image?: string;
   type?: 'website' | 'article';
   publishedDate?: Date;
+  updatedDate?: Date;
   tags?: string[];
   noindex?: boolean;
+  profile?: boolean;
 }
 
 const {
   title,
-  description = 'Brock Herion — software engineer, writer, thinker.',
+  description = 'Brock Herion is a software engineer and writer. Essays on tech, life, and everything in between.',
   socialTitle,
   image,
   type,
   publishedDate,
+  updatedDate,
   tags,
   noindex,
+  profile,
 } = Astro.props;
 ---
 
@@ -37,12 +41,6 @@ const {
     <link rel="icon" href="/favicon.ico" />
     <meta name="description" content={description} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Lora:wght@400;600&display=swap"
-      rel="stylesheet"
-    />
     <link rel="alternate" type="application/rss+xml" title="Brock Herion" href="/rss.xml" />
     <title>{title}</title>
     <SEO
@@ -51,8 +49,10 @@ const {
       image={image}
       type={type}
       publishedDate={publishedDate}
+      updatedDate={updatedDate}
       tags={tags}
       noindex={noindex}
+      profile={profile}
     />
     <script async src="https://plausible.io/js/pa-PV_3Vri_l0Ki-W_Wv0ydF.js"></script>
     <script is:inline>
