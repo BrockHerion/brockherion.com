@@ -1,7 +1,10 @@
 import { slug } from 'github-slugger';
 
+// Rendering hands components marked text nested under mark nodes, so a span
+// may carry children instead of text.
 interface Span {
   text?: string;
+  children?: Span[];
 }
 
 interface Block {
@@ -11,7 +14,8 @@ interface Block {
   code?: string;
 }
 
-const blockText = (block: Block) => (block.children ?? []).map(span => span.text ?? '').join('');
+const blockText = (node: Block | Span): string =>
+  (node.children ?? []).map(span => span.text ?? blockText(span)).join('');
 
 /**
  * Matches the ids Astro's Markdown pipeline gave headings, so `/blog/x#section`
