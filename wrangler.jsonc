@@ -17,8 +17,45 @@
       "bucket_name": "brockherion-com-media"
     }
   ],
+  // Astro sessions, which hold the EmDash admin login.
+  "kv_namespaces": [
+    {
+      "binding": "SESSION",
+      "id": "2289f028f4274e56a74a2dedb0ca276b"
+    }
+  ],
   // Runs scheduled publishing, backups, and EmDash maintenance.
   "triggers": {
     "crons": ["* * * * *"]
+  },
+  "env": {
+    // Build with CLOUDFLARE_ENV=preview. Shares production's data, so what it
+    // shows is what production will show; bindings are not inherited, hence
+    // the repetition. No cron: production's runs the scheduled work.
+    "preview": {
+      "routes": [{ "pattern": "preview.brockherion.com", "custom_domain": true }],
+      "d1_databases": [
+        {
+          "binding": "DB",
+          "database_name": "brockherion-com",
+          "database_id": "ddcd5ed6-f3ea-4bc5-a7c0-b30aa97b299d"
+        }
+      ],
+      "r2_buckets": [
+        {
+          "binding": "MEDIA",
+          "bucket_name": "brockherion-com-media"
+        }
+      ],
+      "kv_namespaces": [
+        {
+          "binding": "SESSION",
+          "id": "2289f028f4274e56a74a2dedb0ca276b"
+        }
+      ],
+      "triggers": {
+        "crons": []
+      }
+    }
   }
 }
