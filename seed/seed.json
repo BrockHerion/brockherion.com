@@ -1,0 +1,53 @@
+{
+  "$schema": "https://emdashcms.com/seed.schema.json",
+  "version": "1",
+  "meta": {
+    "name": "brockherion.com",
+    "description": "Essays and projects",
+    "author": "Brock Herion"
+  },
+  "settings": {
+    "title": "Brock Herion",
+    "tagline": "Thoughts on tech, life, and everything in between."
+  },
+  "collections": [
+    {
+      "slug": "posts",
+      "label": "Posts",
+      "labelSingular": "Post",
+      "supports": ["drafts", "revisions", "search"],
+      "fields": [
+        { "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },
+        { "slug": "description", "label": "Description", "type": "text", "required": true, "searchable": true },
+        { "slug": "content", "label": "Content", "type": "portableText", "searchable": true },
+        { "slug": "updated", "label": "Meaningfully revised at", "type": "datetime" },
+        { "slug": "note", "label": "Front-page note", "type": "text" },
+        { "slug": "image", "label": "Open Graph image override", "type": "string" }
+      ]
+    },
+    {
+      "slug": "projects",
+      "label": "Projects",
+      "labelSingular": "Project",
+      "supports": ["drafts", "revisions"],
+      "fields": [
+        { "slug": "title", "label": "Title", "type": "string", "required": true },
+        { "slug": "description", "label": "Description", "type": "text", "required": true },
+        { "slug": "content", "label": "Content", "type": "portableText" },
+        { "slug": "url", "label": "Site URL", "type": "url" },
+        { "slug": "repo", "label": "Repository URL", "type": "url" },
+        { "slug": "featured", "label": "Featured", "type": "boolean", "defaultValue": false }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "tag",
+      "label": "Tags",
+      "labelSingular": "Tag",
+      "hierarchical": false,
+      "collections": ["posts", "projects"],
+      "terms": []
+    }
+  ]
+}

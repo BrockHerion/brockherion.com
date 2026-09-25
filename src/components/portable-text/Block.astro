@@ -1,0 +1,13 @@
+---
+import { Block as EmDashBlock } from 'emdash/ui';
+import { headingId } from '../../lib/portable-text';
+
+const { node } = Astro.props;
+const id = node.style === 'h2' || node.style === 'h3' ? headingId(node) : undefined;
+---
+
+{id ? (
+  node.style === 'h2' ? <h2 id={id}><slot /></h2> : <h3 id={id}><slot /></h3>
+) : (
+  <EmDashBlock {...Astro.props}><slot /></EmDashBlock>
+)}

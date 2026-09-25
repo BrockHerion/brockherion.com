@@ -25,3 +25,12 @@ pnpm-debug.log*
 
 # superpowers
 .superpowers/
+
+# emdash
+.emdash/migrations.json
+emdash-env.d.ts
+.wrangler/
+.dev.vars
+
+# playwright mcp artifacts
+.playwright-mcp/

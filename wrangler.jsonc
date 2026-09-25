@@ -1,0 +1,24 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "brockherion-com",
+  "main": "./src/worker.ts",
+  "compatibility_date": "2026-03-26",
+  "compatibility_flags": ["nodejs_compat"],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "brockherion-com",
+      "database_id": "ddcd5ed6-f3ea-4bc5-a7c0-b30aa97b299d"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "brockherion-com-media"
+    }
+  ],
+  // Runs scheduled publishing, backups, and EmDash maintenance.
+  "triggers": {
+    "crons": ["* * * * *"]
+  }
+}

@@ -1,0 +1,7 @@
+---
+import { Code } from 'astro:components';
+
+const { node } = Astro.props;
+---
+
+<Code code={node.code} lang={node.language || 'text'} theme="github-dark" />

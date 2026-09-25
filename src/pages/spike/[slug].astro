@@ -1,0 +1,29 @@
+---
+import { getEmDashEntry } from 'emdash';
+import { PortableText } from 'emdash/ui';
+import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
+import Block from '../../components/portable-text/Block.astro';
+import Code from '../../components/portable-text/Code.astro';
+import { readingTime } from '../../lib/format';
+import { headings, plainText } from '../../lib/portable-text';
+
+const { entry, error } = await getEmDashEntry('posts', Astro.params.slug!);
+if (error) throw error;
+if (!entry) return new Response(null, { status: 404 });
+
+const post = entry.data;
+const content = post.content ?? [];
+---
+
+<BlogPostLayout
+  title={post.title}
+  description={post.description}
+  date={new Date(entry.data.publishedAt ?? entry.data.published_at)}
+  updated={post.updated ? new Date(post.updated) : undefined}
+  tags={[]}
+  readingTime={readingTime(plainText(content))}
+  headings={headings(content)}
+  image={post.image ?? `/og/${Astro.params.slug}.png`}
+>
+  <PortableText value={content} components={{ block: Block, type: { code: Code } }} />
+</BlogPostLayout>
