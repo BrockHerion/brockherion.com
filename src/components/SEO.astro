@@ -6,6 +6,9 @@
  * `?tag=…` onto its own URL via history.replaceState, so `/blog` is reachable
  * at many query-string URLs that are all the same page. The canonical is built
  * from the pathname alone, which collapses them.
+ *
+ * It also always ends in a slash: pages rendered on request answer with and
+ * without one, and the prerendered site only ever had the slashed form.
  */
 
 interface Props {
@@ -36,7 +39,7 @@ const {
 } = Astro.props;
 
 const site = Astro.site ?? new URL('https://brockherion.com');
-const canonical = new URL(Astro.url.pathname, site);
+const canonical = new URL(Astro.url.pathname.replace(/\/?$/, '/'), site);
 const imageUrl = new URL(image, site);
 
 const person = {

@@ -1,21 +1,19 @@
 ---
-export const prerender = true;
-import { getCollection } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import TagList from '../../components/TagList.astro';
+import { getPosts } from '../../lib/content';
 import { dateStamp } from '../../lib/format';
 
-const allPosts = (await getCollection('blog'))
-  .filter(post => !post.data.draft)
-  .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+const { posts: allPosts, cacheHint } = await getPosts();
+Astro.cache.set(cacheHint);
 
-// 95 distinct tags exist across the archive; the header filter holds a single
+// About 30 tags exist across the archive; the header filter holds a single
 // wrapping row. Show the most-used ones and let `?tag=` reach the rest — the
 // script below adds a chip for any tag arrived at from a post's tag list.
 const tagCounts = new Map<string, number>();
 for (const post of allPosts) {
-  for (const tag of post.data.tags) {
+  for (const tag of post.tags) {
     tagCounts.set(tag, (tagCounts.get(tag) ?? 0) + 1);
   }
 }
@@ -42,19 +40,19 @@ const topTags = [...tagCounts.entries()]
     <div class="flex flex-col" id="post-list">
       {allPosts.map(post => (
         <a
-          href={`/blog/${post.id}`}
+          href={`/blog/${post.slug}`}
           class="row-link post-row py-[26px] border-b border-divider"
-          data-tags={post.data.tags.join(',')}
+          data-tags={post.tags.join(',')}
         >
           <span class="post-row-date mono tnum text-[11px] tracking-[0.08em] text-muted band:pt-2.5">
-            {dateStamp(post.data.date)}
+            {dateStamp(post.date)}
           </span>
           <div class="post-row-content">
-            <h2 class="display-row mb-1.5">{post.data.title}</h2>
-            <p class="text-[16px] text-deck max-w-[64ch]">{post.data.description}</p>
+            <h2 class="display-row mb-1.5">{post.title}</h2>
+            <p class="text-[16px] text-deck max-w-[64ch]">{post.description}</p>
           </div>
           <TagList
-            tags={post.data.tags.slice(0, 2)}
+            tags={post.tags.slice(0, 2)}
             align="end"
             class="post-row-tags band:pt-2"
           />

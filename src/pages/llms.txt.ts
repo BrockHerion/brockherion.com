@@ -1,14 +1,11 @@
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-
-export const prerender = true;
+import { getPosts } from '../lib/content';
 
 export async function GET(context: APIContext) {
   const site = (context.site?.toString() || 'https://brockherion.com').replace(/\/$/, '');
 
-  const posts = (await getCollection('blog'))
-    .filter(post => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const { posts, cacheHint } = await getPosts();
+  context.cache.set(cacheHint);
 
   const lines = [
     '# Brock Herion',
@@ -19,7 +16,7 @@ export async function GET(context: APIContext) {
     '## Writing',
     '',
     ...posts.map(
-      post => `- [${post.data.title}](${site}/blog/${post.id}): ${post.data.description}`
+      post => `- [${post.title}](${site}/blog/${post.slug}): ${post.description}`
     ),
     '',
     '## Pages',

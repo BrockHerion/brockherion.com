@@ -1,7 +1,7 @@
 ---
-import { Code } from 'astro:components';
+import { highlight } from '../../lib/highlight';
 
 const { node } = Astro.props;
 ---
 
-<Code code={node.code} lang={node.language || 'text'} theme="github-dark" />
+<Fragment set:html={await highlight(node.code, node.language || 'text')} />

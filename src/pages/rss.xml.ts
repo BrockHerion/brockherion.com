@@ -1,23 +1,20 @@
 import rss from '@astrojs/rss';
-import { getCollection } from 'astro:content';
 import type { APIContext } from 'astro';
-
-export const prerender = true;
+import { getPosts } from '../lib/content';
 
 export async function GET(context: APIContext) {
-  const posts = (await getCollection('blog'))
-    .filter(post => !post.data.draft)
-    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+  const { posts, cacheHint } = await getPosts();
+  context.cache.set(cacheHint);
 
   return rss({
     title: 'Brock Herion',
     description: 'Thoughts on tech, life, and everything in between.',
     site: context.site?.toString() || 'https://brockherion.com',
     items: posts.map(post => ({
-      title: post.data.title,
-      description: post.data.description,
-      pubDate: post.data.date,
-      link: `/blog/${post.id}`,
+      title: post.title,
+      description: post.description,
+      pubDate: post.date,
+      link: `/blog/${post.slug}`,
     })),
   });
 }

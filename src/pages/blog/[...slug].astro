@@ -1,43 +1,35 @@
 ---
-export const prerender = true;
-import { getCollection, render } from 'astro:content';
+import { PortableText } from 'emdash/ui';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
-import { readingTime } from '../../lib/format';
-import { nextReads, type ReadCandidate } from '../../lib/next-reads';
+import Block from '../../components/portable-text/Block.astro';
+import Code from '../../components/portable-text/Code.astro';
+import { getPost, getPosts } from '../../lib/content';
+import { nextReads } from '../../lib/next-reads';
+import { headings } from '../../lib/portable-text';
 
-export async function getStaticPaths() {
-  const posts = (await getCollection('blog')).filter(post => !post.data.draft);
-  const candidates: ReadCandidate[] = posts.map(post => ({
-    slug: post.id,
-    title: post.data.title,
-    description: post.data.description,
-    date: post.data.date,
-    tags: post.data.tags,
-  }));
-  return posts.map((post, index) => ({
-    params: { slug: post.id },
-    props: { post, reads: nextReads(candidates[index], candidates) },
-  }));
+const [{ post, cacheHint }, { posts, cacheHint: postsHint }] = await Promise.all([
+  getPost(Astro.params.slug!),
+  getPosts(),
+]);
+// Uncached, so a post published after someone hit its URL is not stuck as a 404.
+if (!post) {
+  Astro.cache.set(false);
+  return new Response(null, { status: 404 });
 }
-
-const { post, reads } = Astro.props;
-const { Content, headings } = await render(post);
-
-// Cards are generated per slug by scripts/generate-og.mjs. Frontmatter only
-// needs `image` when a post wants artwork of its own.
-const image = post.data.image ?? `/og/${post.id}.png`;
+Astro.cache.set(cacheHint);
+Astro.cache.set(postsHint);
 ---
 
 <BlogPostLayout
-  title={post.data.title}
-  description={post.data.description}
-  date={post.data.date}
-  updated={post.data.updated}
-  tags={post.data.tags}
-  readingTime={readingTime(post.body)}
-  headings={headings}
-  image={image}
-  nextReads={reads}
+  title={post.title}
+  description={post.description}
+  date={post.date}
+  updated={post.updated}
+  tags={post.tags}
+  readingTime={post.readingTime}
+  headings={headings(post.content)}
+  image={post.image ?? `/og/${post.slug}.png`}
+  nextReads={nextReads(post, posts)}
 >
-  <Content />
+  <PortableText value={post.content} components={{ block: Block, type: { code: Code } }} />
 </BlogPostLayout>

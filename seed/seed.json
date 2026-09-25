@@ -15,6 +15,7 @@
       "slug": "posts",
       "label": "Posts",
       "labelSingular": "Post",
+      "urlPattern": "/blog/{slug}",
       "supports": ["drafts", "revisions", "search"],
       "fields": [
         { "slug": "title", "label": "Title", "type": "string", "required": true, "searchable": true },

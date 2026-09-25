@@ -9,17 +9,26 @@
  * make the output depend on the network, and a card that silently falls back
  * to Times is worse than one that fails loudly.
  *
- * Usage:  node scripts/generate-og.mjs [--only <slug>] [--site] [--missing]
+ * Posts come from EmDash over its API, so a post published from the admin gets
+ * its card the next time this runs and the result is committed. Until then the
+ * post links to the shared card (see src/pages/og/[slug].png.ts).
+ *
+ * Usage:  node scripts/generate-og.mjs [--only <slug>] [--site] [--missing] [--url <site>]
+ *         --url defaults to the production site, which needs EMDASH_TOKEN set to
+ *         a personal access token. Against localhost, EmDash's dev bypass signs in.
  * Output: public/og/<slug>.png at 1200x630, public/og/page-<name>.png for the
  *         standing pages, and public/og/site.png as the shared fallback.
 
  * Page cards are prefixed so they cannot collide with a post slug.
  */
 
-import { readFileSync, writeFileSync, mkdirSync, readdirSync, rmSync, existsSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync, rmSync, existsSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { EmDashClient } from 'emdash/client';
+import { readingTime } from '../src/lib/format.ts';
+import { plainText } from '../src/lib/portable-text.ts';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
@@ -32,25 +41,6 @@ const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov
 
 function b64(file) {
   return readFileSync(join(FONT_DIR, file)).toString('base64');
-}
-
-// Frontmatter here is read with a deliberately small parser rather than a YAML
-// dependency: this script only ever needs three scalar fields.
-function parsePost(raw) {
-  const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
-  if (!match) return null;
-  const [, front, body] = match;
-  const field = name => {
-    const m = front.match(new RegExp(`^${name}:\\s*(.*)$`, 'm'));
-    if (!m) return undefined;
-    return m[1].trim().replace(/^["']|["']$/g, '');
-  };
-  return {
-    title: field('title'),
-    date: field('date'),
-    draft: field('draft') === 'true',
-    words: body.trim().split(/\s+/).length,
-  };
 }
 
 function escapeHtml(s) {
@@ -101,6 +91,9 @@ const only = process.argv.includes('--only')
   ? process.argv[process.argv.indexOf('--only') + 1]
   : null;
 const siteOnly = process.argv.includes('--site');
+const baseUrl = process.argv.includes('--url')
+  ? process.argv[process.argv.indexOf('--url') + 1]
+  : 'https://brockherion.com';
 // --missing renders only what is absent, which is what the pre-commit hook
 // wants: adding one post should not re-render fifty unchanged cards.
 const missingOnly = process.argv.includes('--missing');
@@ -118,13 +111,11 @@ function shoot(htmlPath, outPath) {
   ], { stdio: 'pipe' });
 }
 
-const blogDir = join(root, 'src/content/blog');
 const tmp = join(root, '.og-tmp');
 mkdirSync(OUT_DIR, { recursive: true });
 mkdirSync(tmp, { recursive: true });
 
 let made = 0;
-let skipped = 0;
 
 // The standing pages get their own card, mirroring what the page itself shows:
 // a single word in Cormorant over the ink rule. The kicker carries the wordmark
@@ -160,22 +151,29 @@ if (!only && !(missingOnly && existsSync(join(OUT_DIR, 'site.png')))) {
   console.log('  ✓ site');
 }
 
-for (const file of siteOnly ? [] : readdirSync(blogDir).filter(f => f.endsWith('.mdx')).sort()) {
-  const slug = file.replace(/\.mdx$/, '');
-  if (only && slug !== only) continue;
+const client = new EmDashClient({
+  baseUrl,
+  ...(process.env.EMDASH_TOKEN ? { token: process.env.EMDASH_TOKEN } : { devBypass: true }),
+});
 
-  const post = parsePost(readFileSync(join(blogDir, file), 'utf8'));
-  if (!post) { console.warn(`  ?  ${slug} — unparseable frontmatter`); continue; }
-  if (post.draft) { skipped++; continue; }
+const posts = [];
+if (!siteOnly) {
+  for await (const post of client.listAll('posts', { status: 'published' })) posts.push(post);
+}
+
+for (const { slug, publishedAt, data } of posts) {
+  if (only && slug !== only) continue;
+  // A post pointing at its own artwork opts out of the generated card.
+  if (data.image) continue;
   if (missingOnly && existsSync(join(OUT_DIR, `${slug}.png`))) continue;
 
   // UTC getters, matching src/lib/format.ts — local time renders a day early.
-  const d = new Date(post.date);
-  const minutes = Math.max(1, Math.ceil(post.words / 200));
+  const d = new Date(publishedAt);
+  const minutes = readingTime(plainText(data.content ?? []));
   const kicker = `${d.getUTCDate()} ${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()} · ${minutes} min`;
 
   const htmlPath = join(tmp, `${slug}.html`);
-  writeFileSync(htmlPath, template({ title: post.title, kicker }));
+  writeFileSync(htmlPath, template({ title: data.title, kicker }));
 
   shoot(htmlPath, join(OUT_DIR, `${slug}.png`));
 
@@ -184,4 +182,4 @@ for (const file of siteOnly ? [] : readdirSync(blogDir).filter(f => f.endsWith('
 }
 
 rmSync(tmp, { recursive: true, force: true });
-console.log(`\n${made} card(s) written to public/og/ — ${skipped} draft(s) skipped`);
+console.log(`\n${made} post card(s) written to public/og/`);
