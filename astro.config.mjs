@@ -24,10 +24,11 @@ export default defineConfig({
     // The EmDash admin UI is a React app.
     react(),
     emdash({
-      // Passkeys are bound to this domain, so the ones made on the preview
-      // subdomain keep working here.
+      // Passkeys are bound to this domain, so ones made on the preview
+      // subdomain keep working here. The preview itself is allowed through
+      // EMDASH_ALLOWED_ORIGINS in wrangler.jsonc: EmDash 0.40.1 drops the
+      // `allowedOrigins` option when it bundles this config.
       siteUrl: 'https://brockherion.com',
-      allowedOrigins: ['https://preview.brockherion.com'],
       database: d1({ binding: 'DB' }),
       storage: r2({ binding: 'MEDIA' }),
     }),

@@ -34,6 +34,7 @@
     // the repetition. No cron: production's runs the scheduled work.
     "preview": {
       "routes": [{ "pattern": "preview.brockherion.com", "custom_domain": true }],
+      "vars": { "EMDASH_ALLOWED_ORIGINS": "https://preview.brockherion.com" },
       "d1_databases": [
         {
           "binding": "DB",
