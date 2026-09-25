@@ -316,14 +316,20 @@ for (const slug of tagsInUse) {
   await client.createTerm('tag', { slug, label: labels.get(slug) ?? slug });
 }
 
-const existingSlugs = new Set();
+const existing = new Map();
 for (const { collection } of sources) {
-  for await (const item of client.listAll(collection)) existingSlugs.add(`${collection}/${item.slug}`);
+  for await (const item of client.listAll(collection)) existing.set(`${collection}/${item.slug}`, item);
 }
 
 const counts = { created: 0, skipped: 0 };
 for (const { collection, slug, draft, input } of entries) {
-  if (existingSlugs.has(`${collection}/${slug}`)) {
+  const found = existing.get(`${collection}/${slug}`);
+  // A run that died between create and publish leaves the entry as a draft.
+  if (found && !draft && found.status !== 'published') {
+    await client.publish(collection, found.id);
+    console.log(`  published ${collection}/${slug} (left unpublished by an earlier run)`);
+  }
+  if (found) {
     counts.skipped++;
     continue;
   }
