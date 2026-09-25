@@ -2,7 +2,6 @@
 import { defineConfig } from 'astro/config';
 import cloudflare from '@astrojs/cloudflare';
 import { cacheCloudflare } from '@astrojs/cloudflare/cache';
-import mdx from '@astrojs/mdx';
 import react from '@astrojs/react';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
@@ -14,7 +13,6 @@ export default defineConfig({
   output: 'server',
   adapter: cloudflare(),
   integrations: [
-    mdx(),
     // Only sees prerendered pages, so the on-demand ones are listed by hand.
     // Posts live in D1; src/pages/sitemap-posts.xml.ts lists them at request time.
     sitemap({
