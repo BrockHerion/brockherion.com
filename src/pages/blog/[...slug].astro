@@ -3,18 +3,24 @@ export const prerender = true;
 import { getCollection, render } from 'astro:content';
 import BlogPostLayout from '../../layouts/BlogPostLayout.astro';
 import { readingTime } from '../../lib/format';
+import { nextReads, type ReadCandidate } from '../../lib/next-reads';
 
 export async function getStaticPaths() {
-  const posts = await getCollection('blog');
-  return posts
-    .filter(post => !post.data.draft)
-    .map(post => ({
-      params: { slug: post.id },
-      props: { post },
-    }));
+  const posts = (await getCollection('blog')).filter(post => !post.data.draft);
+  const candidates: ReadCandidate[] = posts.map(post => ({
+    slug: post.id,
+    title: post.data.title,
+    description: post.data.description,
+    date: post.data.date,
+    tags: post.data.tags,
+  }));
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: { post, reads: nextReads(candidates[index], candidates) },
+  }));
 }
 
-const { post } = Astro.props;
+const { post, reads } = Astro.props;
 const { Content, headings } = await render(post);
 
 // Cards are generated per slug by scripts/generate-og.mjs. Frontmatter only
@@ -31,6 +37,7 @@ const image = post.data.image ?? `/og/${post.id}.png`;
   readingTime={readingTime(post.body)}
   headings={headings}
   image={image}
+  nextReads={reads}
 >
   <Content />
 </BlogPostLayout>

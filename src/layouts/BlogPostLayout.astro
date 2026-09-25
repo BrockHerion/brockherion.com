@@ -1,6 +1,7 @@
 ---
 import BaseLayout from './BaseLayout.astro';
 import { dateStamp } from '../lib/format';
+import type { ReadCandidate } from '../lib/next-reads';
 
 interface Heading {
   depth: number;
@@ -17,9 +18,10 @@ interface Props {
   readingTime: number;
   headings: Heading[];
   image?: string;
+  nextReads: ReadCandidate[];
 }
 
-const { title, description, date, updated, tags, readingTime, headings, image } = Astro.props;
+const { title, description, date, updated, tags, readingTime, headings, image, nextReads } = Astro.props;
 
 // The rail lists sections, not sub-sections.
 const sections = headings.filter(heading => heading.depth === 2);
@@ -60,6 +62,22 @@ const sections = headings.filter(heading => heading.depth === 2);
       <div class="prose" id="post-body">
         <slot />
       </div>
+
+      {nextReads.length > 0 && (
+        <aside class="mt-20" aria-labelledby="next-reads">
+          <div class="rule-ink mb-6"></div>
+          <h2 id="next-reads" class="mono text-[10px] tracking-[0.12em] text-accent">Keep reading</h2>
+          <div class="flex flex-col">
+            {nextReads.map(post => (
+              <a href={`/blog/${post.slug}`} class="row-link block py-[22px] border-b border-divider">
+                <span class="mono tnum text-[11px] tracking-[0.08em] text-muted">{dateStamp(post.date)}</span>
+                <h3 class="display-row mt-1.5 mb-1.5">{post.title}</h3>
+                <p class="text-[16px] text-deck">{post.description}</p>
+              </a>
+            ))}
+          </div>
+        </aside>
+      )}
     </article>
 
     <!-- Right rail: on this page. Dropped below `wide`. -->

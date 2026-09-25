@@ -55,14 +55,14 @@ const TAG_MAP = {
   'twitter': 'social-media', 'bluesky': 'social-media', 'social media': 'social-media',
 };
 
-// Posts that shipped with `tags: []`.
+// Posts that shipped with `tags: []`. `chirpmark` groups the devlog series.
 const TAGS_FOR_UNTAGGED = {
   '8-great-react-libraries-you-need-to-be-using-in-2023': ['react', 'javascript'],
-  'chirpmark-devlog-finding-a-focus': ['build-in-public', 'startups'],
+  'chirpmark-devlog-finding-a-focus': ['chirpmark', 'build-in-public', 'startups'],
   'building-reusable-components-in-react-with-typescript-and-generics': ['react', 'typescript'],
   'designing-and-building-rest-apis-for-other-humans': ['apis', 'software-development'],
   'creating-per-page-layouts-with-nextjs-typescript-trcp-and-nextauth': ['nextjs', 'typescript', 'trpc'],
-  'fixing-issues-and-finding-new-ones': ['build-in-public', 'startups'],
+  'fixing-issues-and-finding-new-ones': ['chirpmark', 'build-in-public', 'startups'],
   'how-i-built-brockherion-dev': ['nextjs', 'writing'],
   'i-rebuilt-my-site-in-astro': ['astro', 'nextjs'],
   'how-to-use-drizzle-with-planetscale': ['drizzle', 'databases', 'typescript'],
@@ -72,7 +72,7 @@ const TAGS_FOR_UNTAGGED = {
   'setting-up-a-monorepo-with-pnpm-and-typescript': ['typescript', 'tooling'],
   'stop-building-rest-apis-for-your-next-apps': ['nextjs', 'trpc', 'apis'],
   'things-about-software-development': ['software-development', 'personal'],
-  'welcome-to-chirpmark': ['build-in-public', 'nextjs'],
+  'welcome-to-chirpmark': ['chirpmark', 'build-in-public', 'nextjs'],
   'the-top-five-must-read-books-for-software-developers': ['software-development'],
   'using-higher-order-functions-to-build-per-page-layouts-in-nextjs': ['nextjs', 'react'],
   'what-did-i-learn-from-2021': ['personal'],
