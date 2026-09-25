@@ -3,19 +3,10 @@ export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { dateMonthStamp } from '../lib/format';
+import { frontmatter, Content as NowContent } from '../data/now.md';
 
-const nowFile = Object.values(
-  import.meta.glob<{
-    frontmatter: { lastUpdated?: string; entries?: { label: string; value: string }[] };
-    default: any;
-  }>('/src/data/now.md', { eager: true })
-)[0];
-
-const NowContent = nowFile?.default;
-const entries = nowFile?.frontmatter?.entries ?? [];
-const stamp = nowFile?.frontmatter?.lastUpdated
-  ? dateMonthStamp(new Date(nowFile.frontmatter.lastUpdated))
-  : '';
+const entries: { label: string; value: string }[] = frontmatter.entries ?? [];
+const stamp = frontmatter.lastUpdated ? dateMonthStamp(new Date(frontmatter.lastUpdated)) : '';
 ---
 
 <BaseLayout title="Now — Brock Herion" description="What Brock Herion is doing right now — building, reading, training, and family life."
@@ -39,7 +30,7 @@ const stamp = nowFile?.frontmatter?.lastUpdated
       <div class="rule-hair my-10"></div>
 
       <div class="prose">
-        {NowContent && <NowContent />}
+        <NowContent />
       </div>
     </div>
   </div>

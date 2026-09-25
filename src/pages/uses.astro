@@ -3,18 +3,9 @@ export const prerender = true;
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import { dateMonthStamp } from '../lib/format';
+import { frontmatter, Content as UsesContent } from '../data/uses.md';
 
-const usesFile = Object.values(
-  import.meta.glob<{
-    frontmatter: { lastUpdated?: string };
-    default: any;
-  }>('/src/data/uses.md', { eager: true })
-)[0];
-
-const UsesContent = usesFile?.default;
-const stamp = usesFile?.frontmatter?.lastUpdated
-  ? dateMonthStamp(new Date(usesFile.frontmatter.lastUpdated))
-  : '';
+const stamp = frontmatter.lastUpdated ? dateMonthStamp(new Date(frontmatter.lastUpdated)) : '';
 ---
 
 <BaseLayout title="Uses — Brock Herion" description="The hardware, software, and tools Brock Herion uses."
@@ -24,7 +15,7 @@ const stamp = usesFile?.frontmatter?.lastUpdated
       <PageHeader title="Uses" stamp={stamp} />
 
       <div class="prose mt-10">
-        {UsesContent && <UsesContent />}
+        <UsesContent />
       </div>
     </div>
   </div>
